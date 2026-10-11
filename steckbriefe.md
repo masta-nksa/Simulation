@@ -1,0 +1,160 @@
+---
+layout: material
+art: steckbrief
+titel: "Steckbriefe der vier Modelle"
+kurz: "Zu jedem Modell dieselben acht Fragen: was es abbildet, wie es funktioniert und wie weit man ihm trauen darf"
+permalink: /steckbriefe.html
+---
+
+# Steckbriefe der vier Modelle
+
+Zu jedem Modell der Einheit füllen Sie denselben Steckbrief aus. So können Sie die Modelle am
+Schluss vergleichen – und Sie haben eine Zusammenfassung für die Prüfung. Ihre Einträge bleiben
+auf diesem Gerät gespeichert.
+
+Schreiben Sie in Stichworten. Wo eine Musterlösung hinterlegt ist, können Sie Ihre Antwort
+damit vergleichen, sobald Sie selbst etwas geschrieben haben.
+
+## Steckbrief 1 – Brownsche Bewegung
+
+*Ausfüllen nach: Lektion 2*
+
+**Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
+
+<div class="antwort" data-zeilen="2" data-loesung="Die Ausbreitung eines Gases in einem Raum durch Diffusion, zum Beispiel der Geruch von Essigessenz."></div>
+
+**Akteure** – Wer oder was handelt im Modell?
+
+<div class="antwort" data-zeilen="2" data-loesung="Teilchen (die Moleküle des Geruchsstoffs) und ein Detektor (die Nase)."></div>
+
+**Regeln** – Nach welchen Regeln verhalten sich die Akteure?
+
+<div class="antwort" data-zeilen="2" data-loesung="Jedes Teilchen geht pro Zeitschritt zufällig eine Zelle nach links, rechts, oben oder unten. An der Wand bleibt es stehen. Der Detektor schlägt an, sobald genügend verschiedene Teilchen ihn erreicht haben."></div>
+
+**Parameter** – Was lässt sich einstellen?
+
+<div class="antwort" data-zeilen="2" data-loesung="Abstand des Detektors, Anzahl Teilchen, Schwelle des Detektors."></div>
+
+**Zufall** – Wo spielt der Zufall mit?
+
+<div class="antwort" data-zeilen="2" data-loesung="Bei der Startposition jedes Teilchens in der Quelle und bei der Richtung jedes einzelnen Schritts."></div>
+
+**Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
+
+<div class="antwort" data-zeilen="2" data-loesung="Die Zeit in Zeitschritten, bis der Detektor anschlägt – in Abhängigkeit vom Abstand."></div>
+
+**Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
+
+<div class="antwort" data-zeilen="2" data-loesung="Luftströmung, die dritte Dimension, Nachschub aus der Quelle, Hindernisse wie Möbel und Personen, Temperatur."></div>
+
+**Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
+
+<div class="antwort" data-zeilen="2" data-loesung="Mit dem Experiment (Zeit gegen Abstand) und mit der Vorhersage der Diffusionstheorie: doppelter Abstand, etwa vierfache Zeit. Mit der Theorie stimmt das Modell gut überein, mit dem Experiment im Schulzimmer nur grob, weil dort die Luftströmung überwiegt."></div>
+
+## Steckbrief 2 – Stau
+
+*Ausfüllen nach: Lektionen 3 und 4*
+
+**Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Akteure** – Wer oder was handelt im Modell?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Regeln** – Nach welchen Regeln verhalten sich die Akteure?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Parameter** – Was lässt sich einstellen?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Zufall** – Wo spielt der Zufall mit?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
+
+<div class="antwort" data-zeilen="2"></div>
+
+## Steckbrief 3 – Segregation
+
+*Ausfüllen nach: Lektion 5*
+
+**Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Akteure** – Wer oder was handelt im Modell?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Regeln** – Nach welchen Regeln verhalten sich die Akteure?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Parameter** – Was lässt sich einstellen?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Zufall** – Wo spielt der Zufall mit?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
+
+<div class="antwort" data-zeilen="2"></div>
+
+## Steckbrief 4 – Krankheitsübertragung
+
+*Ausfüllen nach: Lektion 6*
+
+**Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Akteure** – Wer oder was handelt im Modell?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Regeln** – Nach welchen Regeln verhalten sich die Akteure?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Parameter** – Was lässt sich einstellen?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Zufall** – Wo spielt der Zufall mit?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
+
+<div class="antwort" data-zeilen="2"></div>
+
+**Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
+
+<div class="antwort" data-zeilen="2"></div>

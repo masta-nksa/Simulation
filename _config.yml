@@ -1,0 +1,123 @@
+# ---------------------------------------------------------------------------
+#  Simulationen – Unterrichtseinheit (8 Lektionen)
+#  Jekyll-Konfiguration für GitHub Pages
+# ---------------------------------------------------------------------------
+
+title: "Simulationen"
+untertitel: "Modellieren, Simulieren, Validieren"
+description: "Selbstlernmodul zu Simulationen: Brownsche Bewegung, Stau, Segregation und Krankheitsübertragung"
+lang: "de-CH"
+
+# WICHTIG ------------------------------------------------------------------
+# baseurl muss dem Repository-Namen entsprechen, wenn die Seite unter
+#   https://<username>.github.io/<repo-name>/  läuft (= Normalfall).
+# Heisst das Repo z. B. "Simulation", muss hier "/Simulation" stehen.
+# Nur bei einem Repo namens "<username>.github.io" bleibt der Wert leer ("").
+baseurl: "/Simulation"
+url: ""
+# ---------------------------------------------------------------------------
+
+# Fusszeile
+schule: "Neue Kantonsschule Aarau"
+
+# Signet (optional): Zeichenleiste unter dem Titel der Startseite. Das eine
+# Gestaltungselement, das jede Einheit aus ihrem eigenen Stoff füllt – etwas
+# Kurzes, das man in Zellen schreiben kann (ein Wort und seine Verschlüsselung,
+# eine Zahl binär und dezimal, eine Formel, eine Tonleiter …). Jede Zeile hat
+# ein Etikett und eine Zeichenfolge (alle gleich lang, höchstens etwa 20
+# Zeichen); "markiert: true" hinterlegt die Zeile mit Leuchtstift. "text"
+# beschreibt die Leiste für Screenreader. Ohne diesen Block entfällt sie.
+#
+signet:
+  text: "Eine Strasse aus 20 Zellen im Nagel-Schreckenberg-Modell, zweimal im Abstand von einer Sekunde. Jede Ziffer ist ein Auto und gibt sein Tempo in Zellen pro Sekunde an, ein Punkt ist eine leere Zelle."
+  zeilen:
+    - label: "Sekunde 0"
+      zeichen: "2..1.00..3.....5...."
+    - label: "Sekunde 1"
+      zeichen: "..2.10.1.....4.....4"
+      markiert: true
+
+# Zusatzeinträge in der Kopfzeile, hinter den Lektionsnummern (optional).
+hauptnav:
+  - titel: "Steckbriefe"
+    url: "/steckbriefe.html"
+  - titel: "Dossier"
+    url: "/dossier.html"
+
+# Besucherstatistik (optional): Code des GoatCounter-Kontos, also der Teil vor
+# ".goatcounter.com". Gezählt wird ohne Cookies und ohne gespeicherte
+# IP-Adressen. Mehrere Einheiten können denselben Code teilen – sie
+# unterscheiden sich im Pfad (baseurl). Ohne diese Zeile wird nichts gezählt
+# und der Hinweis in der Fusszeile entfällt.
+# goatcounter: "nksa"
+
+# Lektionsuhr (optional): Öffnet jemand eine Lektionsseite, startet eine Uhr.
+# Eine Leiste am unteren Rand zeigt danach auf jeder Seite, bei welchem Schritt
+# man nach Plan steht und wann man spätestens zum nächsten wechselt. Die Zeiten
+# kommen aus dem Ablauf der Lektionsseite ("ca. 13 Min."). Ohne diese Zeile
+# gibt es keine Uhr.
+lektionsuhr: true
+
+# Kein Theme: Layouts und CSS liegen vollständig in diesem Repo. GitHub Pages
+# würde sonst das Standard-Theme "primer" laden, dessen Stylesheet den Pfad
+# assets/css/style.css belegt – darum heisst unseres unterricht.css.
+theme:
+
+markdown: kramdown
+kramdown:
+  input: GFM              # aktiviert u. a. Task-Listen  - [ ] / - [x]
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-sitemap
+
+# Beschriftung der Material-Typen (Badges + Listen).
+# Neuer Typ? Hier ergänzen und im Frontmatter der Datei "art:" setzen.
+# Ohne Eintrag bleibt das Badge leer – der häufigste Grund für ein leeres Badge.
+art_labels:
+  ablaufplan:    "Ablaufplan"
+  arbeitsblatt:  "Arbeitsblatt"
+  musterloesung: "Musterlösung"
+  glossar:       "Glossar"
+  info:          "Information"
+  input:         "Theorie-Input"
+  auftrag:       "Auftrag"
+  konzept:       "Konzept"
+  zusammenfassung: "Das Wichtigste"
+  rueckblick:    "Rückblick"
+  etappe:        "Etappe"
+  zusatz:        "Zusatz"
+  selbsttest:    "Selbsttest"
+  steckbrief:    "Steckbrief"
+  dossier:       "Dossier"
+
+# Alle Dateien in lektionen/ sind Unterrichtsmaterial und teilen dasselbe Layout.
+defaults:
+  - scope:
+      path: "lektionen"
+      type: "pages"
+    values:
+      layout: "material"
+      typ: "material"
+  # Musterlösungen liegen unter /lsg/ – sie werden nirgends von den SuS-Seiten aus
+  # verlinkt (die Lehrperson gibt den Link weiter) und bleiben aus Suchmaschinen
+  # heraus: noindex + kein Eintrag in der sitemap.xml.
+  - scope:
+      path: "lsg"
+      type: "pages"
+    values:
+      layout: "material"
+      typ: "material"
+      zielgruppe: "loesung"
+      art: "musterloesung"
+      noindex: true
+      sitemap: false
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - quellen
+  - .gitignore

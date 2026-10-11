@@ -1,0 +1,75 @@
+---
+layout: default
+---
+{%- comment -%}
+  Nur Materialseiten gehören zu einer Lektion – das Gesamtkonzept nicht.
+  Ohne diese Abfrage würde die Suche nach der Lektionsseite ins Leere greifen.
+{%- endcomment -%}
+{%- assign lektionsseite = false -%}
+{%- if page.lektion -%}
+  {%- assign lektionsseite = site.pages | where: "layout", "lektion" | where: "lektion", page.lektion | first -%}
+{%- endif -%}
+{%- comment -%}
+  Die nächste Unterlage derselben Lektion (Reihenfolge wie auf der Lektionsseite),
+  damit man von Blatt zu Blatt weiterkommt, ohne über die Lektionsseite zu gehen.
+  Nur im SuS-Bereich – Ablaufpläne und Lösungen haben keine solche Abfolge.
+{%- endcomment -%}
+{%- assign naechste = false -%}
+{%- if lektionsseite and page.zielgruppe == 'sus' -%}
+  {%- assign geschwister = site.pages | where: "typ", "material" | where: "lektion", page.lektion | where: "zielgruppe", "sus" | sort: "reihenfolge" -%}
+  {%- for m in geschwister -%}
+    {%- if m.url == page.url -%}
+      {%- assign naechste = geschwister[forloop.index] -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+<div class="wrap wrap-narrow">
+
+  <nav class="breadcrumb" aria-label="Sie sind hier">
+    <a href="{{ '/' | relative_url }}">Übersicht</a>
+    {%- if page.zielgruppe == 'loesung' %}
+    <span aria-hidden="true">/</span> <a href="{{ '/lsg/' | relative_url }}">Musterlösungen</a>
+    {%- elsif lektionsseite %}
+    <span aria-hidden="true">/</span> <a href="{{ lektionsseite.url | relative_url }}">Lektion {{ page.lektion }}</a>
+    {%- endif %}
+    <span aria-hidden="true">/</span> {{ page.titel }}
+  </nav>
+
+  <div class="material-bar">
+    <div class="material-tags">
+      <span class="badge badge-{{ page.art }}">{{ site.art_labels[page.art] }}</span>
+      {%- if page.lektion %}
+      <span class="badge badge-zielgruppe-sus">Lektion {{ page.lektion }}</span>
+      {%- endif %}
+      {%- if page.zielgruppe == 'lehrperson' %}
+      <span class="badge badge-zielgruppe-lp">Lehrperson</span>
+      {%- endif %}
+    </div>
+    <button type="button" class="print-btn" onclick="window.print()">Drucken</button>
+  </div>
+
+  {%- if page.art == 'musterloesung' %}
+  <p class="hinweis hinweis-loesung"><strong>Musterlösung.</strong> Zuerst selbst versuchen – diese Seite dient zur Kontrolle und zum Nachholen einer verpassten Lektion.</p>
+  {%- elsif page.zielgruppe == 'lehrperson' %}
+  <p class="hinweis hinweis-lp"><strong>Material für die Lehrperson.</strong> Planungsunterlage – die Arbeitsblätter für die Klasse finden Sie im SuS-Bereich der Lektion.</p>
+  {%- endif %}
+
+  <article class="prose">
+    {{ content }}
+  </article>
+
+  <nav class="pager">
+    {%- if page.zielgruppe == 'loesung' %}
+    <a class="pager-prev" href="{{ '/lsg/' | relative_url }}"><span>&larr; Zurück</span>Alle Musterlösungen</a>
+    {%- elsif lektionsseite %}
+    <a class="pager-prev" href="{{ lektionsseite.url | relative_url }}"><span>&larr; Zurück</span>Lektion {{ page.lektion }}: {{ lektionsseite.titel }}</a>
+    {%- else %}
+    <a class="pager-prev" href="{{ '/' | relative_url }}"><span>&larr; Zurück</span>Zur Übersicht</a>
+    {%- endif %}
+    {%- if naechste %}
+    <a class="pager-next" href="{{ naechste.url | relative_url }}"><span>Nächste Unterlage &rarr;</span>{{ naechste.titel }}</a>
+    {%- endif %}
+  </nav>
+
+</div>

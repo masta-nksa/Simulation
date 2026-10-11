@@ -1,0 +1,1107 @@
+---
+# Diese Datei wird von Jekyll verarbeitet (leeres Frontmatter ist Absicht).
+---
+
+/* ==========================================================================
+   Simulationen – Unterrichtsmaterialien
+   Layout, Typografie, Dark Mode und Druckansicht
+
+   AUFBAU
+   1. Schriften (@font-face, lokal im Repo)
+   2. Gestaltungsvariablen
+   3. Grundgerüst, Kopfzeile, Startseite, Lektionen, Material, Fliesstext
+   4. Druckansicht
+   5. Info-Kasten, Dossier
+   6. Interaktive Übungen und kompakter Druck
+   7. Lektionsuhr (Leiste am unteren Rand, Uhrzeiten im Ablauf)
+   8. Simulationen, Messtabellen, Schaubilder (Ergänzung dieser Einheit)
+
+   FARBE ODER SCHRIFT ÄNDERN
+   Fast alles ergibt sich aus den Variablen in Abschnitt 2. Wer dort bleibt,
+   bekommt Dark Mode und Druckansicht ohne Zusatzpflege mit.
+   ========================================================================== */
+
+/* --- 1. Schriften -------------------------------------------------------- */
+/* Die Dateien liegen im Repo (keine Anfrage an Google o. ä., siehe
+   assets/fonts/LIZENZ.md): Inter für den Lesetext, IBM Plex Mono für Titel,
+   Nummern und Etiketten. */
+
+@font-face {
+  font-family: "Inter var";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("{{ '/assets/fonts/inter-latin-wght-normal.woff2' | relative_url }}") format("woff2-variations");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("{{ '/assets/fonts/ibm-plex-mono-latin-400-normal.woff2' | relative_url }}") format("woff2");
+}
+/* Der Schnitt 500 deckt auch «fett» ab – sonst verdickt der Browser die
+   Schreibmaschinenschrift künstlich, und das sieht verschmiert aus. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url("{{ '/assets/fonts/ibm-plex-mono-latin-500-normal.woff2' | relative_url }}") format("woff2");
+}
+
+/* --- 2. Gestaltungsvariablen --------------------------------------------- */
+/* Tinte auf Papier, Schreibmaschinenschrift für alles, was Etikett oder Nummer
+   ist, und Leuchtstift-Gelb als einzige Farbe. Das Design ist bewusst
+   themenneutral: Was eine Einheit von der anderen unterscheidet, steht nicht
+   hier, sondern in _config.yml (signet, hauptnav) und im Frontmatter der
+   Lektionsseiten (stichwort). */
+
+:root {
+  --bg:            #fafaf6;
+  --bg-elev:       #ffffff;
+  --text:          #14161a;
+  --text-muted:    #5d6067;
+  --border:        #d6d6cf;
+  --border-strong: #8e9096;
+  --accent:        #14161a;
+  --accent-soft:   #fff3b8;
+  --marker:        #ffd83a;   /* Leuchtstift: Hervorhebung, Hover, aktuelle Seite */
+  --on-marker:     #14161a;   /* Schrift auf Leuchtstift – in beiden Modi dunkel */
+  --lp:            #8a5a0a;
+  --lp-soft:       #f8eed8;
+  --sus:           #1c6b52;
+  --sus-soft:      #e4f3ec;
+
+  /* Die tragende Linie: Kopfzeile, Register, Blöcke, Tabellenränder. */
+  --linie:         var(--text);
+  --linie-b:       1.5px;
+
+  --font-body: "Inter var", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-head: var(--font-body);
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --font-meta: var(--font-mono);      /* Etiketten, Nummern, Brotkrumen */
+  --font-display: var(--font-mono);   /* Titel der Startseite, Wortmarke */
+  --head-weight:    700;
+  --display-weight: 500;
+  --label-weight:   500;
+  --label-transform: uppercase;
+  --label-tracking:  .06em;
+
+  /* Laufweite der Überschriften, von gross nach klein. */
+  --tr-hero: -.045em;   /* Titel der Startseite */
+  --tr-h1:   -.02em;    /* Seitentitel */
+  --tr-h2:   -.015em;   /* Abschnittstitel im Fliesstext */
+  --tr-h3:   -.01em;    /* Zwischentitel, Kartentitel, Wortmarke */
+  --tr-h4:   -.005em;   /* Kacheltitel */
+
+  /* Eckenradien: Das Design ist kantig. */
+  --radius-karte: 0;   /* Blöcke, Pager */
+  --radius-feld:  0;   /* Karten */
+  --radius-block: 0;   /* Hinweis, Codeblock, Tabelle */
+  --radius-knopf: 0;   /* Navigation, Schaltflächen */
+  --radius-marke: 0;   /* Badges */
+  --radius-code:  0;   /* Inline-Code, Kontrollkästchen */
+  --radius-pill:  0;   /* Auswahl-Chips */
+  --shadow:       none;
+
+  --hero-bg:       none;
+  --header-bg:     var(--bg);
+  --header-filter: none;
+
+  --wrap:        min(64rem, 100% - 2.5rem);
+  --wrap-narrow: min(50rem, 100% - 2.5rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:            #131417;
+    --bg-elev:       #1b1c20;
+    --text:          #ecebe5;
+    --text-muted:    #a3a49f;
+    --border:        #2e3036;
+    --border-strong: #6b6d74;
+    --accent:        #ecebe5;
+    --accent-soft:   #3a3410;
+    --lp:            #e0b055;
+    --lp-soft:       #2a2216;
+    --sus:           #6cc9aa;
+    --sus-soft:      #14261f;
+  }
+}
+
+/* --- 3. Grundgerüst ------------------------------------------------------ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-head); font-weight: var(--head-weight); }
+
+a { color: var(--accent); text-decoration-thickness: .07em; text-underline-offset: .17em; }
+
+/* Etikett: kleine Schrift in Versalien für alles, was beschriftet statt erzählt
+   (Badges, Vorspann, Blocktitel, Schaltflächen). */
+.eyebrow, .section-title, .badge, .material-block h2, .lektion-stichwort,
+.print-btn, .pager a span {
+  font-family: var(--font-meta); font-weight: var(--label-weight);
+  letter-spacing: var(--label-tracking); text-transform: var(--label-transform);
+}
+
+.wrap        { width: var(--wrap); margin-inline: auto; }
+.wrap-narrow { width: var(--wrap-narrow); margin-inline: auto; }
+
+.skip-link {
+  position: absolute; left: -9999px;
+  background: var(--accent); color: var(--bg); padding: .6rem 1rem; z-index: 100;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* --- Kopfzeile ----------------------------------------------------------- */
+
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--header-bg);
+  backdrop-filter: var(--header-filter);
+  border-bottom: 2px solid var(--linie);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; min-height: 3.4rem; padding-block: .45rem; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: inherit; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-text strong {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: 1rem; letter-spacing: var(--tr-h3);
+}
+/* Symbol und Untertitel stehen im Markup, die Kopfzeile kommt ohne sie aus –
+   der Untertitel steht in der Fusszeile. */
+.brand-icon, .brand-text small, .block-icon { display: none; }
+
+.header-tools { display: flex; align-items: center; gap: .8rem; margin-left: auto; }
+
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem; font-family: var(--font-meta); }
+.site-nav a {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 2.1rem; height: 1.9rem; padding-inline: .45rem;
+  border-radius: var(--radius-knopf); font-size: .88rem; font-weight: var(--label-weight);
+  text-decoration: none; color: var(--text);
+}
+.site-nav a:hover { background: var(--accent-soft); }
+.site-nav a[aria-current="page"] { background: var(--marker); color: var(--on-marker); }
+.nav-trenner { margin-inline: .4rem; color: var(--border-strong); }
+
+/* Tablet und Handy: Die Einträge werden mit dem Finger getroffen und sind darum
+   höher. */
+@media (max-width: 52rem) {
+  .site-nav a { min-width: 2.25rem; height: 2.5rem; }
+}
+/* Reicht die Breite nicht mehr für eine Zeile, rückt die Navigation unter die
+   Wortmarke und steht linksbündig. */
+@media (max-width: 46rem) {
+  .header-inner { gap: .1rem 1rem; padding-block: .35rem .25rem; }
+  .header-tools { width: 100%; margin-left: -.45rem; }
+}
+/* Auf dem Handy passen Lektionsnummern und Zusatzeinträge (hauptnav) nicht in
+   eine Zeile – der Trenner wird zum Zeilenumbruch, die Zusatzeinträge stehen
+   unter den Nummern. */
+@media (max-width: 36rem) {
+  .nav-trenner { flex-basis: 100%; height: 0; margin: 0; overflow: hidden; }
+  .site-nav a.nav-text { height: 2.1rem; }
+  /* Drei Zeilen wären als feste Kopfzeile zu hoch: Die Wortmarke scrollt weg,
+     stehen bleibt nur die Navigation. Der negative Abstand ist die Höhe der
+     Wortmarken-Zeile (Abstand oben + Zeile). */
+  .site-header { top: -1.9rem; }
+  .header-inner { padding-top: .3rem; row-gap: 0; }
+  .brand { min-height: 1.6rem; }
+}
+
+/* --- Startseite ---------------------------------------------------------- */
+
+.hero { background: var(--hero-bg); padding-block: 3.2rem 2.2rem; }
+.eyebrow { margin: 0 0 .5rem; font-size: .8rem; color: var(--text-muted); }
+.hero h1 {
+  margin: 0; font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: clamp(2.2rem, 7vw, 4.2rem); letter-spacing: var(--tr-hero); line-height: 1;
+  overflow-wrap: anywhere;
+}
+.hero-sub { margin: .35rem 0 0; font-size: 1.15rem; color: var(--text-muted); }
+.hero-text { max-width: 44rem; margin-top: 1.9rem; font-size: 1.06rem; }
+.hero-text p:last-child { margin-bottom: 0; }
+/* Fett im Einstiegstext ist die Leitfrage – sie bekommt den Leuchtstift. */
+.hero-text p:not(.quellen) > strong {
+  background: var(--marker); color: var(--on-marker); padding: .1em .25em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+
+/* Signet: Zeichenleiste unter dem Titel (signet: in _config.yml). Das eine
+   Element, das jede Einheit aus ihrem eigenen Stoff füllt – hier eine Strasse im
+   Nagel-Schreckenberg-Modell. Ohne Eintrag in der Konfiguration entfällt es. */
+.signet {
+  --zelle: 2.25rem;
+  display: grid; grid-template-columns: auto repeat(var(--n), minmax(0, var(--zelle)));
+  width: fit-content; max-width: 100%; margin-top: 1.6rem;
+  border-top: var(--linie-b) solid var(--linie);
+  font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; line-height: 2.1rem;
+}
+.signet-zeile { display: contents; }
+.signet-zeile > * { text-align: center; border-bottom: var(--linie-b) solid var(--linie); }
+.signet-zelle { border-right: 1px solid var(--border); }
+.signet-zeile .signet-label {
+  padding-right: 1.1rem; text-align: left; white-space: nowrap;
+  font-weight: 400; font-size: .75rem; color: var(--text-muted);
+  border-right: var(--linie-b) solid var(--linie);
+}
+.signet-zeile.markiert .signet-zelle {
+  background: var(--marker); color: var(--on-marker);
+  border-right-color: color-mix(in srgb, var(--on-marker) 20%, transparent);
+}
+@media (max-width: 44rem) {
+  .signet { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); width: 100%; font-size: .82rem; line-height: 1.75rem; }
+  .signet-zeile .signet-label { grid-column: 1 / -1; border-right: 0; border-bottom: 0; line-height: 1.5rem; padding-top: .2rem; }
+}
+
+.section-title { margin: 1.4rem 0 .6rem; font-size: .8rem; color: var(--text-muted); }
+
+/* Lektionen als Register: eine Zeile pro Lektion, Nummer links, Stichwort rechts. */
+.lektion-list {
+  list-style: none; margin: 0 0 3.5rem; padding: 0;
+  border-top: var(--linie-b) solid var(--linie);
+}
+.lektion-list > li > a {
+  display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto;
+  align-items: baseline; column-gap: .8rem;
+  padding: .95rem .7rem 1rem .5rem; text-decoration: none; color: inherit;
+  border-bottom: var(--linie-b) solid var(--linie);
+}
+.lektion-list > li > a:hover,
+.lektion-list > li > a:focus-visible { background: var(--marker); color: var(--on-marker); }
+.lektion-list > li > a:hover .lektion-kurz,
+.lektion-list > li > a:focus-visible .lektion-kurz { color: inherit; }
+.lektion-nr {
+  font-family: var(--font-mono); font-size: 1.85rem; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.lektion-body { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.lektion-body strong { font-size: 1.12rem; font-weight: 650; letter-spacing: var(--tr-h3); }
+.lektion-kurz { color: var(--text-muted); font-size: .92rem; }
+.lektion-meta { color: var(--text-muted); font-size: .8rem; }
+.lektion-stichwort { font-size: .76rem; white-space: nowrap; }
+.lektion-pfeil { margin-left: .4rem; visibility: hidden; }
+.lektion-list > li > a:hover .lektion-pfeil,
+.lektion-list > li > a:focus-visible .lektion-pfeil { visibility: visible; }
+@media (max-width: 36rem) {
+  .lektion-list > li > a { grid-template-columns: 3rem minmax(0, 1fr); }
+  .lektion-nr { font-size: 1.5rem; }
+  .lektion-stichwort { display: none; }
+}
+
+.quicklinks { margin-bottom: 3rem; }
+.quick-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+.quick-col {
+  background: var(--bg-elev); border: var(--linie-b) solid var(--linie);
+  border-radius: var(--radius-karte); padding: 1.3rem 1.4rem;
+}
+.quick-col h3 { margin: 0 0 .4rem; font-size: 1.02rem; }
+.quick-col > p { margin: 0 0 .9rem; color: var(--text-muted); font-size: .92rem; }
+.link-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; }
+.link-list a {
+  display: flex; align-items: center; gap: .55rem;
+  padding: .4rem .5rem; border-radius: var(--radius-knopf);
+  text-decoration: none; color: inherit; font-size: .94rem;
+}
+.link-list a:hover { background: var(--accent-soft); }
+.mini-nr {
+  flex: none; display: grid; place-items: center;
+  width: 1.7rem; height: 1.7rem; border-radius: var(--radius-marke);
+  border: 1px solid var(--linie);
+  font-family: var(--font-mono); font-size: .74rem; font-weight: 500;
+}
+
+/* --- Lektionsseite ------------------------------------------------------- */
+
+.breadcrumb { margin: 1.5rem 0 1.4rem; font-family: var(--font-meta); font-size: .8rem; color: var(--text-muted); }
+.breadcrumb a { color: var(--text-muted); }
+.breadcrumb span { margin-inline: .4rem; color: var(--border-strong); }
+
+.lektion-header { margin-bottom: 2rem; }
+.lektion-header h1 { margin: 0 0 .5rem; font-size: clamp(1.7rem, 4vw, 2.3rem); letter-spacing: var(--tr-h1); line-height: 1.15; }
+.lead { margin: 0; font-size: 1.1rem; color: var(--text-muted); max-width: 46rem; }
+
+.fact-list {
+  list-style: none; display: flex; flex-wrap: wrap; gap: .5rem;
+  margin: 1.2rem 0 0; padding: 0;
+}
+.fact-list li {
+  background: var(--bg-elev); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill); padding: .3rem .85rem;
+  font-family: var(--font-meta); font-size: .8rem;
+}
+.fact-list li span { color: var(--text-muted); margin-right: .35rem; }
+
+.lektion-intro { margin-bottom: 2rem; }
+
+/* Block mit Titelleiste: Ablauf, Unterlagen, Material der Lehrperson. */
+.material-block {
+  border: var(--linie-b) solid var(--linie); border-radius: var(--radius-karte);
+  background: var(--bg-elev); padding: 1.2rem 1.3rem 1.35rem;
+  margin-bottom: 1.4rem;
+}
+.material-block h2 {
+  display: flex; align-items: center; gap: .55rem;
+  margin: -1.2rem -1.3rem 1.1rem; padding: .4rem 1.3rem;
+  border-bottom: var(--linie-b) solid var(--linie);
+  font-size: .8rem; line-height: 1.5;
+}
+.block-hint { margin: 0 0 1rem; color: var(--text-muted); font-size: .9rem; }
+.block-lehrperson h2 { background: var(--lp-soft); color: var(--lp); }
+
+/* Quellenangabe unter einem Text */
+.quellen {
+  margin-top: 1.6rem; padding-top: .9rem;
+  border-top: 1px solid var(--border);
+  font-size: .82rem; line-height: 1.7; color: var(--text-muted);
+}
+.quellen strong { color: var(--text-muted); font-weight: 650; }
+.quellen a { color: var(--text-muted); text-decoration-color: var(--border-strong); }
+.quellen a:hover { color: var(--accent); }
+
+/* Ablauf einer Lektion: nummerierte Schritte mit Richtzeit */
+.ablauf { max-width: none; }
+.ablauf > *:last-child { margin-bottom: 0; }
+.ablauf ol { list-style: none; counter-reset: schritt; margin: 0 0 1rem; padding: 0; }
+.ablauf ol > li {
+  counter-increment: schritt; position: relative;
+  padding-left: 2.7rem; margin-bottom: .9rem;
+}
+.ablauf ol > li::before {
+  content: counter(schritt); position: absolute; left: 0; top: .1rem;
+  width: 1.75rem; height: 1.75rem; border-radius: var(--radius-code);
+  display: grid; place-items: center;
+  border: var(--linie-b) solid var(--linie);
+  font-family: var(--font-mono); font-size: .85rem; font-weight: 500;
+}
+/* Die Richtzeit steht kursiv direkt hinter dem fetten Schrittnamen. Nur sie
+   wird zum Etikett – Kursives im Satz bleibt kursiv. */
+.ablauf ol > li strong:first-child + em {
+  font-style: normal; font-family: var(--font-meta); font-size: .76em;
+  color: var(--text-muted); white-space: nowrap;
+}
+
+.card-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); }
+.card-list-breit { grid-template-columns: 1fr; margin-bottom: 1.4rem; }
+.card-list + .material-block { margin-top: 1.4rem; }
+.card code {
+  font-family: var(--font-mono);
+  font-size: .9em; padding: .1em .35em;
+  background: var(--accent-soft); border-radius: var(--radius-code);
+}
+.card a {
+  display: flex; flex-direction: column; gap: .35rem; height: 100%;
+  padding: .85rem .95rem .95rem; text-decoration: none; color: inherit;
+  border: 1px solid var(--border-strong); border-radius: var(--radius-feld); background: var(--bg);
+}
+.card a:hover { background: var(--marker); color: var(--on-marker); border-color: var(--linie); }
+.card a:hover .card-kurz { color: inherit; }
+.card a:hover .badge { background: var(--on-marker); color: var(--marker); }
+.card a:hover code { background: none; }
+.card strong { letter-spacing: var(--tr-h4); }
+.card-kurz { color: var(--text-muted); font-size: .87rem; line-height: 1.45; }
+
+/* --- Badges -------------------------------------------------------------- */
+/* Die Art des Materials steht als Wort im Badge; eine Farbe je Art gibt es
+   bewusst nicht. */
+
+.badge {
+  align-self: flex-start;
+  display: inline-block; padding: .08rem .5rem;
+  border-radius: var(--radius-marke); font-size: .7rem;
+  background: var(--text); color: var(--bg);
+}
+.badge-zielgruppe-sus { background: none; color: var(--text); padding-inline: .1rem; }
+.badge-zielgruppe-lp  { background: var(--lp-soft); color: var(--lp); }
+
+/* --- Materialseite ------------------------------------------------------- */
+
+.material-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem;
+}
+.material-tags { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.print-btn {
+  font-size: .72rem; padding: .3rem .8rem; cursor: pointer;
+  background: none; color: var(--text);
+  border: var(--linie-b) solid var(--linie); border-radius: var(--radius-knopf);
+}
+.print-btn:hover { background: var(--marker); color: var(--on-marker); }
+
+.hinweis {
+  border-radius: var(--radius-block); padding: .8rem 1rem; margin: 0 0 1.6rem;
+  font-size: .93rem; border: 1px solid var(--border);
+}
+.hinweis-loesung { background: var(--sus-soft); border-color: color-mix(in srgb, var(--sus) 35%, transparent); }
+.hinweis-lp      { background: var(--lp-soft);  border-color: color-mix(in srgb, var(--lp) 35%, transparent); }
+
+/* --- Fliesstext (aus Markdown) ------------------------------------------- */
+
+.prose { max-width: 46rem; }
+.prose > *:first-child { margin-top: 0; }
+.prose h1 { font-size: clamp(1.7rem, 4vw, 2.2rem); letter-spacing: var(--tr-h1); line-height: 1.2; margin: 0 0 1rem; }
+.prose h2 { font-size: 1.4rem; letter-spacing: var(--tr-h2); margin: 2.4rem 0 .8rem; padding-bottom: .35rem; border-bottom: var(--linie-b) solid var(--linie); }
+.prose h3 { font-size: 1.13rem; margin: 1.9rem 0 .6rem; }
+.prose h4 { font-size: 1rem; margin: 1.5rem 0 .5rem; color: var(--text-muted); }
+.prose p, .prose ul, .prose ol { margin: 0 0 1rem; }
+.prose li { margin-bottom: .35rem; }
+.prose li > ul, .prose li > ol { margin-top: .35rem; }
+.prose strong { font-weight: 650; }
+.prose hr { border: 0; border-top: 1px solid var(--border); margin: 2.2rem 0; }
+.prose em { color: inherit; }
+.prose a:hover { background: var(--marker); color: var(--on-marker); }
+
+.prose blockquote {
+  margin: 1.4rem 0; padding: .2rem 0 .2rem 1.1rem;
+  border-left: 3px solid var(--border-strong); color: var(--text-muted);
+}
+.prose code {
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: .87em; padding: .12em .38em;
+  background: var(--accent-soft); border-radius: var(--radius-code);
+}
+.prose pre {
+  background: var(--bg-elev); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-block); padding: 1rem; overflow-x: auto;
+}
+.prose pre code { background: none; padding: 0; }
+
+/* Tabellen: Linie oben und unten, Haarlinien dazwischen. Die Kopfzeile bleibt
+   in normaler Schreibung – in vielen Tabellen ist sie selbst Inhalt (Klartext
+   klein, Geheimtext gross). */
+.table-scroll { overflow-x: auto; margin: 0 0 1.4rem; }
+.prose table {
+  width: 100%; border-collapse: collapse; font-size: .93rem;
+  border-top: var(--linie-b) solid var(--linie);
+  border-bottom: var(--linie-b) solid var(--linie);
+}
+.prose th, .prose td {
+  border-bottom: 1px solid var(--border);
+  padding: .55rem .75rem; text-align: left; vertical-align: top;
+}
+.prose th { font-weight: 650; font-size: .87rem; border-bottom-color: var(--linie); }
+.prose tbody tr:last-child td { border-bottom: 0; }
+/* Kopfzeilen ohne Beschriftung (z. B. bei den Steckbrief-Tabellen) ausblenden */
+.prose thead tr:not(:has(th:not(:empty))) { display: none; }
+.prose td:empty::after { content: ""; display: block; min-height: 1.4rem; }
+
+/* Task-Listen (- [ ] / - [x])
+   Zwei Selektoren, weil kramdown die Klasse .task-list-item nicht in jeder
+   Version setzt – so greift die Formatierung in beiden Fällen. */
+.prose .task-list-item,
+.prose li:has(> input[type="checkbox"]) { list-style: none; margin-left: -1.4rem; padding-left: 0; }
+.prose .task-list-item input[type="checkbox"],
+.prose li > input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  width: 1.05rem; height: 1.05rem; margin-right: .55rem;
+  vertical-align: -.16rem;
+  border: 1.5px solid var(--linie); border-radius: var(--radius-code);
+  background: var(--bg-elev);
+}
+.prose li > input[type="checkbox"]:checked {
+  background: var(--accent); border-color: var(--accent);
+}
+.prose li > input[type="checkbox"]:checked::after {
+  content: "\2713"; color: var(--bg-elev); font-size: .78rem;
+  display: grid; place-items: center; height: 100%;
+}
+
+/* Schreiblinien zum Ausfüllen.
+   In den Markdown-Dateien als <span class="fill-line"></span> setzen –
+   eine Zeile aus Unterstrichen wäre in Markdown eine Trennlinie (<hr>)
+   bzw. würde als Fettschrift gelesen und zerbricht die Nummerierung. */
+.fill-line {
+  display: inline-block; min-width: 12rem; max-width: 100%;
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--linie);
+  height: 1.35em; margin-bottom: -.25em;
+}
+.fill-line.breit { display: block; width: 100%; min-width: 0; height: 1.7em; }
+
+/* --- Pager & Fusszeile --------------------------------------------------- */
+
+.pager {
+  display: flex; gap: 0 1.5rem; flex-wrap: wrap;
+  margin: 2.6rem 0 3rem; border-top: var(--linie-b) solid var(--linie);
+}
+.pager a {
+  flex: 1 1 14rem; display: flex; flex-direction: column; gap: .15rem;
+  padding: .75rem .6rem .9rem; text-decoration: none; color: inherit;
+  border-radius: var(--radius-karte); font-size: .95rem; font-weight: 600;
+}
+.pager a:hover { background: var(--marker); color: var(--on-marker); }
+.pager a span { color: var(--text-muted); font-size: .72rem; }
+.pager a:hover span { color: inherit; }
+.pager-next { text-align: right; }
+
+.site-footer {
+  border-top: 2px solid var(--linie);
+  padding-block: 1.4rem 2.4rem;
+  color: var(--text-muted); font-size: .86rem;
+}
+.site-footer p { margin: 0 0 .25rem; }
+.footer-meta { font-family: var(--font-meta); font-size: .74rem; }
+
+/* --- 4. Druckansicht ----------------------------------------------------- */
+
+@media print {
+  :root {
+    --bg: #fff; --bg-elev: #fff; --text: #000; --text-muted: #333;
+    --border: #bbb; --border-strong: #666; --accent: #000; --accent-soft: #f2f2f2;
+    --marker: #f2f2f2; --on-marker: #000; --linie: #bbb; --linie-b: 1px;
+    --shadow: none; --hero-bg: none; --header-filter: none;
+    --radius-karte: 0; --radius-feld: 0; --radius-block: 0;
+    --radius-knopf: 0; --radius-marke: 0; --radius-code: 0; --radius-pill: 0;
+
+    /* Gedruckt wird in der Systemschrift: Die Arbeitsblätter sind auf deren
+       Laufweite hin umbrochen (Seitenwechsel, Einseiter). */
+    --font-body: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    --font-meta: var(--font-body); --font-display: var(--font-body);
+    --display-weight: 700; --label-weight: 700;
+  }
+  body { font-size: 11.5pt; line-height: 1.45; background: #fff; }
+  .site-header, .site-footer, .pager, .breadcrumb, .print-btn, .skip-link { display: none !important; }
+  .wrap, .wrap-narrow { width: 100%; }
+  .prose { max-width: none; }
+  .material-bar { margin-bottom: .8rem; }
+  .badge { border: 1px solid #999; background: none !important; color: #000 !important; }
+  .hinweis { border: 1px solid #999; background: none; }
+  .prose table { font-size: 10pt; page-break-inside: auto; border: 1px solid var(--border); }
+  .prose th { background: var(--accent-soft); border-bottom-color: var(--border); }
+  .prose code { font-weight: 400; }
+  .prose pre { border-color: var(--border); }
+  .prose .task-list-item input[type="checkbox"], .prose li > input[type="checkbox"] { border-color: var(--border-strong); }
+  .prose tr, .prose img { page-break-inside: avoid; }
+  .prose thead { display: table-header-group; }
+  .prose h1, .prose h2, .prose h3 { page-break-after: avoid; }
+  .prose td:empty::after { min-height: 2.2rem; }
+  .fill-line { border-bottom: 1px solid #444; }
+  a { color: #000; text-decoration: none; }
+}
+
+/* --- 5. Info-Kasten und Dossier ------------------------------------------ */
+/* Info-Kasten im Fliesstext (z. B. «Gut zu wissen») */
+.kasten {
+  margin: 1.2rem 0; padding: .8rem 1rem; border-radius: var(--radius-block);
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.kasten > :last-child { margin-bottom: 0; }
+
+/* Dossier: alle Unterlagen auf einer Seite */
+.dossier-teil { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 2px solid var(--border-strong); }
+.dossier-status { color: var(--text-muted); }
+.dossier-auswahl label { display: inline-flex; align-items: center; gap: .3rem; margin-right: .9rem; white-space: nowrap; }
+
+@media print {
+  .simulation { box-shadow: none; border: 1px dashed #888; padding: .4rem .7rem; }
+  .simulation > * { display: none !important; }
+  .simulation::before, .simulation:empty::before {
+    content: "Simulation – nur auf der Website verfügbar."; display: block;
+    font-style: italic; color: #333;
+  }
+  .kasten { background: none; border: 1px solid #999; }
+  .dossier-teil { page-break-before: always; border-top: 0; margin-top: 0; padding-top: 0; }
+  .dossier-steuerung { display: none !important; }
+  .prose ul.checkliste { column-count: 2; column-gap: 1.2em; }
+  .prose ul.mc-liste.kurz { column-count: 2; column-gap: 1.2em; }
+  .prose ul.mc-liste li { break-inside: avoid; }
+  .prose ul, .prose ol { padding-left: 1.3em; }
+  .prose li { margin-bottom: .05em; }
+  .luecke-feld { line-height: 1.15; padding-top: 0; padding-bottom: 0; }
+  .prose .task-list-item input[type="checkbox"], .prose li > input[type="checkbox"] { width: .75em; height: .75em; margin-right: .4em; vertical-align: -.08em; }
+  .prose ul.checkliste li { break-inside: avoid; margin-bottom: .15em; }
+  .prose li > input[type="checkbox"] { width: .8rem; height: .8rem; }
+}
+
+/* --- 6. Interaktive Übungen und kompakter Druck -------------------------- */
+/* Die Felder baut assets/js/uebungen.js aus den Platzhaltern span.luecke,
+   span.wahl, div.antwort und Task-Listen. Im Druck erscheinen sie als
+   Schreiblinien bzw. als Kästchen zum Ankreuzen. */
+
+.luecke-feld {
+  font: inherit; font-size: .95em; color: var(--text);
+  padding: .05rem .35rem; margin: .05rem 0;
+  border: 0; border-bottom: 1.5px solid var(--border-strong);
+  border-radius: 3px 3px 0 0; background: var(--accent-soft);
+  max-width: 100%; box-sizing: border-box; vertical-align: baseline;
+}
+select.luecke-feld { cursor: pointer; }
+/* Die aufgeklappte Liste übernimmt sonst den Hintergrund des Feldes. Ist er
+   durchscheinend (.falsch), legt der Browser ihn auf Weiss – im dunklen Modus
+   mit heller Schrift unlesbar. */
+select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
+.luecke-feld:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.luecke-voll { width: 100%; }
+.luecke-feld.richtig { border-bottom-color: var(--sus); background: var(--sus-soft); }
+.luecke-feld.falsch  { border-bottom-color: #c0392b; background: color-mix(in srgb, #c0392b 14%, transparent); }
+
+.wahl-gruppe { display: inline-flex; flex-wrap: wrap; gap: .25rem; border-radius: var(--radius-pill); }
+.chip {
+  font: inherit; font-size: .8rem; line-height: 1.3; cursor: pointer;
+  padding: .15rem .55rem; border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong); background: var(--bg-elev); color: var(--text);
+}
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg-elev); }
+.wahl-gruppe.richtig .chip[aria-pressed="true"]   { background: var(--sus); border-color: var(--sus); }
+.wahl-gruppe.teilweise .chip[aria-pressed="true"] { background: var(--lp); border-color: var(--lp); }
+.wahl-gruppe.falsch .chip[aria-pressed="true"]    { background: #c0392b; border-color: #c0392b; color: #fff; }
+
+.antwort { margin: .3rem 0 1rem; }
+.antwort-feld {
+  display: block; width: 100%; box-sizing: border-box;
+  font: inherit; line-height: 1.6; color: var(--text);
+  padding: .4rem .6rem; resize: vertical;
+  min-height: calc(var(--zeilen, 2) * 1.6em + .8rem);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-code); background: var(--bg-elev);
+}
+.antwort-feld:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.antwort-druck, .antwort-text, .optionen-druck, .nur-druck { display: none; }
+
+/* Lösungen (Easter Egg: «ockham» tippen oder 5× auf den Titel klicken) */
+.loesung-tag, .loesung-box { display: none; }
+.loesungen-an .loesung-tag {
+  display: inline-block; margin: 0 .3em; padding: 0 .4em; border-radius: var(--radius-code);
+  font-size: .8em; font-weight: 600; background: var(--sus-soft); color: var(--sus);
+  border: 1px dashed var(--sus);
+}
+.loesungen-an .loesung-tag::before { content: "\2713 "; }
+.loesungen-an .loesung-box, .loesung-offen > .loesung-box {
+  display: block; margin-top: .4rem; padding: .5rem .7rem; font-size: .9rem;
+  background: var(--sus-soft); border-left: 3px solid var(--sus); border-radius: var(--radius-code);
+}
+.loesungen-an .loesung-box::before, .loesung-offen > .loesung-box::before { content: "Musterlösung: "; font-weight: 700; color: var(--sus); }
+.loesung-box.ist-hinweis::before { content: "Hinweis: " !important; }
+
+/* Offene Fragen selbst kontrollieren: Wer etwas geschrieben hat, deckt die
+   Musterlösung auf und schätzt die eigene Antwort ein. Tipps in Stufen
+   (Liste mit {: .tipps}) deckt ein Knopf einzeln auf. */
+.vergleich-leiste { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .8rem; margin-top: .4rem; }
+.vergleich-knopf, .tipp-knopf {
+  font: inherit; font-size: .84rem; cursor: pointer;
+  padding: .22rem .75rem; border-radius: var(--radius-knopf);
+  border: 1px solid var(--accent); background: none; color: var(--accent);
+}
+.vergleich-knopf:hover:not(:disabled), .tipp-knopf:hover { background: var(--accent); color: var(--bg-elev); }
+.vergleich-knopf:disabled { cursor: default; border-color: var(--border-strong); color: var(--text-muted); }
+.vergleich-hinweis { font-size: .82rem; color: var(--text-muted); }
+.vergleich-urteil { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; margin-top: .45rem; font-size: .86rem; }
+.vergleich-urteil[hidden], .tipp-knopf[hidden] { display: none; }
+
+.prose ul.tipps, .prose ol.tipps {
+  list-style: none; counter-reset: tipp; margin: .8rem 0 .5rem; padding: .6rem .9rem;
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.prose .tipps > li { counter-increment: tipp; margin-bottom: .3rem; }
+.prose .tipps > li:last-child { margin-bottom: 0; }
+.prose .tipps > li::before { content: "Tipp " counter(tipp) ": "; font-weight: 700; }
+.prose .tipps.leer, .prose .tipps > li.zu { display: none; }
+.loesungen-an .prose .tipps.leer { display: block; }
+.loesungen-an .prose .tipps > li.zu { display: list-item; }
+.tipps-leiste { margin: .3rem 0 1rem; }
+.loesungen-an .chip.ist-loesung { box-shadow: 0 0 0 2px var(--sus); }
+.loesungen-an .chip.auch-loesung { box-shadow: 0 0 0 2px var(--sus); border-style: dashed; }
+.loesungen-an .prose li.ist-loesung, .loesungen-an li.ist-loesung { color: var(--sus); font-weight: 650; }
+#loesungen-banner {
+  position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 50;
+  padding: .5rem 1rem; border-radius: var(--radius-pill); font-size: .88rem; box-shadow: var(--shadow);
+  background: var(--bg-elev); border: 1px solid var(--border-strong); color: var(--text);
+  transition: opacity .4s;
+}
+#loesungen-banner.an { border-color: var(--sus); color: var(--sus); }
+#loesungen-banner.weg { opacity: 0; pointer-events: none; }
+
+.prose .mc-liste input, .prose .checkliste input { cursor: pointer; }
+.prose ul.mc-liste.richtig { box-shadow: -4px 0 0 var(--sus); }
+.prose ul.mc-liste.falsch  { box-shadow: -4px 0 0 #c0392b; }
+
+.pruefen-leiste { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; margin: .2rem 0 1.4rem; }
+.pruefen-knopf {
+  font: inherit; font-size: .86rem; font-weight: 600; cursor: pointer;
+  padding: .3rem .9rem; border-radius: var(--radius-knopf);
+  border: 1px solid var(--accent); background: var(--accent); color: var(--bg-elev);
+}
+.pruefen-knopf:hover { filter: brightness(1.1); }
+.pruefen-meldung { font-size: .88rem; }
+.pruefen-meldung.ok { color: var(--sus); font-weight: 700; }
+.pruefen-meldung.noch-nicht { color: var(--lp); }
+.eingaben-loeschen { margin-top: 2.2rem; font-size: .82rem; }
+.link-knopf { font: inherit; background: none; border: 0; padding: 0; color: var(--text-muted); text-decoration: underline; cursor: pointer; }
+
+.dossier-option { display: inline-flex; align-items: center; gap: .35rem; }
+
+/* Schema eines Ablaufs (.schema): Knoten in einer Reihe, dazwischen beschriftete Pfeile
+   (.schema-schritt), darunter ein gestrichelter Abzweig zum mittleren Knoten.
+   Auf schmalen Bildschirmen läuft die Reihe von oben nach unten, der Abzweig
+   steht daneben. Masse in em, damit das Schema im Druck mitschrumpft. */
+.schema {
+  display: grid; grid-template-columns: auto minmax(5em, 1fr) auto minmax(5em, 1fr) auto;
+  margin: 1.3em 0 1.4em; font-size: .9em; line-height: 1.3;
+}
+.schema-knoten {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3em;
+  padding: .6em .9em; border: var(--linie-b) solid var(--linie); background: var(--bg-elev);
+}
+.schema-knoten b { font-weight: 650; }
+.schema-knoten span { color: var(--text-muted); font-size: .9em; text-align: center; }
+.schema-schritt { display: grid; grid-template-rows: 1fr auto 1fr; text-align: center; font-size: .9em; }
+.schema-schritt b { grid-row: 1; align-self: end; padding: 0 .9em .3em .5em; font-weight: 650; }
+.schema-schritt span { grid-row: 3; padding: .3em .9em 0 .5em; color: var(--text-muted); }
+.schema-schritt strong { color: var(--text); }
+.schema-schritt::before {
+  content: ""; grid-area: 2 / 1; align-self: center; margin-right: .5em;
+  border-top: var(--linie-b) solid var(--linie);
+}
+.schema-schritt::after {
+  content: ""; grid-area: 2 / 1; justify-self: end;
+  border-left: .65em solid var(--linie); border-top: .35em solid transparent; border-bottom: .35em solid transparent;
+}
+/* Auf breiten Bildschirmen bleibt die Beschriftung eines Pfeils auf einer
+   Zeile: Die Pfeile sind gleich lang, solange der Text Platz hat. */
+@media screen and (min-width: 52rem) {
+  .schema:not(.schema-paar) { grid-template-columns: auto minmax(max-content, 1fr) auto minmax(max-content, 1fr) auto; }
+}
+.schema-abzweig {
+  grid-area: 2 / 2 / 3 / 5; justify-self: center; position: relative; margin-top: 1.1em;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: .4em .8em; border: var(--linie-b) dashed var(--border-strong); font-size: .9em;
+}
+.schema-abzweig b { font-weight: 650; }
+.schema-abzweig span { color: var(--text-muted); }
+.schema-abzweig::before {
+  content: ""; position: absolute; left: 50%; bottom: 100%; height: 1.2em;
+  border-left: var(--linie-b) dashed var(--border-strong);
+}
+/* Zwei kurze Reihen untereinander, deren Ergebnisse verglichen werden: Eine
+   Klammer fasst beide Reihen, rechts davon steht .schema-vergleich. Bleibt
+   auch auf schmalen Bildschirmen waagrecht; der Vergleich steht dort zwischen
+   den beiden Endknoten. */
+.schema-paar { grid-template-columns: auto minmax(5em, 1fr) auto auto; row-gap: .5em; max-width: 42em; }
+.schema-vergleich { grid-area: 1 / 4 / 3 / 5; display: flex; margin-left: .5em; font-weight: 650; white-space: nowrap; }
+.schema-vergleich::before { content: ""; width: .6em; margin-right: .7em; border: var(--linie-b) solid var(--linie); border-left: 0; }
+.schema-vergleich span { align-self: center; }
+@media screen and (max-width: 36rem) {
+  .schema:not(.schema-paar) { grid-template-columns: auto 1fr; justify-content: start; }
+  .schema:not(.schema-paar) > .schema-knoten, .schema:not(.schema-paar) > .schema-schritt { grid-column: 1; }
+  .schema:not(.schema-paar) > .schema-schritt { grid-template: auto auto / 2.6em 1fr; text-align: left; padding: .2em 0; min-height: 3em; }
+  .schema:not(.schema-paar) > .schema-schritt b { grid-area: 1 / 2; padding: .5em 0 0; }
+  .schema:not(.schema-paar) > .schema-schritt span { grid-area: 2 / 2; padding: 0 0 .7em; }
+  .schema:not(.schema-paar) > .schema-schritt::before { grid-area: 1 / 1 / 3 / 2; align-self: stretch; justify-self: center; margin: 0 0 .5em; border-top: 0; border-left: var(--linie-b) solid var(--linie); }
+  .schema:not(.schema-paar) > .schema-schritt::after {
+    grid-area: 1 / 1 / 3 / 2; align-self: end; justify-self: center;
+    border-top: .65em solid var(--linie); border-bottom: 0; border-left: .35em solid transparent; border-right: .35em solid transparent;
+  }
+  .schema-abzweig { grid-area: 3 / 2; justify-self: start; align-self: center; align-items: flex-start; text-align: left; margin: 0 0 0 1.1em; }
+  .schema-abzweig::before { left: auto; right: 100%; bottom: 50%; height: 0; width: 1.2em; border-left: 0; border-top: var(--linie-b) dashed var(--border-strong); }
+  .schema-paar { grid-template-columns: auto minmax(7.8em, 1fr) auto; row-gap: 0; }
+  .schema-vergleich { grid-area: auto; grid-column: 3; justify-content: center; margin: 0; padding: .15em 0; }
+  .schema-vergleich::before { display: none; }
+  .schema-paar .schema-knoten { padding: .5em .4em; text-align: center; }
+  .schema-paar .schema-schritt { grid-template-rows: auto auto auto; align-content: center; }
+  .schema-paar .schema-schritt b, .schema-paar .schema-schritt span { padding-left: .2em; padding-right: .7em; }
+}
+
+@media print {
+  @page { size: A4; margin: 11mm 13mm 12mm; }
+  body { font-size: 9.6pt; line-height: 1.3; }
+  .prose h1 { font-size: 15pt; margin: 0 0 .35em; }
+  .prose h2 { font-size: 11.5pt; margin: .75em 0 .3em; padding-bottom: .1em; }
+  .prose h3 { font-size: 10.5pt; margin: .55em 0 .15em; }
+  .prose h4 { font-size: 10pt; margin: .5em 0 .2em; }
+  .prose p, .prose ul, .prose ol { margin: 0 0 .35em; }
+  .prose li { margin-bottom: .1em; }
+  .prose blockquote { margin: .35em 0; padding: 0 0 0 .7em; }
+  .prose pre { font-size: 8pt; padding: .35em .5em; margin: .3em 0; }
+  .prose table { font-size: 8.5pt; }
+  .prose th, .prose td { padding: .18em .4em; }
+  .table-scroll { margin: 0 0 .5em; overflow: visible; }
+  .kasten { padding: .3em .6em; margin: .45em 0; }
+  .material-bar, .hinweis, .pruefen-leiste, .eingaben-loeschen, .dossier-steuerung { display: none !important; }
+  /* Selbstkontrolle und Tipps gibt es nur am Bildschirm. Eine einzeln
+     aufgedeckte Musterlösung wird nicht gedruckt – nur der Lösungsschlüssel
+     (alle Lösungen eingeblendet). */
+  .vergleich-leiste, .vergleich-urteil, .tipps-leiste, .prose ul.tipps, .prose ol.tipps { display: none !important; }
+  html:not(.loesungen-an) .loesung-offen > .loesung-box { display: none; }
+  .simulation, .simulation:empty { display: none !important; }
+
+  /* «Ziel» als eine Zeile statt Überschrift + Absatz */
+  .prose h2#ziel { display: none; }
+  .prose h2#ziel + p { font-style: italic; margin-bottom: .5em; }
+  .prose h2#ziel + p::before { content: "Ziel: "; font-weight: 700; font-style: normal; }
+
+  /* Felder als Schreiblinien */
+  .luecke-feld {
+    background: none !important; color: #000; border: 0; border-bottom: 1px solid #444;
+    border-radius: 0; padding: 0 .15em; -webkit-appearance: none; appearance: none;
+  }
+  /* Auswahl-Chips werden auf Papier zu Kästchen zum Ankreuzen; was am
+     Bildschirm schon gewählt wurde, ist angekreuzt. Das Kreuz ist ein
+     Schriftzeichen, weil Browser Hintergrundfarben oft nicht drucken. */
+  .wahl-gruppe { display: inline-grid; grid-template-columns: repeat(2, auto); gap: .15em 1.2em; justify-items: start; }
+  .chip {
+    font-size: 8pt; padding: 0; white-space: nowrap;
+    background: none !important; color: #000 !important; border: 0 !important;
+  }
+  .chip::before {
+    content: ""; display: inline-block; box-sizing: border-box;
+    width: 2.8mm; height: 2.8mm; margin: -.4mm 1.1mm 0 0; vertical-align: middle; overflow: hidden;
+    border: .25mm solid #000;
+    font-size: 9pt; font-weight: 700; line-height: 2.2mm; text-align: center;
+  }
+  .chip[aria-pressed="true"]::before,
+  .loesungen-an .chip.ist-loesung::before,
+  .loesungen-an .chip.auch-loesung::before { content: "\00D7"; }
+  .loesungen-an .chip.ist-loesung, .loesungen-an .chip.auch-loesung { box-shadow: none; font-weight: 700; }
+  .loesungen-an .chip.auch-loesung::before { border-style: dashed; }
+  .antwort { margin: 0 0 .4em; }
+  .antwort-feld { display: none !important; }
+  .antwort-druck { display: block; }
+  .antwort.hat-text .antwort-druck { display: none; }
+  .antwort.hat-text .antwort-text { display: block; white-space: pre-wrap; border-bottom: 1px solid #888; padding: .1em 0 .2em; }
+  .fill-line, .fill-line.breit { border-bottom-color: #888; }
+  .fill-line.breit { height: 6.2mm; }
+  .nur-online { display: none !important; }
+  .nur-druck { display: block; }
+  .optionen-druck { display: inline; font-size: 7.5pt; color: #444; margin-left: .2em; white-space: nowrap; }
+  #loesungen-banner { display: none !important; }
+  /* Mit eingeblendeten Lösungen druckt man einen Lösungsschlüssel */
+  .loesungen-an .loesung-tag, .loesungen-an .loesung-box { background: none !important; color: #000 !important; border-color: #000 !important; }
+  .loesungen-an .loesung-box { font-size: 8.5pt; padding: .2em .5em; }
+  .prose ul.mc-liste, .prose ul.checkliste { box-shadow: none; }
+  /* Die Trennlinie zwischen zwei Unterlagen ist kräftig und schwarz, damit
+     man sie nicht mit einer Schreiblinie verwechselt. */
+  .dossier-teil { page-break-before: auto; margin-top: 1.1em; padding-top: .7em; border-top: 1.5pt solid #000; }
+  .dossier-teil.dossier-lektion, .dossier-neue-seite .dossier-teil { page-break-before: always; margin-top: 0; padding-top: 0; border-top: 0; }
+  .dossier-intro { display: none; }
+  #dossier-inhalt > section:not([hidden]) ~ section .dossier-lektion { page-break-before: always; }
+  #dossier-inhalt > section:first-of-type .dossier-lektion { page-break-before: avoid; }
+  /* Dossier als leere Vorlage: Was am Bildschirm schon ausgefüllt ist, bleibt
+     auf Papier weg (ausser die Option «Eigene Eingaben mitdrucken» ist an).
+     Eingeblendete Lösungen werden weiterhin gedruckt. Der Einzug schiebt den
+     Text der Lücken aus dem Feld, damit er auch in einem gespeicherten PDF
+     nicht als unsichtbarer Text steckt. */
+  .dossier-leer .luecke-feld {
+    color: transparent; -webkit-text-fill-color: transparent; border-bottom-color: #444;
+    text-indent: -999em; overflow: hidden;
+  }
+  .dossier-leer .chip[aria-pressed="true"]::before { content: ""; }
+  .loesungen-an .dossier-leer .chip.ist-loesung::before,
+  .loesungen-an .dossier-leer .chip.auch-loesung::before { content: "\00D7"; }
+  .dossier-leer .antwort.hat-text .antwort-druck { display: block; }
+  .dossier-leer .antwort.hat-text .antwort-text { display: none; }
+  /* Listen mit Kästchen: hängender Einzug. Das Kästchen steht bündig am
+     linken Rand (auch in zwei Spalten), umbrochene Zeilen stehen unter dem
+     Text. Kästchen plus Abstand ergeben genau den Einzug von 1.5em. */
+  .prose .task-list-item,
+  .prose li:has(> input[type="checkbox"]) {
+    margin-left: -1.3em; padding-left: 1.5em; text-indent: -1.5em; break-inside: avoid;
+  }
+  .prose li:has(> input[type="checkbox"]) > * { text-indent: 0; }
+  .prose .task-list-item input[type="checkbox"],
+  .prose li > input[type="checkbox"] {
+    width: .9em; height: .9em; margin: 0 .6em 0 0; vertical-align: -.1em;
+    border: .25mm solid #000; background: none;
+  }
+  .prose li > input[type="checkbox"]:checked { background: none; border-color: #000; }
+  .prose li > input[type="checkbox"]:checked::after { content: "\00D7"; color: #000; font-size: 9pt; font-weight: 700; line-height: .7; }
+  .dossier-leer li > input[type="checkbox"]:checked::after { content: none; }
+  .prose ul.checkliste, .prose ul.mc-liste.kurz { column-gap: 2em; }
+  .prose ul.checkliste { break-inside: avoid; }
+  .prose p:has(+ ul.checkliste) { break-after: avoid; }
+
+  /* Was zusammengehört, bleibt auf einer Seite: Frage und Schreiblinien,
+     Titel und erster Absatz, Kästen, Zitate und Schemas. */
+  .antwort { break-inside: avoid; break-before: avoid; }
+  .prose h4, .prose h1 + p { break-after: avoid; }
+  .prose pre, .prose blockquote, .kasten, .schema { break-inside: avoid; }
+  .schema { margin: .45em 0 .55em; max-width: 50em; }
+  .schema-knoten { padding: .25em .8em; background: none; }
+  .schema-schritt b { padding-bottom: .15em; }
+  .schema-schritt span { padding-top: .15em; }
+  .schema-knoten, .schema-abzweig, .schema-abzweig::before, .schema-schritt::before, .schema-vergleich::before { border-color: #000; }
+  .schema-schritt::after { border-left-color: #000; }
+  .schema-schritt span, .schema-abzweig span, .schema-knoten span { color: #444; }
+  .schema-schritt strong { color: #000; }
+  .schema-paar { max-width: 38em; row-gap: .35em; }
+  .schema-abzweig { margin-top: .8em; padding: .25em .7em; }
+  .schema-abzweig::before { height: .9em; }
+
+  /* Die Kopfzeile einer Tabelle ist gleich gross wie ihre Zeilen – oft ist
+     sie selbst Inhalt (Klartext über Schlüssel und Geheimtext). */
+  .prose th { font-size: inherit; }
+}
+
+/* --- 7. Lektionsuhr ------------------------------------------------------ */
+/* assets/js/lektionsuhr.js liest die Richtzeiten aus dem Ablauf der
+   Lektionsseite und zeigt auf jeder Seite, was nach Plan dran ist: als Leiste
+   am unteren Rand und als Uhrzeiten im Ablauf. Die Leiste steht am Ende der
+   Seite und bleibt beim Scrollen am Fensterrand stehen. */
+
+.lektionsuhr {
+  position: sticky; bottom: 0; z-index: 40;
+  background: var(--bg-elev); border-top: 2px solid var(--linie);
+  font-size: .88rem; line-height: 1.4;
+}
+.lu-innen {
+  width: var(--wrap); margin-inline: auto;
+  display: flex; align-items: center; flex-wrap: wrap; gap: .2rem .9rem;
+  padding-block: .4rem;
+}
+.lu-marke, .lu-titel {
+  font-family: var(--font-meta); font-weight: var(--label-weight);
+  letter-spacing: var(--label-tracking); text-transform: var(--label-transform);
+}
+.lu-marke {
+  padding: .08rem .5rem; font-size: .7rem; white-space: nowrap;
+  background: var(--text); color: var(--bg); text-decoration: none;
+}
+.lu-text { flex: 1 1 16rem; min-width: 0; }
+.lu-text strong { font-family: var(--font-mono); font-weight: 500; white-space: nowrap; }
+.lu-rest { color: var(--text-muted); white-space: nowrap; }
+.lu-weiter { font-weight: 600; white-space: nowrap; }
+.lu-zu {
+  width: 1.9rem; height: 1.9rem; margin-left: auto; padding: 0; cursor: pointer;
+  font: inherit; font-size: 1.15rem; line-height: 1;
+  background: none; border: 0; color: inherit;
+}
+.lu-zu:hover { background: var(--accent-soft); }
+/* Handy: Etikett, Link und Schliessen in einer Zeile, der Text darunter. */
+@media (max-width: 36rem) {
+  .lu-weiter { order: 1; margin-left: auto; }
+  .lu-zu { order: 2; }
+  .lu-weiter + .lu-zu { margin-left: 0; }
+  .lu-text { order: 3; flex-basis: 100%; }
+}
+
+/* Die Zeit des Schritts ist um, und der nächste hat eine eigene Unterlage:
+   Die ganze Leiste bekommt den Leuchtstift. */
+.lektionsuhr.um { background: var(--marker); color: var(--on-marker); }
+.lektionsuhr.um a { color: inherit; }
+.lektionsuhr.um .lu-marke { background: var(--on-marker); color: var(--marker); }
+.lektionsuhr.um .lu-zu:hover { background: color-mix(in srgb, var(--on-marker) 14%, transparent); }
+.lektionsuhr.um :focus-visible { outline-color: var(--on-marker); }
+
+/* Die Meldung «Lösungen eingeblendet» rückt über die Leiste. */
+.hat-lektionsuhr #loesungen-banner { bottom: 4rem; }
+
+/* Im Ablauf der Lektionsseite: Stand der Uhr über der Liste, Uhrzeit hinter
+   jeder Richtzeit, der aktuelle Schritt im Leuchtstift. */
+.ablauf .lu-steuerung {
+  margin: 0 0 1rem; font-family: var(--font-meta); font-size: .76rem; color: var(--text-muted);
+}
+.lu-titel { margin-right: .3em; color: var(--text); cursor: help; }
+.lu-knopf {
+  font: inherit; padding: 0; cursor: pointer;
+  background: none; border: 0; color: inherit; text-decoration: underline;
+}
+.lu-knopf:hover { color: var(--text); }
+.lu-zeit {
+  margin-left: .5em; padding-inline: .35em;
+  font-family: var(--font-meta); font-size: .76em; color: var(--text-muted); white-space: nowrap;
+}
+.ablauf ol > li.lu-jetzt::before,
+.ablauf ol > li.lu-jetzt .lu-zeit { background: var(--marker); color: var(--on-marker); }
+.ablauf ol > li.lu-vorbei::before { border-color: var(--border-strong); color: var(--text-muted); }
+
+@media print {
+  .lektionsuhr, .lu-steuerung, .lu-zeit { display: none !important; }
+  .ablauf ol > li.lu-jetzt::before { background: none; }
+}
+
+/* --- 8. Simulationen, Messtabellen, Schaubilder -------------------------- */
+/* Die Bausteine baut assets/js/simulation.js in leere Platzhalter
+   (div.simulation, div.messtabelle, div.schaubild). Alle Farben kommen aus den
+   Variablen von Abschnitt 2; die Leinwand liest sie beim Zeichnen aus. */
+
+.simulation {
+  margin: 1.4rem 0; padding: .9rem 1rem 1rem;
+  border: var(--linie-b) solid var(--linie); background: var(--bg-elev);
+}
+.simulation:empty::before { content: "Simulation wird geladen …"; color: var(--text-muted); font-size: .9rem; }
+.sim-leinwand { display: block; width: 100%; height: auto; background: var(--bg-elev); }
+.sim-status {
+  margin: .6rem 0 .5rem; min-height: 2.6em;
+  font-family: var(--font-meta); font-size: .82rem; line-height: 1.3; color: var(--text);
+}
+.sim-knoepfe { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .9rem; }
+.sim-knopf {
+  font: inherit; font-size: .86rem; font-weight: 600; cursor: pointer;
+  padding: .35rem .9rem; border-radius: var(--radius-knopf);
+  border: 1px solid var(--accent); background: var(--bg-elev); color: var(--text);
+}
+.sim-knopf.haupt { background: var(--accent); color: var(--bg-elev); }
+.sim-knopf:hover { background: var(--marker); border-color: var(--marker); color: var(--on-marker); }
+.sim-knopf:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.sim-reglerfeld { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .7rem 1.6rem; }
+.sim-regler { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: .1rem .6rem; }
+.sim-regler label { font-size: .86rem; font-weight: 600; }
+.sim-regler output { font-family: var(--font-meta); font-size: .82rem; white-space: nowrap; }
+.sim-regler input[type="range"] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--accent); }
+
+/* Messtabelle: von Hand ausgefüllt oder von einer Simulation geschrieben */
+.messtabelle { margin: 1.1rem 0; }
+.prose .messtabelle table.messwerte { width: auto; min-width: min(100%, 22rem); margin-bottom: .3rem; }
+.prose .messwerte th, .prose .messwerte td { padding: .3rem .7rem; }
+.prose .messwerte td { font-family: var(--font-meta); font-size: .86rem; }
+.prose .messwerte .messwerte-nr { width: 2.6rem; color: var(--text-muted); }
+.prose .messwerte .messwerte-weg { width: 1.6rem; text-align: center; }
+.prose .messwerte .messwerte-leer { font-family: var(--font-body); color: var(--text-muted); font-size: .88rem; }
+.messwerte-feld { width: 7rem; }
+.messwerte-weg .link-knopf { text-decoration: none; font-size: 1rem; line-height: 1; padding: 0 .3rem; }
+.messwerte-weg .link-knopf:hover { color: var(--text); background: var(--marker); }
+.sim-leiste { margin: 0 0 1rem; font-size: .82rem; }
+
+/* Schaubild */
+.schaubild { margin: 1.2rem 0 1.4rem; }
+.schaubild-figur { margin: 0; padding: .6rem .6rem .3rem; border: 1px solid var(--border); background: var(--bg-elev); }
+.schaubild-figur svg { display: block; width: 100%; height: auto; }
+.schaubild svg .raster { stroke: var(--border); stroke-width: 1; }
+.schaubild svg .achse  { stroke: var(--text); stroke-width: 1.5; }
+.schaubild svg .marke  { font-family: var(--font-meta); font-size: 11px; fill: var(--text-muted); }
+.schaubild svg .titel  { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; fill: var(--text); }
+.schaubild svg .leer   { font-family: var(--font-body); font-size: 13px; fill: var(--text-muted); }
+.schaubild svg .punkt  { fill: var(--text); fill-opacity: .55; stroke: var(--bg-elev); stroke-width: 1; }
+.schaubild svg .mittel { stroke: var(--text); stroke-width: 3; }
+.schaubild svg .kurve  { fill: none; stroke: var(--text); stroke-width: 1.75; }
+.schaubild-hinweis { margin: .2rem 0 .2rem; font-size: .8rem; color: var(--text-muted); }
+.schaubild-wahl { display: flex; flex-direction: column; gap: .25rem; margin-top: .5rem; font-size: .88rem; }
+.schaubild-kurve { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem .45rem; cursor: pointer; }
+.schaubild-muster { width: 34px; height: 10px; flex: none; }
+.schaubild-muster .kurve { fill: none; stroke: var(--text); stroke-width: 1.75; }
+.schaubild-abw { color: var(--text-muted); font-family: var(--font-meta); font-size: .8rem; }
+
+/* Regeln eines Modells als Programmcode zum Aufklappen */
+.prose details.regeln { margin: 1rem 0 1.3rem; border: 1px solid var(--border); background: var(--bg-elev); }
+.prose details.regeln > summary { cursor: pointer; padding: .5rem .8rem; font-weight: 600; font-size: .92rem; }
+.prose details.regeln > summary:hover { background: var(--marker); color: var(--on-marker); }
+.prose details.regeln > :not(summary) { margin-left: .8rem; margin-right: .8rem; }
+
+@media print {
+  .simulation { border: 1px dashed #888; background: none; padding: .4rem .7rem; }
+  .sim-leiste, .schaubild-wahl input, .messwerte-weg { display: none !important; }
+  .schaubild-figur { border-color: #999; break-inside: avoid; }
+  .schaubild svg .punkt { fill: #000; fill-opacity: 1; }
+  .prose details.regeln { break-inside: avoid; }
+}

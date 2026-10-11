@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.titel %}{{ page.titel }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.kurz | default: site.description | strip_html }}">
+  {%- if page.noindex %}
+  <meta name="robots" content="noindex, nofollow">
+  {%- endif %}
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="{{ '/assets/css/unterricht.css' | relative_url }}">
+  {%- comment -%} Simulationen, Messtabellen und Schaubilder (nur aktiv, wo ein solches Element steht) {%- endcomment -%}
+  <script src="{{ '/assets/js/simulation.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/sim-brown.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/uebungen.js' | relative_url }}" defer></script>
+  {%- comment -%} Lektionsuhr (nur mit "lektionsuhr: true" in _config.yml): zeigt, wann der nächste Schritt der Lektion spätestens beginnt {%- endcomment -%}
+  {%- if site.lektionsuhr %}
+  <script src="{{ '/assets/js/lektionsuhr.js' | relative_url }}" defer></script>
+  {%- endif %}
+  {%- comment -%} Besucherstatistik (nur mit "goatcounter" in _config.yml): zählt Aufrufe ohne Cookies; lokale Vorschauen zählt das Skript von sich aus nicht mit {%- endcomment -%}
+  {%- if site.goatcounter %}
+  <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  {%- endif %}
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127922;</text></svg>">
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Direkt zum Inhalt</a>
+
+  {%- assign lektionen = site.pages | where: "layout", "lektion" | sort: "lektion" -%}
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <span class="brand-icon" aria-hidden="true">&#127922;</span>
+        <span class="brand-text">
+          <strong>{{ site.title }}</strong>
+          <small>{{ site.untertitel }}</small>
+        </span>
+      </a>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="Hauptnavigation">
+          {%- for l in lektionen %}
+          <a href="{{ l.url | relative_url }}"{% if page.url == l.url %} aria-current="page"{% endif %} title="Lektion {{ l.lektion }}: {{ l.titel }}">{{ l.lektion | prepend: "0" | slice: -2, 2 }}</a>
+          {%- endfor %}
+          {%- comment -%} Zusatzeinträge aus _config.yml (hauptnav), z. B. Werkzeuge oder Glossar {%- endcomment -%}
+          {%- if site.hauptnav %}
+          <span class="nav-trenner" aria-hidden="true">|</span>
+          {%- for n in site.hauptnav %}
+          <a class="nav-text" href="{{ n.url | relative_url }}"{% if page.url == n.url %} aria-current="page"{% endif %}>{{ n.titel }}</a>
+          {%- endfor %}
+          {%- endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="inhalt">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>{{ site.title }} – {{ site.untertitel }} · {{ site.schule }}</p>
+      <p class="footer-meta">&copy; {{ site.time | date: "%Y" }} masta · zuletzt aktualisiert am {{ site.time | date: "%d.%m.%Y" }}</p>
+      {%- if site.goatcounter %}
+      <p class="footer-meta">Diese Seite zählt Aufrufe anonym, ohne Cookies und ohne gespeicherte IP-Adressen (<a href="https://www.goatcounter.com/help/privacy">GoatCounter</a>).</p>
+      {%- endif %}
+    </div>
+  </footer>
+
+  <script>
+    // 1) Breite Tabellen auf schmalen Bildschirmen horizontal scrollbar machen.
+    document.querySelectorAll('.prose table').forEach(function (t) {
+      var box = document.createElement('div');
+      box.className = 'table-scroll';
+      t.parentNode.insertBefore(box, t);
+      box.appendChild(t);
+    });
+
+    // 2) Fallback: Sollte der Markdown-Konverter Task-Listen einmal nicht als
+    //    Checkbox rendern, sondern als Text "[ ] …", hier nachträglich umwandeln.
+    document.querySelectorAll('.prose li').forEach(function (li) {
+      var first = li.firstChild;
+      if (!first || first.nodeType !== 3) return;
+      var m = first.nodeValue.match(/^\s*\[( |x|X)\]\s+/);
+      if (!m) return;
+      first.nodeValue = first.nodeValue.slice(m[0].length);
+      var box = document.createElement('input');
+      box.type = 'checkbox';
+      box.disabled = true;
+      if (m[1] !== ' ') box.checked = true;
+      li.classList.add('task-list-item');
+      li.insertBefore(document.createTextNode(' '), first);
+      li.insertBefore(box, li.firstChild);
+    });
+
+    // 3) Ausfülllinien (____) in echte Schreiblinien umwandeln – sie passen sich
+    //    der Spaltenbreite an und sehen im Druck sauber aus.
+    (function () {
+      var root = document.querySelector('.prose');
+      if (!root) return;
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+      var nodes = [], n;
+      while ((n = walker.nextNode())) { if (/_{4,}/.test(n.nodeValue)) nodes.push(n); }
+      nodes.forEach(function (node) {
+        var frag = document.createDocumentFragment();
+        var parts = node.nodeValue.split(/(_{4,})/);
+        parts.forEach(function (p) {
+          if (/^_{4,}$/.test(p)) {
+            var s = document.createElement('span');
+            s.className = 'fill-line';
+            frag.appendChild(s);
+          } else if (p) {
+            frag.appendChild(document.createTextNode(p));
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
+    })();
+
+    // 4) Externe Links öffnen in einem neuen Tab. Erst beim Klick gesetzt, damit
+    //    es auch für nachgeladene Inhalte gilt (Dossier, Werkzeuge).
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest && ev.target.closest('a[href]');
+      if (a && /^https?:$/.test(a.protocol) && a.host !== location.host) { a.target = '_blank'; a.rel = 'noopener'; }
+    });
+  </script>
+</body>
+</html>

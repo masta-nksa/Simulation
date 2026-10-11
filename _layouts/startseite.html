@@ -1,0 +1,51 @@
+---
+layout: default
+---
+{%- assign lektionen = site.pages | where: "layout", "lektion" | sort: "lektion" -%}
+
+<div class="hero">
+  <div class="wrap">
+    <h1>{{ site.title }}</h1>
+    {%- comment -%}
+      Signet: Zeichenleiste unter dem Titel, gefüllt aus _config.yml (signet).
+      Jede Zeile ist ein Etikett und eine Zeichenfolge; fehlt der Eintrag,
+      entfällt die Leiste.
+    {%- endcomment -%}
+    {%- if site.signet %}
+    <div class="signet" style="--n: {{ site.signet.zeilen.first.zeichen | size }}" role="img" aria-label="{{ site.signet.text }}">
+      {%- for zeile in site.signet.zeilen %}
+      <div class="signet-zeile{% if zeile.markiert %} markiert{% endif %}">
+        <span class="signet-label">{{ zeile.label }}</span>
+        {%- assign zeichen = zeile.zeichen | split: "" -%}
+        {%- for z in zeichen -%}
+        <span class="signet-zelle">{{ z }}</span>
+        {%- endfor %}
+      </div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+    <div class="prose hero-text">
+      {{ content }}
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <h2 class="section-title">{{ lektionen.size }} Lektionen</h2>
+  <ol class="lektion-list">
+    {%- for l in lektionen %}
+    <li>
+      <a href="{{ l.url | relative_url }}">
+        <span class="lektion-nr">{{ l.lektion | prepend: "0" | slice: -2, 2 }}</span>
+        <span class="lektion-body">
+          <strong>{{ l.titel }}</strong>
+          <span class="lektion-kurz">{{ l.kurz }}</span>
+        </span>
+        <span class="lektion-stichwort">{{ l.stichwort }}<span class="lektion-pfeil" aria-hidden="true">&rarr;</span></span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ol>
+
+</div>

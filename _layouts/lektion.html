@@ -1,0 +1,66 @@
+---
+layout: default
+---
+{%- comment -%}
+  Lektionsseite aus SuS-Sicht: Ablauf (aus dem Seiteninhalt) und die Unterlagen
+  dieser Lektion. Material der Lehrperson und Musterlösungen erscheinen hier
+  bewusst nicht – sie sind über /LP/ bzw. /lsg/ erreichbar.
+{%- endcomment -%}
+{%- assign material  = site.pages | where: "typ", "material" | where: "lektion", page.lektion | sort: "reihenfolge" -%}
+{%- assign fuer_sus  = material | where: "zielgruppe", "sus" -%}
+{%- assign lektionen = site.pages | where: "layout", "lektion" | sort: "lektion" -%}
+
+<div class="wrap">
+
+  <nav class="breadcrumb" aria-label="Sie sind hier">
+    <a href="{{ '/' | relative_url }}">Übersicht</a> <span aria-hidden="true">/</span> Lektion {{ page.lektion }}
+  </nav>
+
+  <header class="lektion-header">
+    <p class="eyebrow">Lektion {{ page.lektion | prepend: "0" | slice: -2, 2 }}</p>
+    <h1>{{ page.titel }}</h1>
+    <p class="lead">{{ page.kurz }}</p>
+  </header>
+
+  {%- if content != "" %}
+  <section class="material-block block-ablauf">
+    <h2><span class="block-icon" aria-hidden="true">&#128203;</span> Ablauf</h2>
+    {%- comment -%} data-lektion: Daran erkennt die Lektionsuhr (lektionsuhr.js) den Ablauf mit den Richtzeiten. {%- endcomment %}
+    <div class="prose ablauf" data-lektion="{{ page.lektion }}">
+      {{ content }}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if fuer_sus.size > 0 %}
+  <section class="material-block block-sus">
+    <h2><span class="block-icon" aria-hidden="true">&#9997;</span> Unterlagen</h2>
+    <p class="block-hint">Diese Unterlagen brauchen Sie in dieser Lektion.</p>
+    <ul class="card-list">
+      {%- for m in fuer_sus %}
+      <li class="card">
+        <a href="{{ m.url | relative_url }}">
+          <span class="badge badge-{{ m.art }}">{{ site.art_labels[m.art] }}</span>
+          <strong>{{ m.titel }}</strong>
+          <span class="card-kurz">{{ m.kurz }}</span>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+
+  {%- assign nr_prev = page.lektion | minus: 1 -%}
+  {%- assign nr_next = page.lektion | plus: 1 -%}
+  {%- assign vorige   = lektionen | where: "lektion", nr_prev | first -%}
+  {%- assign naechste = lektionen | where: "lektion", nr_next | first -%}
+  <nav class="pager" aria-label="Weitere Lektionen">
+    {%- if vorige %}
+    <a class="pager-prev" href="{{ vorige.url | relative_url }}"><span>&larr; Lektion {{ vorige.lektion }}</span>{{ vorige.titel }}</a>
+    {%- endif %}
+    {%- if naechste %}
+    <a class="pager-next" href="{{ naechste.url | relative_url }}"><span>Lektion {{ naechste.lektion }} &rarr;</span>{{ naechste.titel }}</a>
+    {%- endif %}
+  </nav>
+
+</div>

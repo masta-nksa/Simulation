@@ -115,7 +115,11 @@
     var tbody = el("tbody");
     tabelle.append(thead, tbody);
     var leiste = el("p", { class: "sim-leiste" });
-    kasten.append(tabelle, leiste);
+    // Breite Tabellen auf schmalen Bildschirmen scrollbar machen (das Layout
+    // erledigt das nur für Tabellen, die schon im Markdown stehen).
+    var rolle = el("div", { class: "table-scroll" });
+    rolle.appendChild(tabelle);
+    kasten.append(rolle, leiste);
 
     function zeichneFest() {
       var zeilen = Daten.lesen(id);

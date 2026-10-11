@@ -53,39 +53,39 @@ damit vergleichen, sobald Sie selbst etwas geschrieben haben.
 
 ## Steckbrief 2 – Stau
 
-*Ausfüllen nach: Lektionen 3 und 4*
+*Ausfüllen nach: Lektion 4*
 
 **Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Den Verkehr auf einer einspurigen Strasse ohne Hindernis – und wie darin Staus aus dem Nichts entstehen."></div>
 
 **Akteure** – Wer oder was handelt im Modell?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Autos. Jedes steht für ein Fahrzeug samt Fahrerin oder Fahrer."></div>
 
 **Regeln** – Nach welchen Regeln verhalten sich die Akteure?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Vier Regeln pro Zeitschritt, für alle gleichzeitig: beschleunigen (Tempo + 1 bis zum Höchsttempo), bremsen (höchstens so schnell wie die Lücke gross ist), trödeln (mit einer festen Wahrscheinlichkeit Tempo − 1), fahren (um das Tempo vorrücken)."></div>
 
 **Parameter** – Was lässt sich einstellen?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Anzahl Autos (Dichte), Höchsttempo, Trödelwahrscheinlichkeit."></div>
 
 **Zufall** – Wo spielt der Zufall mit?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Bei den Startpositionen und Starttempi und in jedem Zeitschritt beim Trödeln."></div>
 
 **Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Der Verkehrsfluss in Fahrzeugen pro Stunde an einer Messstelle, dazu das mittlere Tempo – in Abhängigkeit von der Dichte."></div>
 
 **Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Spurwechsel, Auffahrten und Ausfahrten, verschiedene Fahrzeugtypen, Steigungen und Kurven, Wetter, unterschiedliche Fahrstile."></div>
 
 **Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Mit Ringversuchen (Staus entstehen ohne Hindernis und wandern rückwärts – stimmt) und mit Zähldaten von Autobahnen (grösster Fluss bei etwa 85 km/h – im Modell stimmt der Verlauf, die Zahl nicht)."></div>
 
 ## Steckbrief 3 – Segregation
 

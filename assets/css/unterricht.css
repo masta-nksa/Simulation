@@ -1062,6 +1062,7 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 
 /* Messtabelle: von Hand ausgefüllt oder von einer Simulation geschrieben */
 .messtabelle { margin: 1.1rem 0; }
+.messtabelle .table-scroll { margin-bottom: .3rem; }
 .prose .messtabelle table.messwerte { width: auto; min-width: min(100%, 22rem); margin-bottom: .3rem; }
 .prose .messwerte th, .prose .messwerte td { padding: .3rem .7rem; }
 .prose .messwerte td { font-family: var(--font-meta); font-size: .86rem; }
@@ -1091,6 +1092,28 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .schaubild-muster { width: 34px; height: 10px; flex: none; }
 .schaubild-muster .kurve { fill: none; stroke: var(--text); stroke-width: 1.75; }
 .schaubild-abw { color: var(--text-muted); font-family: var(--font-meta); font-size: .8rem; }
+
+/* Zweite Statuszeile einer Simulation: Ergebnis einer Messung */
+.sim-meldung { min-height: 0; margin-top: -.4rem; color: var(--sus); }
+.sim-meldung:empty { display: none; }
+
+/* Regel-Trainer (Modell «stau-regeln»): Strasse aus Zellen, darunter die
+   Eingaben für das markierte Auto */
+.rt-kopf { margin: 0 0 .5rem; font-family: var(--font-meta); font-size: .78rem; font-weight: var(--label-weight); text-transform: var(--label-transform); letter-spacing: var(--label-tracking); }
+.rt-strasse { display: grid; gap: .25rem; margin: 0 0 .8rem; overflow-x: auto; padding-bottom: .2rem; }
+.rt-zeile { display: grid; grid-template-columns: 6.2rem repeat(20, minmax(1.25rem, 1fr)); min-width: 31.5rem; }
+.rt-label { align-self: center; font-family: var(--font-meta); font-size: .72rem; color: var(--text-muted); }
+.rt-zelle {
+  height: 1.75rem; line-height: 1.75rem; text-align: center; margin-left: -1px;
+  border: 1px solid var(--border); font-family: var(--font-mono); font-size: .86rem; color: var(--text-muted);
+}
+.rt-zelle.auto { border-color: var(--text); color: var(--text); font-weight: 600; position: relative; }
+.rt-zelle.dran { background: var(--marker); color: var(--on-marker); }
+.rt-lage { margin: 0 0 .7rem; font-family: var(--font-meta); font-size: .82rem; line-height: 1.45; }
+.rt-felder { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; margin: 0 0 .8rem; }
+.rt-eingabe label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: .15rem; }
+.rt-feld { width: 3.2rem; text-align: center; font-family: var(--font-mono); }
+.rt-hinweis { margin: 0; min-height: 1.5em; font-size: .88rem; color: var(--lp); }
 
 /* Regeln eines Modells als Programmcode zum Aufklappen */
 .prose details.regeln { margin: 1rem 0 1.3rem; border: 1px solid var(--border); background: var(--bg-elev); }

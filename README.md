@@ -49,7 +49,7 @@ Lektion 1 erscheinen in Lektion 2 wieder.
 | Modell | Datei | Lektion | Stand |
 |---|---|---|---|
 | Brownsche Bewegung | `sim-brown.js` | 2 | fertig |
-| Stau (Nagel-Schreckenberg) | – | 3, 4 | offen |
+| Stau (Nagel-Schreckenberg) | `sim-stau.js` (Modelle `stau` und `stau-regeln`) | 3, 4 | fertig |
 | Segregation | – | 5 | offen |
 | Krankheitsübertragung (HIV) | – | 6 | offen |
 

@@ -7,7 +7,7 @@ kurz: "Zeitraster, Hinweise zur Simulation, die Pointe mit der Luftströmung"
 reihenfolge: 1
 ---
 
-# Ablaufplan Lektion 2: Die Simulation als dritter Weg
+# Ablaufplan Lektion 2: Die Simulation als drittes Standbein
 
 **45 Min. | Einzelarbeit oder zu zweit, Plenum**
 

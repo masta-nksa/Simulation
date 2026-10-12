@@ -91,8 +91,17 @@ simulieren, Ergebnis festhalten, sich selbst kontrollieren. Die Vorhersage steht
 bewusst vor der Simulation: Erst der Vergleich mit der eigenen Erwartung macht
 ein Ergebnis überraschend.
 
-**Ein Schema als Anker.** Das Schema «Wirklichkeit – Abbild – Validieren»
-steht in jeder Lektion, jeweils mit dem aktuellen Schritt hervorgehoben. Die
+**Einstieg mit Begriffswolke.** Die Einheit beginnt mit einer einzigen Frage:
+«Woran denken Sie beim Begriff Simulation?» Die Klasse gibt Begriffe ein, daraus
+entsteht eine Wortwolke (Particify). Das holt das Vorwissen ab, kostet vier
+Minuten und zeigt der Lehrperson, wo die Klasse steht. In Lektion 7 wird
+dieselbe Frage noch einmal gestellt: Der Vergleich der beiden Wolken macht
+sichtbar, was sich verändert hat.
+
+**Eine Grafik als Anker.** Die Grafik «Wissenschaft und Simulationen» mit den
+drei Standbeinen Theorie, Experiment und Simulation ist der erste Input der
+Einheit und steht auf der Seite «Das Wichtigste» der Lektionen 1 bis 4 wieder,
+jeweils mit dem Hinweis, welcher Teil gerade bearbeitet wurde. Die
 drei Schritte Modellieren, Simulieren und Validieren werden am Stau in zwei
 Lektionen erarbeitet und danach an zwei weiteren Modellen angewendet.
 
@@ -121,7 +130,7 @@ zurückliegt, holt in der Pufferlektion auf.
 | Lektion | Thema | Methode | Ergebnis |
 |---|---|---|---|
 | 1 | Theorie und Experiment | Input, Experiment im Plenum, Selbstlernphase | Messwerte der Klasse, Liste der Schwachstellen |
-| 2 | Die Simulation als dritter Weg (Brownsche Bewegung) | Selbstlernphase, Sicherung im Plenum | Schaubild Zeit gegen Abstand, Steckbrief 1 |
+| 2 | Die Simulation als drittes Standbein (Brownsche Bewegung) | Selbstlernphase, Sicherung im Plenum | Schaubild Zeit gegen Abstand, Steckbrief 1 |
 | 3 | Stau: modellieren und simulieren | Selbstlernphase mit Regel-Trainer | Regeln von Hand angewendet, erste Parameterstudie |
 | 4 | Stau: validieren | Selbstlernphase, Sicherung im Plenum | Fluss-Dichte-Diagramm, Steckbrief 2 |
 | 5 | Segregation | Selbstlernphase, Sicherung im Plenum | Messreihe zum Wohlfühlfaktor, Steckbrief 3 |
@@ -133,18 +142,19 @@ zurückliegt, holt in der Pufferlektion auf.
 
 ### Lektion 1: Theorie und Experiment
 
-Input (5 Min.): Glas mit stark riechender Substanz – was passiert, warum, wie
-prüfen? Jede Person schreibt eine Vorhersage. Danach das Essigessenz-Experiment
-im Plenum (20 Min.); die Klasse hält Abstand und Zeit fest. In der
-Selbstlernphase (12 Min.) werten die Schülerinnen und Schüler das Experiment
-aus: mindestens fünf Schwachstellen, anekdotische Evidenz gegen kontrolliertes
-Experiment. Sicherung (8 Min.): Schwachstellen sammeln, Frage für Lektion 2
-stellen.
+Input (10 Min.): Begriffswolke zum Wort Simulation, danach die Grafik mit den
+drei Standbeinen, dann die Frage zum Glas mit der stark riechenden Substanz –
+was passiert, warum, wie prüfen? Jede Person schreibt eine Vorhersage. Danach
+das Essigessenz-Experiment im Plenum (20 Min.); die Klasse trägt Abstand und
+Zeit laufend ein. In der Selbstlernphase (9 Min.) werten die Schülerinnen und
+Schüler das Experiment aus: mindestens fünf Schwachstellen, anekdotische Evidenz
+gegen kontrolliertes Experiment. Sicherung (6 Min.): Schwachstellen sammeln,
+Frage für Lektion 2 stellen.
 
 Das Experiment steht am Anfang, weil die Kritik daran die Simulation motiviert:
 Was im Schulzimmer nicht kontrollierbar ist, lässt sich im Modell kontrollieren.
 
-### Lektion 2: Die Simulation als dritter Weg
+### Lektion 2: Die Simulation als drittes Standbein
 
 Input (5 Min.): Rückblick auf das Experiment. Etappe 1 (12 Min.): Theorie –
 Diffusion und Brownsche Bewegung, Minimalanforderungen, Ockhams Rasiermesser,
@@ -212,7 +222,8 @@ am Modell krankheitsspezifisch ist.
 
 ### Lektion 7: Vier Modelle, eine Methode
 
-Input (5 Min.): die drei Schritte in Erinnerung rufen. Etappe 1 (15 Min.): die
+Input (5 Min.): dieselbe Frage wie in Lektion 1 als Begriffswolke, Vergleich
+mit der ersten Wolke. Etappe 1 (15 Min.): die
 vier Steckbriefe vergleichen – Gemeinsamkeiten, Unterschiede, wo war die
 Validierung am schwierigsten? Etappe 2 (17 Min.): Selbsttest entlang der
 Lernziele. Sicherung (8 Min.): Rolle der Simulation in der Wissenschaft und

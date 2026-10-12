@@ -3,7 +3,7 @@ lektion: 2
 zielgruppe: sus
 art: zusammenfassung
 titel: "Das Wichtigste: Theorie, Experiment, Simulation"
-kurz: "Besprechung am Ende der Lektion und Lernzusammenfassung: Anforderungen an Theorien, drei Wege zur Erkenntnis, warum Simulationen"
+kurz: "Besprechung am Ende der Lektion und Lernzusammenfassung: Anforderungen an Theorien, drei Standbeine der Wissenschaft, warum Simulationen"
 reihenfolge: 80
 ---
 
@@ -49,11 +49,17 @@ Erklären zwei Theorien dasselbe gleich gut, ist vorzuziehen,
 - welche mit **weniger Annahmen** auskommt (Einfachheit, Ockhams Rasiermesser),
 - welche **mehr verschiedene Vorgänge** erklärt (Gegenstandsbereich).
 
-## Drei Wege zur Erkenntnis
+## Drei Standbeine der Wissenschaft
 
-Theorie, Experiment und Simulation untersuchen dieselbe Frage auf drei Arten.
+Theorie, Experiment und Simulation untersuchen dieselbe Frage auf drei Arten. Die Simulation
+gilt als drittes Standbein neben Theorie und Experiment.
 
-| Weg | Was wird untersucht? | Wie? | Was kommt heraus? |
+<figure class="grafik">
+<img src="{{ '/assets/img/wissenschaft-und-simulationen.webp' | relative_url }}" width="2000" height="1473" alt="Schema der drei Standbeine: In der Wirklichkeit wird ein Realitätsausschnitt experimentell untersucht und liefert Evidenz und Daten. Im Abbild wird eine Theorie bzw. ein konzeptuelles Modell gedanklich untersucht und liefert eine Vorhersage. In der Simulation wird ein funktionales Modell durchgespielt und liefert Ergebnisse und Daten. Alle drei führen zum Validieren: Verhalten sich Abbild und Realität gleich? Bei Ja neue Vorhersagen ableiten, bei Nein Theorie oder Modell ändern.">
+<figcaption>Sie haben jetzt alle drei Zeilen an einem Beispiel durchlaufen. Grafik: <a href="https://oinf.ch/kurs/vernetzung-und-systeme/simulationen/">oinf.ch</a></figcaption>
+</figure>
+
+| Standbein | Was wird untersucht? | Wie? | Was kommt heraus? |
 |---|---|---|---|
 | **Experiment** | ein Ausschnitt der Wirklichkeit (reales System) | experimentell untersuchen | Evidenz, Daten |
 | **Theorie** | ein gedankliches Abbild (konzeptuelles Modell) | durchdenken, berechnen | Vorhersage |

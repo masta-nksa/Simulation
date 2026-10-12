@@ -1093,6 +1093,13 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .schaubild-muster .kurve { fill: none; stroke: var(--text); stroke-width: 1.75; }
 .schaubild-abw { color: var(--text-muted); font-family: var(--font-meta); font-size: .8rem; }
 
+/* Grafik im Fliesstext mit Bildlegende. Die Grafiken haben einen weissen Grund,
+   darum auch im dunklen Modus eine weisse Fläche. */
+.prose figure.grafik { margin: 1.4rem 0; padding: .6rem; border: 1px solid var(--border); background: #fff; }
+.prose figure.grafik img { display: block; width: 100%; height: auto; }
+.prose figure.grafik figcaption { margin-top: .5rem; font-size: .8rem; color: #5d6067; }
+.prose figure.grafik figcaption a { color: inherit; }
+
 /* Zweite Statuszeile einer Simulation: Ergebnis einer Messung */
 .sim-meldung { min-height: 0; margin-top: -.4rem; color: var(--sus); }
 .sim-meldung:empty { display: none; }
@@ -1125,6 +1132,7 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
   .simulation { border: 1px dashed #888; background: none; padding: .4rem .7rem; }
   .sim-leiste, .schaubild-wahl input, .messwerte-weg { display: none !important; }
   .schaubild-figur { border-color: #999; break-inside: avoid; }
+  .prose figure.grafik { border-color: #999; break-inside: avoid; max-width: 13cm; }
   .schaubild svg .punkt { fill: #000; fill-opacity: 1; }
   .prose details.regeln { break-inside: avoid; }
 }

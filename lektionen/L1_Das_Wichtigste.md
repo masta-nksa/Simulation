@@ -13,6 +13,7 @@ reihenfolge: 80
 
 Sie können …
 
+- [ ] die drei Standbeine der wissenschaftlichen Methode nennen
 - [ ] erklären, wie aus einer Theorie eine überprüfbare Vorhersage wird
 - [ ] beschreiben, wie das Experiment mit der Essigessenz aufgebaut war
 - [ ] mindestens fünf Schwachstellen dieses Experiments nennen
@@ -30,6 +31,15 @@ Haken Sie ab, was Sie sicher können. Wo es noch hapert, hilft die Zusammenfassu
 3. Wie könnte man dieselbe Frage untersuchen, ohne dass Nasen und Luftzug stören?
 
 </div>
+
+## Die drei Standbeine
+
+Theorie, Experiment und Simulation sind die drei Standbeine der wissenschaftlichen Methode.
+
+<figure class="grafik">
+<img src="{{ '/assets/img/wissenschaft-und-simulationen.webp' | relative_url }}" width="2000" height="1473" alt="Schema der drei Standbeine: In der Wirklichkeit wird ein Realitätsausschnitt experimentell untersucht und liefert Evidenz und Daten. Im Abbild wird eine Theorie bzw. ein konzeptuelles Modell gedanklich untersucht und liefert eine Vorhersage. In der Simulation wird ein funktionales Modell durchgespielt und liefert Ergebnisse und Daten. Alle drei führen zum Validieren: Verhalten sich Abbild und Realität gleich? Bei Ja neue Vorhersagen ableiten, bei Nein Theorie oder Modell ändern.">
+<figcaption>In dieser Lektion: die oberste Zeile (Experiment) und der Anfang der mittleren (Theorie). Grafik: <a href="https://oinf.ch/kurs/vernetzung-und-systeme/simulationen/">oinf.ch</a></figcaption>
+</figure>
 
 ## Von der Theorie zur Evidenz
 

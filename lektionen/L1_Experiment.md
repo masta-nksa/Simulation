@@ -78,4 +78,4 @@ Ordnen Sie zu.
 
 Und unser Experiment? Was müsste man ändern, damit daraus ein kontrolliertes Experiment wird?
 
-<div class="antwort" data-zeilen="3" data-loesung="Zum Beispiel: mit Sensoren messen statt mit der Nase; Fenster und Türen schliessen und niemanden herumgehen lassen; Abstände ausmessen; bei jedem Abstand mehrmals messen; Temperatur, Menge und Zeitpunkt notieren; das ganze Experiment wiederholen. Vieles davon ist im Schulzimmer kaum zu erreichen – genau deshalb lohnt sich ein anderer Weg (Lektion 2)."></div>
+<div class="antwort" data-zeilen="3" data-loesung="Zum Beispiel: mit Sensoren messen statt mit der Nase; Fenster und Türen schliessen und niemanden herumgehen lassen; Abstände ausmessen; bei jedem Abstand mehrmals messen; Temperatur, Menge und Zeitpunkt notieren; das ganze Experiment wiederholen. Vieles davon ist im Schulzimmer kaum zu erreichen – genau deshalb lohnt sich das dritte Standbein, die Simulation (Lektion 2)."></div>

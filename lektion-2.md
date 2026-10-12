@@ -1,7 +1,7 @@
 ---
 layout: lektion
 lektion: 2
-titel: "Die Simulation als dritter Weg"
+titel: "Die Simulation als drittes Standbein"
 stichwort: "Brownsche Bewegung"
 kurz: "Sie untersuchen dieselbe Frage mit einer Simulation und vergleichen das Ergebnis mit dem Experiment."
 methode: "Selbstlernphase, Sicherung im Plenum"

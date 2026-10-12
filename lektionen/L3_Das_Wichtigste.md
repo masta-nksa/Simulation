@@ -80,7 +80,12 @@ lässt alle anderen gleich.
 
 ## Wo wir stehen
 
-| Weg | Was wird untersucht? | Wie? | Was kommt heraus? |
+<figure class="grafik">
+<img src="{{ '/assets/img/wissenschaft-und-simulationen.webp' | relative_url }}" width="2000" height="1473" alt="Schema der drei Standbeine: In der Wirklichkeit wird ein Realitätsausschnitt experimentell untersucht und liefert Evidenz und Daten. Im Abbild wird eine Theorie bzw. ein konzeptuelles Modell gedanklich untersucht und liefert eine Vorhersage. In der Simulation wird ein funktionales Modell durchgespielt und liefert Ergebnisse und Daten. Alle drei führen zum Validieren: Verhalten sich Abbild und Realität gleich? Bei Ja neue Vorhersagen ableiten, bei Nein Theorie oder Modell ändern.">
+<figcaption>In dieser Lektion: die linke Spalte von oben nach unten (modellieren) und die unterste Zeile (simulieren). Grafik: <a href="https://oinf.ch/kurs/vernetzung-und-systeme/simulationen/">oinf.ch</a></figcaption>
+</figure>
+
+| Standbein | Was wird untersucht? | Wie? | Was kommt heraus? |
 |---|---|---|---|
 | Experiment | ein Ausschnitt der Wirklichkeit | experimentell untersuchen | Evidenz, Daten |
 | Theorie | konzeptuelles Modell | durchdenken, berechnen | Vorhersage |

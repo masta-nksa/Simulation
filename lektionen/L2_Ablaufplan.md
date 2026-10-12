@@ -61,6 +61,13 @@ Leitfragen projizieren → 1 Min. zu zweit → sammeln.
   entsteht so eine Punktwolke, die sich in der Sicherung neben das Schaubild des Experiments
   stellen lässt. In Etappe 2 fehlt der Knopf absichtlich: Dort sollen die SuS den Abstand
   selbst gezielt verändern.
+- **Raum vergrössern:** In derselben Aufgabe lässt sich der Raum wählen (120 × 80, 240 × 80
+  oder 240 × 160 Zellen). Am deutlichsten wird das Schaubild im langen Raum 240 × 80: Der
+  Bereich der Abstände verdoppelt sich, der Bogen ist von Auge zu sehen, und die Zeit folgt
+  dort fast genau dem Quadrat des Abstands. Die Streuung der einzelnen Durchgänge bleibt aber:
+  Die quadratische Kurve weicht in beiden Räumen um rund 15 % von den Messwerten ab. Im
+  grossen Raum 240 × 160 passt sie schlechter (in Tests rund 28 %), vermutlich weil sich die
+  Teilchen dort auch in der Höhe verdünnen.
 - **Programmcode:** Der aufklappbare Kasten zeigt die Regel als Python. Niemand muss ihn
   verstehen; er zeigt, dass hinter der Oberfläche nichts weiter steckt.
 - **Lösungen einblenden:** auf einer Unterlage «ockham» tippen (nicht in einem Eingabefeld)

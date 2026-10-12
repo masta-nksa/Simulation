@@ -22,22 +22,29 @@
      data-dauerlauf  zusätzlicher Knopf «Dauerlauf»: Die Simulation wählt den
                      Abstand selbst zufällig und reiht Durchgang an Durchgang,
                      bis man sie stoppt.
+     data-raum       zusätzlicher Regler «Raum» (120 × 80, 240 × 80 oder
+                     240 × 160 Zellen). Die Messtabelle erhält dann als dritte
+                     Spalte den Raum: Abstand, Zeit, Raum, Teilchen, Schwelle.
    ========================================================================== */
 
 (function () {
   "use strict";
 
-  var BREITE = 120, HOEHE = 80;      // Raum in Zellen
+  var RAEUME = [[120, 80], [240, 80], [240, 160]];   // wählbare Räume in Zellen; der erste ist der Standard
+  var BILD_B = 600;                  // Breite der Leinwand in Bildpunkten
   var QUELLE_B = 4, QUELLE_H = 10;   // Quelle am linken Rand, in der Mitte
   var DET_B = 4, DET_H = 8;          // Detektor
-  var ZELLE = 5;                     // Bildpunkte pro Zelle
   var HOECHSTENS = 200000;           // Abbruch, falls der Detektor nie anschlägt
 
   function bauen(kasten, h) {
     var ziel = kasten.dataset.ziel || "brown";
-    var bild = h.leinwand(BREITE * ZELLE, HOEHE * ZELLE,
+    var mitRaum = kasten.hasAttribute("data-raum");
+    var BREITE = RAEUME[0][0], HOEHE = RAEUME[0][1];   // Raum in Zellen
+    var ZELLE = BILD_B / BREITE;                       // Bildpunkte pro Zelle
+    var bild = h.leinwand(BILD_B, HOEHE * ZELLE,
       "Raum mit Teilchen, die sich zufällig bewegen. Links die Quelle, rechts davon der Detektor.");
     var ctx = bild.ctx;
+    var dichte = bild.element.width / BILD_B;          // Gerätepixel pro Bildpunkt
 
     var xs, ys, da, n, zeit, angekommen, zustand, rahmen = null;
     var mitte = HOEHE >> 1;
@@ -52,6 +59,21 @@
     var schwelle = h.regler({ titel: "Schwelle des Detektors", min: 1, max: 10, wert: 3, einheit: "Teilchen", beiAenderung: geaendert });
     var TEMPI = [1, 5, 50], TEMPO_NAME = ["langsam", "schnell", "sehr schnell"];
     var tempo = h.regler({ titel: "Tempo der Anzeige", min: 0, max: 2, wert: 1, format: function (v) { return TEMPO_NAME[v]; } });
+    // Raum wechseln: Leinwand neu zuschneiden, grösster Abstand passt sich an
+    // (20 Zellen vor der rechten Wand ist Schluss).
+    function raumSetzen(i) {
+      BREITE = RAEUME[i][0]; HOEHE = RAEUME[i][1]; ZELLE = BILD_B / BREITE; mitte = HOEHE >> 1;
+      bild.hoehe = HOEHE * ZELLE;
+      bild.element.height = Math.round(bild.hoehe * dichte);
+      bild.element.style.aspectRatio = BILD_B + " / " + bild.hoehe;
+      ctx.setTransform(dichte, 0, 0, dichte, 0, 0);
+      var feld = abstand.element.querySelector("input");
+      feld.max = BREITE - 20;
+      if (abstand.wert() > BREITE - 20) abstand.setzen(BREITE - 20);
+    }
+    var raum = mitRaum ? h.regler({ titel: "Raum", min: 0, max: RAEUME.length - 1, wert: 0,
+      format: function (v) { return RAEUME[v][0] + " × " + RAEUME[v][1] + " Zellen"; },
+      beiAenderung: function (v) { dauer = false; raumSetzen(v); neu(); } }) : null;
 
     var status = h.el("p", { class: "sim-status", "aria-live": "polite" });
     // Ein Knopf startet jeden Durchgang – auch den nächsten mit gleichen Werten.
@@ -72,12 +94,14 @@
     function naechster() {
       if (dauerZahl >= DAUER_HOECHSTENS) { dauer = false; neu(); return; }
       dauerZahl++;
-      abstand.setzen(10 + 5 * Math.floor(Math.random() * 19));   // 10, 15, … 100 Zellen
+      abstand.setzen(10 + 5 * Math.floor(Math.random() * ((BREITE - 30) / 5 + 1)));   // 10, 15, … bis 20 Zellen vor der Wand
       neu(); zustand = "laeuft"; beschriften(); schleife();
     }
 
     var reglerBox = h.el("div", { class: "sim-reglerfeld" });
-    reglerBox.append(abstand.element, anzahl.element, schwelle.element, tempo.element);
+    reglerBox.append(abstand.element, anzahl.element, schwelle.element);
+    if (raum) reglerBox.appendChild(raum.element);
+    reglerBox.appendChild(tempo.element);
     var leiste = h.el("div", { class: "sim-knoepfe" });
     leiste.append(knopfStart, knopfNeu);
     if (knopfDauer) leiste.appendChild(knopfDauer);
@@ -118,11 +142,15 @@
       rahmen = requestAnimationFrame(function takt() {
         rahmen = null;
         if (zustand !== "laeuft") return;
-        var schritte = dauer ? Math.max(TEMPI[tempo.wert()], 50) : TEMPI[tempo.wert()];
+        // Im Dauerlauf mindestens «sehr schnell»; in einem längeren Raum dauern
+        // die Durchgänge im Quadrat länger, darum entsprechend mehr Schritte pro Bild.
+        var schritte = dauer ? Math.max(TEMPI[tempo.wert()], Math.round(50 * BREITE * BREITE / 14400)) : TEMPI[tempo.wert()];
         for (var s = 0; s < schritte; s++) {
           if (schritt()) {
             zustand = "fertig";
-            h.Daten.anhaengen(ziel, [abstand.wert(), zeit, anzahl.wert(), schwelle.wert()]);
+            h.Daten.anhaengen(ziel, mitRaum
+              ? [abstand.wert(), zeit, BREITE + " × " + HOEHE, anzahl.wert(), schwelle.wert()]
+              : [abstand.wert(), zeit, anzahl.wert(), schwelle.wert()]);
             break;
           }
           if (zeit >= HOECHSTENS) { zustand = "abbruch"; break; }
@@ -164,7 +192,8 @@
 
       // Teilchen
       ctx.fillStyle = f.text;
-      for (var i = 0; i < n; i++) ctx.fillRect(xs[i] * ZELLE + 1, ys[i] * ZELLE + 1, ZELLE - 2, ZELLE - 2);
+      var g = ZELLE >= 4 ? ZELLE - 2 : Math.max(1.6, ZELLE - .6), rand = (ZELLE - g) / 2;   // in kleinen Zellen bleiben die Teilchen sichtbar
+      for (var i = 0; i < n; i++) ctx.fillRect(xs[i] * ZELLE + rand, ys[i] * ZELLE + rand, g, g);
 
       ctx.lineWidth = 2; ctx.strokeStyle = f.text;
       ctx.strokeRect(dx - 1, dy - 1, dw + 2, dh + 2);

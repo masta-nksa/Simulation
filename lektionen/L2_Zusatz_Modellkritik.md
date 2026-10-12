@@ -66,9 +66,9 @@ reiht Durchgang an Durchgang, bis Sie stoppen.
 
 Lassen Sie den Dauerlauf laufen, bis etwa 40 Messwerte beisammen sind.
 
-<div class="simulation" data-modell="brown" data-ziel="brown-serie" data-dauerlauf></div>
+<div class="simulation" data-modell="brown" data-ziel="brown-serie" data-dauerlauf data-raum></div>
 
-<div class="messtabelle" data-id="brown-serie" data-spalten="Abstand (Zellen);Zeit (Zeitschritte)" data-fest></div>
+<div class="messtabelle" data-id="brown-serie" data-spalten="Abstand (Zellen);Zeit (Zeitschritte);Raum (Zellen)" data-fest></div>
 
 <div class="schaubild" data-quelle="brown-serie" data-x="Abstand (Zellen)" data-y="Zeit (Zeitschritte)" data-kurven="linear;quadratisch"></div>
 
@@ -79,3 +79,21 @@ Was erkennen Sie in diesem Schaubild besser als mit zwölf Messwerten bei vier A
 Und was geht verloren, wenn man die Abstände dem Zufall überlässt, statt sie gezielt zu wählen?
 
 <div class="antwort" data-zeilen="3" data-loesung="Beim selben Abstand gibt es nur wenige oder gar keine Wiederholungen. Man kann darum schlecht sagen, wie stark die Zeit bei einem festen Abstand streut, und ein einzelner Ausreisser fällt nicht auf. Wer einen Parameter gezielt verändert und jede Einstellung mehrmals misst, sieht beides. Das Experiment im Schulzimmer hatte genau diese Schwäche: jeder Abstand nur einmal."></div>
+
+## Aufgabe 5 – Ein längerer Raum
+
+Mit dem Regler **Raum** lässt sich der Raum vergrössern. Im längeren Raum (240 × 80 Zellen)
+sind Abstände bis 220 Zellen möglich.
+
+Löschen Sie die Messwerte, stellen Sie den Raum auf 240 × 80 Zellen und starten Sie den
+Dauerlauf erneut.
+
+Vergleichen Sie die Punktwolke mit der aus Aufgabe 4. Was ist jetzt deutlicher zu sehen, und
+was hat sich nicht verbessert?
+
+<div class="antwort" data-zeilen="3" data-loesung="Deutlicher ist der Bogen: Über den doppelten Bereich von Abständen biegt sich die Punktwolke sichtbar nach oben, eine Gerade kann ihr nicht folgen. Nicht verbessert hat sich die Streuung: Die einzelnen Durchgänge liegen immer noch weit um die Kurve herum, und die quadratische Kurve weicht ähnlich stark von den Messwerten ab wie vorher. Ein grösserer Raum macht den Zufall nicht kleiner."></div>
+
+Warum ist ein Zusammenhang leichter zu erkennen, wenn man einen Parameter über einen grossen
+Bereich verändert?
+
+<div class="antwort" data-zeilen="3" data-loesung="Über einen kleinen Bereich sieht fast jede Kurve wie eine Gerade aus, und die zufällige Streuung ist ähnlich gross wie der Unterschied zwischen den Kurven. Über einen grossen Bereich laufen eine Gerade und eine Parabel weit auseinander – welche von beiden passt, sieht man dann von Auge."></div>

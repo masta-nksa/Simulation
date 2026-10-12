@@ -92,3 +92,11 @@ Nachschub, verschiedene Teilchensorten, Hindernisse. Am meisten verändert die L
 - Verloren gehen die Wiederholungen beim selben Abstand: Wie stark die Zeit bei einem festen
   Abstand streut, lässt sich schlecht sagen, und ein Ausreisser fällt nicht auf. Dieselbe
   Schwäche hatte das Experiment im Schulzimmer.
+
+**Aufgabe 5 – Ein längerer Raum**
+
+- Deutlicher ist der Bogen: Über den doppelten Bereich von Abständen biegt sich die Punktwolke
+  sichtbar nach oben. Nicht verbessert hat sich die Streuung – die quadratische Kurve weicht
+  ähnlich stark von den Messwerten ab wie vorher (rund 15 %).
+- Über einen kleinen Bereich sieht fast jede Kurve wie eine Gerade aus. Über einen grossen
+  Bereich laufen Gerade und Parabel weit auseinander.

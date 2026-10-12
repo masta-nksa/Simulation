@@ -13,9 +13,9 @@ reihenfolge: 1
 
 ## Vorbereitung
 
-- Begriffswolke vorbereiten (Particify): Raum öffnen, Frage «Woran denken Sie beim Begriff
-  Simulation?» als Wortwolke anlegen, Zugang bereithalten. Bisher genutzter Raum:
-  [partici.fi/93017862](https://partici.fi/93017862).
+- Begriffswolke vorbereiten: auf [Particify](https://ars.particify.de) einen Raum öffnen, die
+  Frage «Woran denken Sie beim Begriff Simulation?» als Wortwolke anlegen und den Zugang
+  bereithalten.
 - Essigessenz, flache Schale, Messband oder markierte Abstände am Boden, Stoppuhr (Beamer).
 - Fenster und Türen einige Minuten vorher schliessen.
 - Plätze oder Messpunkte in drei bis fünf Abständen festlegen.
@@ -31,21 +31,19 @@ reihenfolge: 1
 | 30–39 | Selbstlernphase | Schwachstellen suchen (Aufgabe 3), Beobachtung oder Beleg (Aufgabe 4). | Das Experiment |
 | 39–45 | Erfahrungen festhalten | Schwachstellen sammeln und gruppieren. Leitfrage 3 der Seite «Das Wichtigste» offen lassen. | Das Wichtigste L1 |
 
-## Vorschlag für die Versuchsanordnung
+## Durchführung des Experiments
 
-Das ist ein Vorschlag – passen Sie ihn Ihrer bewährten Durchführung an.
+1. Alle sitzen an ihrem Platz und schliessen die Augen. So sieht niemand, wann die anderen
+   reagieren.
+2. Essigessenz in die Schale giessen, Stoppuhr am Beamer starten.
+3. Wer den Essig riecht, öffnet die Augen, liest die Zeit ab und merkt sie sich. Niemand steht
+   auf oder trägt etwas ein – jede Bewegung erzeugt Luftzug.
+4. Nach 20 Minuten abbrechen, auch wenn hinten noch niemand etwas riecht. «Kein Messwert» ist
+   ebenfalls ein Ergebnis und wird festgehalten.
+5. Erst jetzt wird für jede Person der Abstand zur Schale gemessen (rund fünf Minuten).
 
-1. Die Klasse sitzt an ihren Plätzen; drei bis fünf Abstände zur Schale sind ausgemessen und an
-   der Tafel notiert.
-2. Essigessenz in die Schale giessen, Stoppuhr starten.
-3. Wer den Geruch wahrnimmt, hebt die Hand. Pro Abstand die Zeit der ersten Meldung (oder der
-   Mehrheit) notieren. Welche Regel gilt, vorher festlegen – auch das ist später eine
-   Schwachstelle, die die Klasse finden kann.
-4. Nach etwa 15 Minuten abbrechen, auch wenn hinten noch niemand etwas riecht. «Kein Messwert»
-   ist ebenfalls ein Ergebnis.
-
-Die Messwerte bleiben an der Tafel stehen oder werden fotografiert: In Lektion 2 braucht die
-Klasse sie wieder. Auf den Geräten der SuS bleiben die eingetragenen Werte gespeichert.
+Die Messwerte bleiben an der Tafel stehen oder werden fotografiert: Die Klasse braucht sie in
+den folgenden Lektionen wieder.
 
 ## Einstieg: Begriffswolke und Grafik
 

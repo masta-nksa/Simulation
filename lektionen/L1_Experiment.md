@@ -33,10 +33,22 @@ prüfen.
 
 ## Aufgabe 2 – Messen
 
-Tragen Sie die Messwerte der Klasse ein: für jeden Abstand die Zeit, bis der Geruch
-wahrnehmbar war. Das Schaubild entsteht von selbst.
+**Während des Experiments:** Schliessen Sie die Augen. Sobald Sie den Essig riechen, öffnen Sie
+die Augen, lesen die Zeit auf der Stoppuhr ab und merken sie sich. Bleiben Sie sitzen und
+schreiben Sie nichts auf – jede Bewegung erzeugt Luftzug.
 
-<div class="messtabelle" data-id="essig" data-spalten="Abstand (m);Zeit (s)" data-zeilen="6"></div>
+**Nach dem Experiment:** Halten Sie zuerst Ihren eigenen Messwert fest.
+
+- Meine Zeit: <span class="luecke" data-breite="6"></span> Sekunden
+- Mein Abstand zur Schale: <span class="luecke" data-breite="6"></span> Meter
+
+Wer nichts gerochen hat, lässt die Zeit leer. Auch das ist ein Ergebnis.
+
+**Die Messwerte der Klasse:** Ihre Lehrperson sammelt alle Werte am Beamer und teilt sie mit
+einem Link. Öffnen Sie den Link – die Tabelle füllt sich von selbst, und das Schaubild
+entsteht. Ohne Link tragen Sie die Werte von der Tafel ein.
+
+<div class="messtabelle" data-id="essig" data-spalten="Abstand (m);Zeit (s)" data-zeilen="6" data-teilen></div>
 
 <div class="schaubild" data-quelle="essig" data-x="Abstand (m)" data-y="Zeit (s)" data-leer="Noch keine Messwerte eingetragen"></div>
 

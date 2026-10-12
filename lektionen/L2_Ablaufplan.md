@@ -13,8 +13,8 @@ reihenfolge: 1
 
 ## Vorbereitung
 
-- Messwerte des Experiments aus Lektion 1 an die Tafel oder auf den Beamer (für alle, die sie
-  nicht auf dem Gerät haben).
+- Link mit den Messwerten des Experiments aus Lektion 1 bereithalten (für alle, die sie nicht
+  auf dem Gerät haben).
 - Die Simulation einmal selbst laufen lassen: Etappe 2, Tempo «sehr schnell».
 
 ## Zeitraster

@@ -24,8 +24,8 @@ permalink: /konzept.html
   Installation, kein Konto: Alle Simulationen laufen direkt auf der Seite.
 - **Vorwissen:** keines. Der Programmcode der Modelle ist einsehbar, muss aber
   nicht verändert werden.
-- **Material ausserhalb der Seite:** Essigessenz, Schale, Messband und Stoppuhr
-  für das Experiment in Lektion 1.
+- **Material ausserhalb der Seite:** Essigessenz, Schale, Schnur mit
+  Abstandsmarken und Stoppuhr für das Experiment in Lektion 1.
 
 ## Lernziele
 
@@ -94,7 +94,7 @@ ein Ergebnis überraschend.
 **Einstieg mit Begriffswolke.** Die Einheit beginnt mit einer einzigen Frage:
 «Woran denken Sie beim Begriff Simulation?» Die Klasse gibt Begriffe ein, daraus
 entsteht eine Wortwolke (Particify). Das holt das Vorwissen ab, kostet vier
-Minuten und zeigt der Lehrperson, wo die Klasse steht. In Lektion 7 wird
+bis fünf Minuten und zeigt der Lehrperson, wo die Klasse steht. In Lektion 7 wird
 dieselbe Frage noch einmal gestellt: Der Vergleich der beiden Wolken macht
 sichtbar, was sich verändert hat.
 
@@ -142,14 +142,17 @@ zurückliegt, holt in der Pufferlektion auf.
 
 ### Lektion 1: Theorie und Experiment
 
-Input (10 Min.): Begriffswolke zum Wort Simulation, danach die Grafik mit den
+Input (15 Min.): Begriffswolke zum Wort Simulation, danach die Grafik mit den
 drei Standbeinen, dann die Frage zum Glas mit der stark riechenden Substanz –
-was passiert, warum, wie prüfen? Jede Person schreibt eine Vorhersage. Danach
-das Essigessenz-Experiment im Plenum (20 Min.); die Klasse trägt Abstand und
-Zeit laufend ein. In der Selbstlernphase (9 Min.) werten die Schülerinnen und
-Schüler das Experiment aus: mindestens fünf Schwachstellen, anekdotische Evidenz
-gegen kontrolliertes Experiment. Sicherung (6 Min.): Schwachstellen sammeln,
-Frage für Lektion 2 stellen.
+was passiert, warum, wie prüfen? Jede Person hält ihre Gedanken und eine
+Vorhersage schriftlich fest. Das Essigessenz-Experiment dauert fünf Minuten:
+Alle schliessen die Augen; wer den Essig riecht, öffnet sie, liest die Zeit ab
+und merkt sie sich. Niemand bewegt sich, damit kein Luftzug entsteht. Danach
+wird jede Person mit der Schnur ausgemessen, die Werte werden am Beamer
+gesammelt und der Klasse als Link gegeben (7 Min.). In der Selbstlernphase
+(11 Min.) werten die Schülerinnen und Schüler das Experiment aus: mindestens
+fünf Schwachstellen, anekdotische Evidenz gegen kontrolliertes Experiment.
+Sicherung (7 Min.): Schwachstellen sammeln, Frage für Lektion 2 stellen.
 
 Das Experiment steht am Anfang, weil die Kritik daran die Simulation motiviert:
 Was im Schulzimmer nicht kontrollierbar ist, lässt sich im Modell kontrollieren.

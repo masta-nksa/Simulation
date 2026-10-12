@@ -16,20 +16,20 @@ reihenfolge: 1
 - Begriffswolke vorbereiten: auf [Particify](https://ars.particify.de) einen Raum öffnen, die
   Frage «Woran denken Sie beim Begriff Simulation?» als Wortwolke anlegen und den Zugang
   bereithalten.
-- Essigessenz, flache Schale, Messband oder markierte Abstände am Boden, Stoppuhr (Beamer).
+- Essigessenz, flache Schale, Schnur mit Abstandsmarken, Stoppuhr (Beamer).
 - Fenster und Türen einige Minuten vorher schliessen.
-- Plätze oder Messpunkte in drei bis fünf Abständen festlegen.
 
 ## Zeitraster
 
 | Zeit | Phase | Was passiert | Material |
 |---|---|---|---|
-| 0–4 | Begriffswolke | «Woran denken Sie beim Begriff Simulation?» Drei Begriffe eingeben, Wolke kurz kommentieren. | Particify, Einstieg |
-| 4–8 | Drei Standbeine | Grafik zeigen: Theorie, Experiment, Simulation – und rechts das Validieren. Nur benennen, nicht erklären. | Einstieg |
-| 8–10 | Frage | «Im Glas ist eine stark riechende Substanz. Was passiert, wenn ich es öffne? Warum? Wie prüfen wir das?» Jede Person schreibt ihre Vorhersage (Aufgabe 1). | Das Experiment |
-| 10–30 | Experiment | Schale aufstellen, Stoppuhr starten. Wer den Essig riecht, meldet sich; Abstand und Zeit an der Tafel sammeln. Die SuS tragen die Werte laufend ein (Aufgabe 2). | Essigessenz, Stoppuhr |
-| 30–39 | Selbstlernphase | Schwachstellen suchen (Aufgabe 3), Beobachtung oder Beleg (Aufgabe 4). | Das Experiment |
-| 39–45 | Erfahrungen festhalten | Schwachstellen sammeln und gruppieren. Leitfrage 3 der Seite «Das Wichtigste» offen lassen. | Das Wichtigste L1 |
+| 0–5 | Begriffswolke | «Woran denken Sie beim Begriff Simulation?» Drei Begriffe eingeben, Wolke kurz kommentieren. | Particify, Einstieg |
+| 5–10 | Drei Standbeine | Grafik zeigen: Theorie, Experiment, Simulation – und rechts das Validieren. Nur benennen, nicht erklären. | Einstieg |
+| 10–15 | Frage und Vorhersage | «Im Glas ist eine stark riechende Substanz. Was passiert, wenn ich es öffne? Warum? Wie prüfen wir das?» Jede Person hält ihre Gedanken schriftlich fest (Aufgabe 1). | Das Experiment |
+| 15–20 | Experiment | Augen zu, Schale aufstellen, Stoppuhr starten. Nach fünf Minuten abbrechen. | Essigessenz, Stoppuhr |
+| 20–27 | Ausmessen und sammeln | Abstand jeder Person mit der Schnur messen; Abstand und Zeit in die Messtabelle am Beamer eintragen, Link teilen (Aufgabe 2). | Schnur, Das Experiment |
+| 27–38 | Selbstlernphase | Schaubild ansehen, mit der Vorhersage vergleichen, Schwachstellen suchen (Aufgabe 3), Beobachtung oder Beleg (Aufgabe 4). | Das Experiment |
+| 38–45 | Erfahrungen festhalten | Schwachstellen sammeln und gruppieren. Leitfrage 3 der Seite «Das Wichtigste» offen lassen. | Das Wichtigste L1 |
 
 ## Durchführung des Experiments
 
@@ -38,12 +38,22 @@ reihenfolge: 1
 2. Essigessenz in die Schale giessen, Stoppuhr am Beamer starten.
 3. Wer den Essig riecht, öffnet die Augen, liest die Zeit ab und merkt sie sich. Niemand steht
    auf oder trägt etwas ein – jede Bewegung erzeugt Luftzug.
-4. Nach 20 Minuten abbrechen, auch wenn hinten noch niemand etwas riecht. «Kein Messwert» ist
-   ebenfalls ein Ergebnis und wird festgehalten.
-5. Erst jetzt wird für jede Person der Abstand zur Schale gemessen (rund fünf Minuten).
+4. Nach fünf Minuten abbrechen. Wer bis dahin nichts gerochen hat, liefert «keinen Messwert» –
+   auch das wird festgehalten (Zeile mit Abstand, aber ohne Zeit).
+5. Jede Person notiert ihre Zeit auf der Seite. Dann wird mit der Schnur für jede Person der
+   Abstand zur Schale gemessen (rund fünf Minuten).
 
-Die Messwerte bleiben an der Tafel stehen oder werden fotografiert: Die Klasse braucht sie in
-den folgenden Lektionen wieder.
+## Messwerte sammeln und teilen
+
+1. Die Seite «Das Experiment» auf dem eigenen Gerät am Beamer öffnen.
+2. Beim Ausmessen nennt jede Person ihre Zeit; Abstand und Zeit in die Messtabelle eintragen
+   («Zeile hinzufügen» für weitere Zeilen). Das Schaubild entsteht dabei vor der Klasse.
+3. Unter der Tabelle auf «Link mit diesen Messwerten kopieren» klicken und den Link der Klasse
+   geben, zum Beispiel im Klassenchat. Wer ihn öffnet, hat alle Werte auf dem eigenen Gerät.
+
+Der Link enthält nur die Zahlen, keine Namen, und die Werte gehen an keinen Server. Den Link
+aufbewahren: Wer in einer späteren Lektion das Gerät wechselt oder gefehlt hat, lädt die Werte
+damit nach.
 
 ## Einstieg: Begriffswolke und Grafik
 
@@ -84,5 +94,5 @@ Messgerät, Störgrössen, Genauigkeit, Wiederholung, Dokumentation.
 - **«Luftzug» wird als Schwachstelle fast immer genannt.** Bestätigen, aber die Tragweite noch
   nicht auflösen.
 - **Wird es knapp:** Aufgabe 4 (Beobachtung oder Beleg) als Hausaufgabe; die Sicherung nicht
-  kürzen. Der Einstieg ist mit zehn Minuten dicht – die Begriffswolke nicht ausdiskutieren.
+  kürzen.
 - **Geruch:** Nach dem Experiment lüften. Essigessenz reizt – Schale nicht herumreichen.

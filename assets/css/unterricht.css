@@ -1072,7 +1072,11 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .messwerte-feld { width: 7rem; }
 .messwerte-weg .link-knopf { text-decoration: none; font-size: 1rem; line-height: 1; padding: 0 .3rem; }
 .messwerte-weg .link-knopf:hover { color: var(--text); background: var(--marker); }
-.sim-leiste { margin: 0 0 1rem; font-size: .82rem; }
+.sim-leiste { margin: 0 0 1rem; font-size: .82rem; color: var(--text-muted); }
+.sim-hinweis { color: var(--text); }
+.sim-hinweis.ok { color: var(--sus); font-weight: 600; }
+.sim-linkfeld { display: block; width: 100%; margin: -.6rem 0 1rem; font-family: var(--font-mono); font-size: .78rem; }
+.sim-linkfeld[hidden] { display: none; }
 
 /* Schaubild */
 .schaubild { margin: 1.2rem 0 1.4rem; }
@@ -1130,7 +1134,7 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 
 @media print {
   .simulation { border: 1px dashed #888; background: none; padding: .4rem .7rem; }
-  .sim-leiste, .schaubild-wahl input, .messwerte-weg { display: none !important; }
+  .sim-leiste, .sim-linkfeld, .schaubild-wahl input, .messwerte-weg { display: none !important; }
   .schaubild-figur { border-color: #999; break-inside: avoid; }
   .prose figure.grafik { border-color: #999; break-inside: avoid; max-width: 13cm; }
   .schaubild svg .punkt { fill: #000; fill-opacity: 1; }

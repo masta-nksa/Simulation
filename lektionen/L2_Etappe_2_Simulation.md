@@ -102,7 +102,7 @@ zwei bis drei Sätzen, so dass jemand anderes es wiederholen könnte.
 ## Aufgabe 4 – Vergleich mit dem Experiment
 
 Hier stehen die Messwerte aus dem Experiment von Lektion 1. Fehlen sie auf diesem Gerät,
-tragen Sie die Werte von der Tafel ein.
+öffnen Sie den Link Ihrer Lehrperson und kehren Sie danach auf diese Seite zurück.
 
 <div class="messtabelle" data-id="essig" data-spalten="Abstand (m);Zeit (s)" data-zeilen="5"></div>
 

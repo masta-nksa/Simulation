@@ -20,6 +20,11 @@
      data-zeilen   Anzahl leerer Zeilen zum Ausfüllen (Standard 5)
      data-fest     Die Tabelle wird von einer Simulation gefüllt; von Hand
                    lassen sich nur Zeilen löschen.
+     data-teilen   Knopf «Link mit diesen Messwerten kopieren». Der Link
+                   enthält die Werte selbst (hinter dem #, sie gehen an keinen
+                   Server). Wer ihn öffnet, hat die Tabelle auf seinem Gerät –
+                   so kommen Messwerte, die am Beamer gesammelt wurden, zur
+                   ganzen Klasse.
 
    SCHAUBILD
      <div class="schaubild" data-quelle="brown" data-kurven="linear;quadratisch"></div>
@@ -177,12 +182,58 @@
       var mehr = el("button", { type: "button", class: "link-knopf" }, "Zeile hinzufügen");
       mehr.addEventListener("click", function () { tbody.appendChild(zeileBauen(null, tbody.children.length + 1)); });
       leiste.appendChild(mehr);
+      if (kasten.hasAttribute("data-teilen")) teilenKnopf(kasten, id, leiste, felderLesen);
       zeichneOffen();
     }
     document.addEventListener("sim:daten", function (ev) {
       if (ev.detail.id !== id || ev.detail.quelle === kasten) return;
       if (fest) zeichneFest(); else zeichneOffen();
     });
+  }
+
+  // ------------------------------------------------------------ Messwerte teilen
+  // Die Werte stehen im Link hinter dem #: «#werte=essig:1,5_40;2_55» – Zeilen
+  // mit ; getrennt, Spalten mit _ (das Komma bleibt für Dezimalzahlen frei). Dieser
+  // Teil der Adresse wird nicht an den Server geschickt.
+  var MARKE = "#werte=";
+  function sauber(v) { return String(v == null ? "" : v).replace(/[^0-9.,\-]/g, "").slice(0, 12); }
+  function teilenKnopf(kasten, id, leiste, zeilenLesen) {
+    var knopf = el("button", { type: "button", class: "link-knopf" }, "Link mit diesen Messwerten kopieren");
+    var meldung = el("span", { class: "sim-hinweis", "aria-live": "polite" });
+    var feld = el("input", { type: "text", class: "luecke-feld sim-linkfeld", readonly: "readonly", "aria-label": "Link mit den Messwerten", hidden: "hidden" });
+    knopf.addEventListener("click", function () {
+      var zeilen = zeilenLesen().filter(function (z) { return z.some(function (v) { return sauber(v) !== ""; }); });
+      if (!zeilen.length) { meldung.textContent = "Die Tabelle ist noch leer."; return; }
+      var link = location.origin + location.pathname + MARKE + id + ":" +
+        zeilen.map(function (z) { return z.map(sauber).join("_"); }).join(";");
+      function zeigen(kopiert) {
+        feld.value = link; feld.hidden = false;
+        meldung.textContent = kopiert ? "Link kopiert (" + zeilen.length + " Zeilen). Wer ihn öffnet, erhält diese Messwerte."
+          : "Link markieren und kopieren:";
+        if (!kopiert) { feld.focus(); feld.select(); }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(function () { zeigen(true); }, function () { zeigen(false); });
+      else zeigen(false);
+    });
+    leiste.append(" · ", knopf, " ", meldung);
+    leiste.after(feld);
+  }
+  // Beim Laden: Stehen Messwerte im Link, übernehmen – nach Rückfrage, falls
+  // auf dem Gerät schon andere stehen.
+  function geteilteWerteLaden() {
+    if (location.hash.indexOf(MARKE) !== 0) return null;
+    var roh; try { roh = decodeURIComponent(location.hash.slice(MARKE.length)); } catch (e) { return null; }
+    var m = roh.match(/^([a-z0-9-]{1,30}):(.*)$/);
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { /* bleibt stehen */ }
+    if (!m) return null;
+    var zeilen = m[2].split(";").slice(0, 200).map(function (z) { return z.split("_").slice(0, 8).map(sauber); })
+      .filter(function (z) { return z.some(function (v) { return v !== ""; }); });
+    if (!zeilen.length) return null;
+    var alt = Daten.lesen(m[1]);
+    if (alt.length && JSON.stringify(alt) !== JSON.stringify(zeilen) &&
+        !window.confirm("Auf diesem Gerät sind schon Messwerte gespeichert. Durch die geteilten Messwerte ersetzen?")) return null;
+    Daten.schreiben(m[1], zeilen);
+    return { id: m[1], anzahl: zeilen.length };
   }
 
   // ------------------------------------------------------------ Schaubild
@@ -384,7 +435,19 @@
       }
     });
   }
-  function startSeite() { start(document); }
+  function geteiltMelden(geteilt) {
+    if (!geteilt) return;
+    var t = document.querySelector('.messtabelle[data-id="' + geteilt.id + '"] .sim-leiste');
+    if (t) t.appendChild(el("span", { class: "sim-hinweis ok" }, " · Geteilte Messwerte geladen (" + geteilt.anzahl + " Zeilen)."));
+  }
+  function startSeite() {
+    var geteilt = geteilteWerteLaden();
+    start(document);
+    geteiltMelden(geteilt);
+  }
+  // Ist die Seite schon offen und der Link wird in dieselbe Registerkarte
+  // eingefügt, lädt der Browser nicht neu – nur der Teil hinter dem # ändert.
+  window.addEventListener("hashchange", function () { geteiltMelden(geteilteWerteLaden()); });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startSeite);
   else startSeite();
 

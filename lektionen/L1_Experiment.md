@@ -33,14 +33,17 @@ prüfen.
 
 ## Aufgabe 2 – Messen
 
+**Vor dem Experiment:** Ihr Abstand zur Schale wird mit der Schnur gemessen. Tragen Sie ihn ein.
+
+- Mein Abstand zur Schale: <span class="luecke" data-breite="6"></span> Meter
+
 **Während des Experiments:** Schliessen Sie die Augen. Sobald Sie den Essig riechen, öffnen Sie
 die Augen, lesen die Zeit auf der Stoppuhr ab und merken sie sich. Bleiben Sie sitzen und
 schreiben Sie nichts auf – jede Bewegung erzeugt Luftzug.
 
-**Nach dem Experiment:** Halten Sie zuerst Ihren eigenen Messwert fest.
+**Nach dem Experiment:** Tragen Sie Ihre Zeit ein.
 
 - Meine Zeit: <span class="luecke" data-breite="6"></span> Sekunden
-- Mein Abstand zur Schale: <span class="luecke" data-breite="6"></span> Meter
 
 Wer nichts gerochen hat, lässt die Zeit leer. Auch das ist ein Ergebnis.
 

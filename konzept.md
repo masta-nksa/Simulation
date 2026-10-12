@@ -145,14 +145,15 @@ zurückliegt, holt in der Pufferlektion auf.
 Input (15 Min.): Begriffswolke zum Wort Simulation, danach die Grafik mit den
 drei Standbeinen, dann die Frage zum Glas mit der stark riechenden Substanz –
 was passiert, warum, wie prüfen? Jede Person hält ihre Gedanken und eine
-Vorhersage schriftlich fest. Das Essigessenz-Experiment dauert fünf Minuten:
-Alle schliessen die Augen; wer den Essig riecht, öffnet sie, liest die Zeit ab
-und merkt sie sich. Niemand bewegt sich, damit kein Luftzug entsteht. Danach
-wird jede Person mit der Schnur ausgemessen, die Werte werden am Beamer
-gesammelt und der Klasse als Link gegeben (7 Min.). In der Selbstlernphase
-(11 Min.) werten die Schülerinnen und Schüler das Experiment aus: mindestens
-fünf Schwachstellen, anekdotische Evidenz gegen kontrolliertes Experiment.
-Sicherung (7 Min.): Schwachstellen sammeln, Frage für Lektion 2 stellen.
+Vorhersage schriftlich fest. Vor dem Experiment wird der Abstand jeder Person
+zur Schale mit der Schnur gemessen (5 Min.). Das Essigessenz-Experiment selbst
+dauert fünf Minuten: Alle schliessen die Augen; wer den Essig riecht, öffnet
+sie, liest die Zeit ab und merkt sie sich. Niemand bewegt sich, damit kein
+Luftzug entsteht. Danach werden die Werte am Beamer gesammelt und der Klasse
+als Link gegeben (5 Min.). In der Selbstlernphase (9 Min.) werten die
+Schülerinnen und Schüler das Experiment aus: mindestens fünf Schwachstellen,
+anekdotische Evidenz gegen kontrolliertes Experiment. Sicherung (6 Min.):
+Schwachstellen sammeln, Frage für Lektion 2 stellen.
 
 Das Experiment steht am Anfang, weil die Kritik daran die Simulation motiviert:
 Was im Schulzimmer nicht kontrollierbar ist, lässt sich im Modell kontrollieren.

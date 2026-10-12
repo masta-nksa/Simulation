@@ -26,28 +26,29 @@ reihenfolge: 1
 | 0–5 | Begriffswolke | «Woran denken Sie beim Begriff Simulation?» Drei Begriffe eingeben, Wolke kurz kommentieren. | Particify, Einstieg |
 | 5–10 | Drei Standbeine | Grafik zeigen: Theorie, Experiment, Simulation – und rechts das Validieren. Nur benennen, nicht erklären. | Einstieg |
 | 10–15 | Frage und Vorhersage | «Im Glas ist eine stark riechende Substanz. Was passiert, wenn ich es öffne? Warum? Wie prüfen wir das?» Jede Person hält ihre Gedanken schriftlich fest (Aufgabe 1). | Das Experiment |
-| 15–20 | Experiment | Augen zu, Schale aufstellen, Stoppuhr starten. Nach fünf Minuten abbrechen. | Essigessenz, Stoppuhr |
-| 20–27 | Ausmessen und sammeln | Abstand jeder Person mit der Schnur messen; Abstand und Zeit in die Messtabelle am Beamer eintragen, Link teilen (Aufgabe 2). | Schnur, Das Experiment |
-| 27–38 | Selbstlernphase | Schaubild ansehen, mit der Vorhersage vergleichen, Schwachstellen suchen (Aufgabe 3), Beobachtung oder Beleg (Aufgabe 4). | Das Experiment |
-| 38–45 | Erfahrungen festhalten | Schwachstellen sammeln und gruppieren. Leitfrage 3 der Seite «Das Wichtigste» offen lassen. | Das Wichtigste L1 |
+| 15–20 | Ausmessen | Abstand jeder Person zur Schale mit der Schnur messen; jede Person trägt ihren Abstand ein (Aufgabe 2). | Schnur, Das Experiment |
+| 20–25 | Experiment | Augen zu, Essigessenz in die Schale, Stoppuhr starten. Nach fünf Minuten abbrechen. | Essigessenz, Stoppuhr |
+| 25–30 | Werte sammeln | Jede Person nennt Abstand und Zeit; in die Messtabelle am Beamer eintragen, Link teilen. | Das Experiment |
+| 30–39 | Selbstlernphase | Schaubild ansehen, mit der Vorhersage vergleichen, Schwachstellen suchen (Aufgabe 3), Beobachtung oder Beleg (Aufgabe 4). | Das Experiment |
+| 39–45 | Erfahrungen festhalten | Schwachstellen sammeln und gruppieren. Leitfrage 3 der Seite «Das Wichtigste» offen lassen. | Das Wichtigste L1 |
 
 ## Durchführung des Experiments
 
-1. Alle sitzen an ihrem Platz und schliessen die Augen. So sieht niemand, wann die anderen
-   reagieren.
-2. Essigessenz in die Schale giessen, Stoppuhr am Beamer starten.
-3. Wer den Essig riecht, öffnet die Augen, liest die Zeit ab und merkt sie sich. Niemand steht
+1. **Vor dem Experiment ausmessen:** Mit der Schnur für jede Person den Abstand zur Schale
+   messen. Jede Person trägt ihren Abstand auf der Seite ein. Danach bleibt alles an seinem
+   Platz.
+2. Alle schliessen die Augen. So sieht niemand, wann die anderen reagieren.
+3. Essigessenz in die Schale giessen, Stoppuhr am Beamer starten.
+4. Wer den Essig riecht, öffnet die Augen, liest die Zeit ab und merkt sie sich. Niemand steht
    auf oder trägt etwas ein – jede Bewegung erzeugt Luftzug.
-4. Nach fünf Minuten abbrechen. Wer bis dahin nichts gerochen hat, liefert «keinen Messwert» –
-   auch das wird festgehalten (Zeile mit Abstand, aber ohne Zeit).
-5. Jede Person notiert ihre Zeit auf der Seite. Dann wird mit der Schnur für jede Person der
-   Abstand zur Schale gemessen (rund fünf Minuten).
+5. Nach fünf Minuten abbrechen. Jede Person trägt ihre Zeit ein. Wer nichts gerochen hat,
+   liefert «keinen Messwert» – auch das wird festgehalten (Zeile mit Abstand, aber ohne Zeit).
 
 ## Messwerte sammeln und teilen
 
 1. Die Seite «Das Experiment» auf dem eigenen Gerät am Beamer öffnen.
-2. Beim Ausmessen nennt jede Person ihre Zeit; Abstand und Zeit in die Messtabelle eintragen
-   («Zeile hinzufügen» für weitere Zeilen). Das Schaubild entsteht dabei vor der Klasse.
+2. Jede Person nennt ihren Abstand und ihre Zeit; beides in die Messtabelle eintragen («Zeile
+   hinzufügen» für weitere Zeilen). Das Schaubild entsteht dabei vor der Klasse.
 3. Unter der Tabelle auf «Link mit diesen Messwerten kopieren» klicken und den Link der Klasse
    geben, zum Beispiel im Klassenchat. Wer ihn öffnet, hat alle Werte auf dem eigenen Gerät.
 

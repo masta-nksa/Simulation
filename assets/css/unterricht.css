@@ -1063,6 +1063,8 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 /* Messtabelle: von Hand ausgefüllt oder von einer Simulation geschrieben */
 .messtabelle { margin: 1.1rem 0; }
 .messtabelle .table-scroll { margin-bottom: .3rem; }
+.messtabelle[data-fest] .table-scroll { max-height: 21rem; overflow-y: auto; }
+.messtabelle[data-fest] .messwerte thead th { position: sticky; top: 0; background: var(--bg); }
 .prose .messtabelle table.messwerte { width: auto; min-width: min(100%, 22rem); margin-bottom: .3rem; }
 .prose .messwerte th, .prose .messwerte td { padding: .3rem .7rem; }
 .prose .messwerte td { font-family: var(--font-meta); font-size: .86rem; }
@@ -1148,6 +1150,7 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
   .simulation { border: 1px dashed #888; background: none; padding: .4rem .7rem; }
   .sim-leiste, .sim-linkfeld, .schaubild-wahl input, .messwerte-weg { display: none !important; }
   .schaubild-figur { border-color: #999; break-inside: avoid; }
+  .messtabelle[data-fest] .table-scroll { max-height: none; overflow: visible; }
   .prose figure.grafik { border-color: #999; break-inside: avoid; max-width: 13cm; }
   .schaubild svg .punkt { fill: #000; fill-opacity: 1; }
   .prose details.regeln { break-inside: avoid; }

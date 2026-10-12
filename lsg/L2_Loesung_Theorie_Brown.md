@@ -84,3 +84,11 @@ Luftströmung. Experiment und Modell untersuchen nicht denselben Vorgang.
 
 **Aufgabe 3.** Mehrere Antworten sind richtig: Luftströmung, dritte Dimension, eine Quelle mit
 Nachschub, verschiedene Teilchensorten, Hindernisse. Am meisten verändert die Luftströmung.
+
+**Aufgabe 4 – Dauerlauf**
+
+- Besser zu erkennen sind die Form der Kurve (ein Bogen, der immer steiler wird) und die
+  Streuung, die mit dem Abstand zunimmt.
+- Verloren gehen die Wiederholungen beim selben Abstand: Wie stark die Zeit bei einem festen
+  Abstand streut, lässt sich schlecht sagen, und ein Ausreisser fällt nicht auf. Dieselbe
+  Schwäche hatte das Experiment im Schulzimmer.

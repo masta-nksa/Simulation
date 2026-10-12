@@ -3,7 +3,7 @@ lektion: 2
 zielgruppe: sus
 art: zusatz
 titel: "Zusatz: Was fehlt dem Modell?"
-kurz: "Freiwillig: die übrigen Parameter untersuchen und nachrechnen, wie schnell reine Diffusion wirklich ist"
+kurz: "Freiwillig: die übrigen Parameter untersuchen, nachrechnen, wie schnell reine Diffusion wirklich ist, und im Dauerlauf viele Messwerte sammeln"
 reihenfolge: 60
 ---
 
@@ -57,3 +57,25 @@ Im Experiment kam der Geruch nach Sekunden oder Minuten an. Was schliessen Sie d
 Was fehlt dem Modell, und was würden Sie zuerst einbauen? Begründen Sie.
 
 <div class="antwort" data-zeilen="4" data-loesung="Mögliche Antworten: Luftströmung (ein zusätzlicher gemeinsamer Schub in eine Richtung) – sie ist im Zimmer der wichtigste Faktor. Die dritte Dimension. Eine Quelle, die laufend neue Teilchen abgibt. Verschiedene Sorten von Teilchen, die unterschiedlich schnell sind. Hindernisse wie Möbel und Personen. Sinnvoll ist, zuerst das einzubauen, was das Ergebnis am stärksten verändert."></div>
+
+## Aufgabe 4 – Dauerlauf
+
+Im Experiment sass jede Person in einem anderen Abstand und hat genau einmal gemessen. Das
+lässt sich nachstellen: Im **Dauerlauf** wählt die Simulation den Abstand selbst zufällig und
+reiht Durchgang an Durchgang, bis Sie stoppen.
+
+Lassen Sie den Dauerlauf laufen, bis etwa 40 Messwerte beisammen sind.
+
+<div class="simulation" data-modell="brown" data-ziel="brown-serie" data-dauerlauf></div>
+
+<div class="messtabelle" data-id="brown-serie" data-spalten="Abstand (Zellen);Zeit (Zeitschritte)" data-fest></div>
+
+<div class="schaubild" data-quelle="brown-serie" data-x="Abstand (Zellen)" data-y="Zeit (Zeitschritte)" data-kurven="linear;quadratisch"></div>
+
+Was erkennen Sie in diesem Schaubild besser als mit zwölf Messwerten bei vier Abständen?
+
+<div class="antwort" data-zeilen="2" data-loesung="Die Form der Kurve: Die Punkte liegen auf einem Bogen, der immer steiler wird. Und die Streuung: Bei grossen Abständen liegen die Zeiten viel weiter auseinander als bei kleinen."></div>
+
+Und was geht verloren, wenn man die Abstände dem Zufall überlässt, statt sie gezielt zu wählen?
+
+<div class="antwort" data-zeilen="3" data-loesung="Beim selben Abstand gibt es nur wenige oder gar keine Wiederholungen. Man kann darum schlecht sagen, wie stark die Zeit bei einem festen Abstand streut, und ein einzelner Ausreisser fällt nicht auf. Wer einen Parameter gezielt verändert und jede Einstellung mehrmals misst, sieht beides. Das Experiment im Schulzimmer hatte genau diese Schwäche: jeder Abstand nur einmal."></div>

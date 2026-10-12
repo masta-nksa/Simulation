@@ -17,6 +17,11 @@
      Teilchen, das im Detektor blieb, in jedem Schritt erneut.
 
      <div class="simulation" data-modell="brown" data-ziel="brown"></div>
+     data-ziel       Messtabelle für die Ergebnisse: Abstand, Zeit, Anzahl
+                     Teilchen, Schwelle
+     data-dauerlauf  zusätzlicher Knopf «Dauerlauf»: Die Simulation wählt den
+                     Abstand selbst zufällig und reiht Durchgang an Durchgang,
+                     bis man sie stoppt.
    ========================================================================== */
 
 (function () {
@@ -36,11 +41,15 @@
 
     var xs, ys, da, n, zeit, angekommen, zustand, rahmen = null;
     var mitte = HOEHE >> 1;
+    var dauer = false, dauerZahl = 0, DAUER_HOECHSTENS = 200;   // Dauerlauf: läuft er, wie viele Durchgänge
 
     // ---------------------------------------------------------- Regler
-    var abstand = h.regler({ titel: "Abstand des Detektors", min: 10, max: 100, schritt: 5, wert: 30, einheit: "Zellen", beiAenderung: neu });
-    var anzahl = h.regler({ titel: "Anzahl Teilchen", min: 100, max: 800, schritt: 50, wert: 400, beiAenderung: neu });
-    var schwelle = h.regler({ titel: "Schwelle des Detektors", min: 1, max: 10, wert: 3, einheit: "Teilchen", beiAenderung: neu });
+    // Wer an einem Regler dreht, beendet den Dauerlauf: Sonst stünden Messwerte
+    // mit verschiedenen Einstellungen unbemerkt in derselben Tabelle.
+    function geaendert() { dauer = false; neu(); }
+    var abstand = h.regler({ titel: "Abstand des Detektors", min: 10, max: 100, schritt: 5, wert: 30, einheit: "Zellen", beiAenderung: geaendert });
+    var anzahl = h.regler({ titel: "Anzahl Teilchen", min: 100, max: 800, schritt: 50, wert: 400, beiAenderung: geaendert });
+    var schwelle = h.regler({ titel: "Schwelle des Detektors", min: 1, max: 10, wert: 3, einheit: "Teilchen", beiAenderung: geaendert });
     var TEMPI = [1, 5, 50], TEMPO_NAME = ["langsam", "schnell", "sehr schnell"];
     var tempo = h.regler({ titel: "Tempo der Anzeige", min: 0, max: 2, wert: 1, format: function (v) { return TEMPO_NAME[v]; } });
 
@@ -54,11 +63,24 @@
       beschriften();
     }, "haupt");
     var knopfNeu = h.knopf("Abbrechen", function () { neu(); });
+    // Dauerlauf: Abstand zufällig wählen, Durchgang rechnen, Messwert eintragen,
+    // von vorn – bis zum Stopp.
+    var knopfDauer = kasten.hasAttribute("data-dauerlauf") ? h.knopf("Dauerlauf starten", function () {
+      if (dauer) { dauer = false; neu(); return; }
+      dauer = true; dauerZahl = 0; naechster();
+    }) : null;
+    function naechster() {
+      if (dauerZahl >= DAUER_HOECHSTENS) { dauer = false; neu(); return; }
+      dauerZahl++;
+      abstand.setzen(10 + 5 * Math.floor(Math.random() * 19));   // 10, 15, … 100 Zellen
+      neu(); zustand = "laeuft"; beschriften(); schleife();
+    }
 
     var reglerBox = h.el("div", { class: "sim-reglerfeld" });
     reglerBox.append(abstand.element, anzahl.element, schwelle.element, tempo.element);
     var leiste = h.el("div", { class: "sim-knoepfe" });
     leiste.append(knopfStart, knopfNeu);
+    if (knopfDauer) leiste.appendChild(knopfDauer);
     kasten.append(bild.element, status, leiste, reglerBox);
 
     // ---------------------------------------------------------- Modell
@@ -96,7 +118,7 @@
       rahmen = requestAnimationFrame(function takt() {
         rahmen = null;
         if (zustand !== "laeuft") return;
-        var schritte = TEMPI[tempo.wert()];
+        var schritte = dauer ? Math.max(TEMPI[tempo.wert()], 50) : TEMPI[tempo.wert()];
         for (var s = 0; s < schritte; s++) {
           if (schritt()) {
             zustand = "fertig";
@@ -107,6 +129,7 @@
         }
         zeichne(); beschriften();
         if (zustand === "laeuft") rahmen = requestAnimationFrame(takt);
+        else if (dauer) rahmen = requestAnimationFrame(function () { rahmen = null; if (dauer) naechster(); });
       });
     }
 
@@ -114,7 +137,16 @@
     function beschriften() {
       var k = schwelle.wert();
       knopfStart.textContent = zustand === "laeuft" ? "Pause" : zustand === "pause" ? "Weiter" : "Durchgang starten";
-      knopfNeu.hidden = !(zustand === "laeuft" || zustand === "pause");
+      knopfStart.hidden = dauer;
+      knopfNeu.hidden = dauer || !(zustand === "laeuft" || zustand === "pause");
+      if (knopfDauer) {
+        knopfDauer.textContent = dauer ? "Dauerlauf stoppen" : "Dauerlauf starten";
+        knopfDauer.classList.toggle("haupt", dauer);
+      }
+      if (dauer) {
+        status.textContent = "Dauerlauf · Durchgang " + dauerZahl + " · Abstand " + abstand.wert() + " Zellen · Zeit: " + zeit + " Zeitschritte";
+        return;
+      }
       if (zustand === "bereit") status.textContent = "Bereit. Die Teilchen sind in der Quelle eingeschlossen; «Durchgang starten» öffnet sie.";
       else if (zustand === "fertig") status.textContent = "Der Detektor hat nach " + zeit + " Zeitschritten angeschlagen. Der Messwert steht in der Tabelle.";
       else if (zustand === "abbruch") status.textContent = "Abgebrochen: Nach " + zeit + " Zeitschritten hat der Detektor noch nicht angeschlagen.";

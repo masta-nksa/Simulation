@@ -56,6 +56,11 @@ Leitfragen projizieren → 1 Min. zu zweit → sammeln.
   als «linear», aber nicht perfekt. Das ist kein Fehler, sondern ein Anlass für die Frage, wie
   gut «gut genug» ist – sie kommt in Lektion 4 beim Validieren wieder.
 - **Messwerte löschen:** Einzelne Zeilen mit dem Kreuz, alle mit dem Link unter der Tabelle.
+- **Dauerlauf für den Beamer:** In der Zusatz-Etappe (Aufgabe 4) wählt die Simulation den
+  Abstand selbst zufällig und reiht Durchgang an Durchgang, bis man stoppt. In weniger als einer Minute
+  entsteht so eine Punktwolke, die sich in der Sicherung neben das Schaubild des Experiments
+  stellen lässt. In Etappe 2 fehlt der Knopf absichtlich: Dort sollen die SuS den Abstand
+  selbst gezielt verändern.
 - **Programmcode:** Der aufklappbare Kasten zeigt die Regel als Python. Niemand muss ihn
   verstehen; er zeigt, dass hinter der Oberfläche nichts weiter steckt.
 - **Lösungen einblenden:** auf einer Unterlage «ockham» tippen (nicht in einem Eingabefeld)

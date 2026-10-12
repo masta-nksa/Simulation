@@ -41,7 +41,7 @@ Die Zeit für eine Strecke x lässt sich abschätzen mit
 
 **t ≈ x² / (2 · D)**
 
-Wie lange bräuchte reine Diffusion für **einen Meter**?
+Wie lange bräuchte reine Diffusion für **einen Meter** (100 cm)?
 
 - Rechnung: 1 m² / (2 · 0,000012 m²/s) ≈
   <span class="luecke" data-typ="groesse" data-antwort="42000" data-breite="8"></span> Sekunden

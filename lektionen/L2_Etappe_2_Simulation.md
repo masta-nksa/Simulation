@@ -104,11 +104,11 @@ zwei bis drei Sätzen, so dass jemand anderes es wiederholen könnte.
 Hier stehen die Messwerte aus dem Experiment von Lektion 1. Fehlen sie auf diesem Gerät,
 öffnen Sie den Link Ihrer Lehrperson und kehren Sie danach auf diese Seite zurück.
 
-<div class="messtabelle" data-id="essig" data-spalten="Abstand (m);Zeit (s)" data-zeilen="5"></div>
+<div class="messtabelle" data-id="essig" data-spalten="Abstand (cm);Zeit (s)" data-zeilen="5"></div>
 
-<div class="schaubild" data-quelle="essig" data-x="Abstand (m)" data-y="Zeit (s)" data-kurven="linear;quadratisch" data-leer="Noch keine Messwerte aus dem Experiment"></div>
+<div class="schaubild" data-quelle="essig" data-x="Abstand (cm)" data-y="Zeit (s)" data-kurven="linear;quadratisch" data-leer="Noch keine Messwerte aus dem Experiment"></div>
 
-Die Simulation misst in Zellen und Zeitschritten, das Experiment in Metern und Sekunden. Die
+Die Simulation misst in Zellen und Zeitschritten, das Experiment in Zentimetern und Sekunden. Die
 Zahlen lassen sich deshalb nicht direkt vergleichen – wohl aber die **Form** der beiden
 Schaubilder.
 

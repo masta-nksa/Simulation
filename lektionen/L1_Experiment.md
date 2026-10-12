@@ -35,7 +35,7 @@ prüfen.
 
 **Vor dem Experiment:** Ihr Abstand zur Schale wird mit der Schnur gemessen. Tragen Sie ihn ein.
 
-- Mein Abstand zur Schale: <span class="luecke" data-breite="6"></span> Meter
+- Mein Abstand zur Schale: <span class="luecke" data-breite="6"></span> cm
 
 **Während des Experiments:** Schliessen Sie die Augen. Sobald Sie den Essig riechen, öffnen Sie
 die Augen, lesen die Zeit auf der Stoppuhr ab und merken sie sich. Bleiben Sie sitzen und
@@ -51,9 +51,9 @@ Wer nichts gerochen hat, lässt die Zeit leer. Auch das ist ein Ergebnis.
 einem Link. Öffnen Sie den Link – die Tabelle füllt sich von selbst, und das Schaubild
 entsteht. Ohne Link tragen Sie die Werte von der Tafel ein.
 
-<div class="messtabelle" data-id="essig" data-spalten="Abstand (m);Zeit (s)" data-zeilen="6" data-teilen></div>
+<div class="messtabelle" data-id="essig" data-spalten="Abstand (cm);Zeit (s)" data-zeilen="6" data-teilen></div>
 
-<div class="schaubild" data-quelle="essig" data-x="Abstand (m)" data-y="Zeit (s)" data-leer="Noch keine Messwerte eingetragen"></div>
+<div class="schaubild" data-quelle="essig" data-x="Abstand (cm)" data-y="Zeit (s)" data-leer="Noch keine Messwerte eingetragen"></div>
 
 Was zeigen die Messwerte? Vergleichen Sie mit Ihrer Vorhersage.
 

@@ -12,7 +12,7 @@
                    Ergebnis schreibt
 
    MESSTABELLE
-     <div class="messtabelle" data-id="essig" data-spalten="Abstand (m);Zeit (s)" data-zeilen="6"></div>
+     <div class="messtabelle" data-id="essig" data-spalten="Abstand (cm);Zeit (s)" data-zeilen="6"></div>
      data-id       Kennung. Sie gilt für die ganze Einheit: Eine Tabelle, die
                    in Lektion 1 ausgefüllt wird, lässt sich in Lektion 2 als
                    Schaubild zeigen.

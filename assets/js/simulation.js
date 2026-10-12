@@ -276,8 +276,32 @@
     var figur = el("figure", { class: "schaubild-figur" });
     var bild = svg("svg", { viewBox: "0 0 " + B + " " + H, role: "img" });
     var wahl = el("div", { class: "schaubild-wahl" });
-    figur.appendChild(bild);
+    // Kleines Schild mit den Werten, wenn man mit der Maus über einen Punkt,
+    // einen Mittelwert oder eine Vergleichskurve fährt (oder ihn antippt).
+    var schild = el("div", { class: "schaubild-schild", hidden: "hidden", "aria-hidden": "true" });
+    figur.append(bild, schild);
     kasten.append(figur, wahl);
+
+    function schildZeigen(ev, text) {
+      schild.textContent = text; schild.hidden = false;
+      var r = figur.getBoundingClientRect();
+      var x = ev.clientX - r.left + 14, y = ev.clientY - r.top - schild.offsetHeight - 10;
+      if (x + schild.offsetWidth > r.width - 4) x = ev.clientX - r.left - schild.offsetWidth - 14;
+      schild.style.left = Math.max(4, x) + "px";
+      schild.style.top = Math.max(4, y) + "px";
+    }
+    function schildWeg() { schild.hidden = true; }
+    // Unsichtbare, grössere Fläche über einem Zeichen, damit man es leicht trifft
+    function ziel(form, text, sichtbar) {
+      form.setAttribute("class", "ziel");
+      function an(ev) { schildZeigen(ev, typeof text === "function" ? text(ev) : text); if (sichtbar) sichtbar.classList.add("aktiv"); }
+      function aus() { schildWeg(); if (sichtbar) sichtbar.classList.remove("aktiv"); }
+      form.addEventListener("pointerenter", an);
+      form.addEventListener("pointermove", an);
+      form.addEventListener("pointerdown", an);
+      form.addEventListener("pointerleave", aus);
+      bild.appendChild(form);
+    }
 
     kurven.forEach(function (k) {
       var id = "kurve-" + quelle + "-" + k;
@@ -322,6 +346,7 @@
 
       // Vergleichskurven
       var m = mittel(punkte);
+      var ziele = [];   // Flächen zum Überfahren – zuletzt gezeichnet, damit sie oben liegen
       kurven.forEach(function (k) {
         var abw = wahl.querySelector('.schaubild-abw[data-kurve="' + k + '"]');
         abw.textContent = "";
@@ -337,7 +362,14 @@
           cp.appendChild(svg("rect", { x: L, y: O, width: B - L - R, height: H - O - U }));
           bild.appendChild(cp);
         }
-        bild.appendChild(svg("path", { d: d, class: "kurve", "stroke-dasharray": KURVEN[k].strich, "clip-path": "url(#" + clip + ")" }));
+        var linie = svg("path", { d: d, class: "kurve", "stroke-dasharray": KURVEN[k].strich, "clip-path": "url(#" + clip + ")" });
+        bild.appendChild(linie);
+        ziele.push([svg("path", { d: d, "clip-path": "url(#" + clip + ")" }), function (ev) {
+          // Wert der Kurve an der Stelle der Maus
+          var r = bild.getBoundingClientRect();
+          var xw = Math.max(0, Math.min(ax.max, ((ev.clientX - r.left) * B / r.width - L) / (B - L - R) * ax.max));
+          return "Vergleichskurve " + k + "\n" + (tx || "x") + ": " + zeige(Math.round(xw * 10) / 10) + "\n" + (ty || "y") + ": " + zeige(Math.round(KURVEN[k].wert(c, xw)));
+        }, linie]);
         // Wie gut passt die Kurve? Mittlere Abweichung von den Mittelwerten in Prozent.
         var s = 0, n = 0;
         m.forEach(function (q) { if (q[1] > 0) { s += Math.abs(KURVEN[k].wert(c, q[0]) - q[1]) / q[1]; n++; } });
@@ -345,11 +377,21 @@
       });
 
       // Messwerte und, wo es mehrere pro x-Wert gibt, ihr Mittelwert
-      punkte.forEach(function (p) { bild.appendChild(svg("circle", { cx: X(p[0]), cy: Y(p[1]), r: 4, class: "punkt" })); });
       m.forEach(function (q) {
         if (q[2] < 2) return;
-        bild.appendChild(svg("line", { x1: X(q[0]) - 9, y1: Y(q[1]), x2: X(q[0]) + 9, y2: Y(q[1]), class: "mittel" }));
+        var strich = svg("line", { x1: X(q[0]) - 9, y1: Y(q[1]), x2: X(q[0]) + 9, y2: Y(q[1]), class: "mittel" });
+        bild.appendChild(strich);
+        ziele.push([svg("line", { x1: X(q[0]) - 12, y1: Y(q[1]), x2: X(q[0]) + 12, y2: Y(q[1]) }),
+          "Mittelwert aus " + q[2] + " Durchgängen\n" + (tx || "x") + ": " + zeige(q[0]) + "\n" + (ty || "y") + ": " + zeige(Math.round(q[1] * 10) / 10), strich]);
       });
+      punkte.forEach(function (p) {
+        var punkt = svg("circle", { cx: X(p[0]), cy: Y(p[1]), r: 4, class: "punkt" });
+        bild.appendChild(punkt);
+        ziele.push([svg("circle", { cx: X(p[0]), cy: Y(p[1]), r: 9 }), (tx || "x") + ": " + zeige(p[0]) + "\n" + (ty || "y") + ": " + zeige(p[1]), punkt]);
+      });
+      // Reihenfolge: Kurven unten, dann Mittelwerte, Punkte zuoberst
+      schildWeg();
+      ziele.forEach(function (z) { ziel(z[0], z[1], z[2]); });
       hinweis.hidden = !m.some(function (q) { return q[2] >= 2; });
     }
 

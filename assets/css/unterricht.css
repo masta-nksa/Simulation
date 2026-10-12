@@ -1054,7 +1054,7 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .sim-knopf:hover { background: var(--marker); border-color: var(--marker); color: var(--on-marker); }
 .sim-knopf:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.sim-reglerfeld { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .7rem 1.6rem; }
+.sim-reglerfeld { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: .7rem 1.6rem; }
 .sim-regler { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: .1rem .6rem; }
 .sim-regler label { font-size: .86rem; font-weight: 600; }
 .sim-regler output { font-family: var(--font-meta); font-size: .82rem; white-space: nowrap; }
@@ -1080,7 +1080,19 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 
 /* Schaubild */
 .schaubild { margin: 1.2rem 0 1.4rem; }
-.schaubild-figur { margin: 0; padding: .6rem .6rem .3rem; border: 1px solid var(--border); background: var(--bg-elev); }
+.schaubild-figur { position: relative; margin: 0; padding: .6rem .6rem .3rem; border: 1px solid var(--border); background: var(--bg-elev); }
+/* Flächen zum Überfahren: unsichtbar, aber breiter als das Zeichen darunter */
+.schaubild svg .ziel { fill: transparent; stroke: transparent; stroke-width: 14; pointer-events: all; cursor: crosshair; }
+.schaubild svg path.ziel { fill: none; pointer-events: stroke; }
+.schaubild svg .punkt.aktiv { fill-opacity: 1; stroke: var(--marker); stroke-width: 3; }
+.schaubild svg .mittel.aktiv, .schaubild svg .kurve.aktiv { stroke: var(--marker); }
+.schaubild svg .kurve.aktiv { stroke-width: 3; }
+.schaubild-schild {
+  position: absolute; z-index: 2; pointer-events: none; white-space: pre-line;
+  padding: .3rem .55rem; border: var(--linie-b) solid var(--linie); background: var(--bg-elev); color: var(--text);
+  font-family: var(--font-meta); font-size: .78rem; line-height: 1.4;
+}
+.schaubild-schild[hidden] { display: none; }
 .schaubild-figur svg { display: block; width: 100%; height: auto; }
 .schaubild svg .raster { stroke: var(--border); stroke-width: 1; }
 .schaubild svg .achse  { stroke: var(--text); stroke-width: 1.5; }

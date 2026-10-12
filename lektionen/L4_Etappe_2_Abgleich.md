@@ -55,7 +55,7 @@ Suchen Sie in Ihrer Messtabelle aus Etappe 1 die Zeile mit dem grössten Fluss (
 <div class="messtabelle" data-id="stau" data-spalten="Dichte (Fz/km);Fluss (Fz/h);Tempo (km/h);Höchsttempo;Trödeln (%)" data-fest data-leer="Noch keine Messwerte – nehmen Sie zuerst die Messreihe in Etappe 1 auf."></div>
 
 Im Modell liegt der grösste Fluss bei einem mittleren Tempo von etwa
-<span class="luecke" data-breite="5"></span> km/h.
+<span class="luecke" data-typ="groesse" data-toleranz="0.1" data-antwort="105" data-breite="5"></span> km/h.
 
 Stimmt das Modell mit der Wirklichkeit überein?
 

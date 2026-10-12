@@ -45,13 +45,15 @@
     var tempo = h.regler({ titel: "Tempo der Anzeige", min: 0, max: 2, wert: 1, format: function (v) { return TEMPO_NAME[v]; } });
 
     var status = h.el("p", { class: "sim-status", "aria-live": "polite" });
-    var knopfStart = h.knopf("Quelle öffnen", function () {
+    // Ein Knopf startet jeden Durchgang – auch den nächsten mit gleichen Werten.
+    // Während er läuft, hält derselbe Knopf an; «Abbrechen» verwirft ihn.
+    var knopfStart = h.knopf("Durchgang starten", function () {
       if (zustand === "bereit" || zustand === "pause") { zustand = "laeuft"; schleife(); }
       else if (zustand === "laeuft") { zustand = "pause"; }
       else { neu(); zustand = "laeuft"; schleife(); }
       beschriften();
     }, "haupt");
-    var knopfNeu = h.knopf("Neuer Durchgang", function () { neu(); });
+    var knopfNeu = h.knopf("Abbrechen", function () { neu(); });
 
     var reglerBox = h.el("div", { class: "sim-reglerfeld" });
     reglerBox.append(abstand.element, anzahl.element, schwelle.element, tempo.element);
@@ -111,9 +113,9 @@
     // ---------------------------------------------------------- Anzeige
     function beschriften() {
       var k = schwelle.wert();
-      knopfStart.textContent = zustand === "bereit" ? "Quelle öffnen" : zustand === "laeuft" ? "Pause"
-        : zustand === "pause" ? "Weiter" : "Nochmals mit gleichen Werten";
-      if (zustand === "bereit") status.textContent = "Bereit. Die Teilchen sind in der Quelle eingeschlossen.";
+      knopfStart.textContent = zustand === "laeuft" ? "Pause" : zustand === "pause" ? "Weiter" : "Durchgang starten";
+      knopfNeu.hidden = !(zustand === "laeuft" || zustand === "pause");
+      if (zustand === "bereit") status.textContent = "Bereit. Die Teilchen sind in der Quelle eingeschlossen; «Durchgang starten» öffnet sie.";
       else if (zustand === "fertig") status.textContent = "Der Detektor hat nach " + zeit + " Zeitschritten angeschlagen. Der Messwert steht in der Tabelle.";
       else if (zustand === "abbruch") status.textContent = "Abgebrochen: Nach " + zeit + " Zeitschritten hat der Detektor noch nicht angeschlagen.";
       else status.textContent = "Zeit: " + zeit + " Zeitschritte · im Detektor angekommen: " + angekommen + " von " + k + (zustand === "pause" ? " · angehalten" : "");

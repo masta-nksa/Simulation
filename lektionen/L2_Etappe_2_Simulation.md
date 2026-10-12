@@ -83,7 +83,8 @@ Sekunden.
 ## Aufgabe 3 – Auswerten
 
 1. Lesen Sie im Schaubild die Mittelwerte ab (die Striche). Bei 40 Zellen dauert es etwa
-   <span class="luecke" data-breite="5"></span>-mal so lang wie bei 20 Zellen.
+   <span class="luecke" data-typ="groesse" data-toleranz="0.19" data-antwort="4.6" data-breite="5"></span>-mal so lang wie bei 20 Zellen.
+   (Fahren Sie mit der Maus über einen Strich, um den Wert zu lesen.)
 2. Blenden Sie beide Vergleichskurven ein. Besser zu den Messwerten passt die Kurve
    <span class="luecke" data-optionen="linear;quadratisch" data-antwort="quadratisch"></span>.
 3. Stimmt das mit Ihrer Vorhersage aus Aufgabe 1 überein?

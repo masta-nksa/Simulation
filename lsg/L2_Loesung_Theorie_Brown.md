@@ -44,7 +44,8 @@ Mittelwerte mit den Standardeinstellungen (400 Teilchen, Schwelle 3):
 
 **Aufgabe 3 – Auswerten**
 
-1. Etwa vier- bis fünfmal so lang.
+1. Etwa vier- bis fünfmal so lang. Weil der Zufall mitspielt, gilt alles zwischen 3 und 7 als
+   richtig.
 2. Die Kurve **quadratisch** passt deutlich besser. Sie passt nicht perfekt: Im Modell wächst
    die Zeit etwas stärker als mit dem Quadrat des Abstands.
 3. Hier gibt es keine richtige Antwort – entscheidend ist der Vergleich mit der eigenen

@@ -9,7 +9,9 @@ reihenfolge: 20
 
 # Etappe 2: Regeln von Hand
 
-**Ziel:** Sie können die vier Regeln des Nagel-Schreckenberg-Modells auf jedes Auto anwenden.
+**Ziel:** Sie können die vier Regeln des
+[Nagel-Schreckenberg-Modells](https://de.wikipedia.org/wiki/Nagel-Schreckenberg-Modell) auf
+jedes Auto anwenden.
 
 ## Die vier Regeln
 

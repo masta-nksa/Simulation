@@ -201,10 +201,18 @@ validieren? Steckbrief 2.
 ### Lektion 5: Segregation
 
 Input (5 Min.): Wie entstehen getrennte Quartiere? Etappe 1 (10 Min.): das
-Modell kennenlernen, «Parabel der Polygone» als Einstieg. Etappe 2 (17 Min.):
-Wohlfühlfaktor variieren, Segregationsmass ablesen, Schaubild. Etappe 3
-(5 Min.): Warum ist die Validierung hier besonders schwierig? Sicherung
-(8 Min.): Steckbrief 3. Zusatz: Segregation rückgängig machen.
+Modell kennenlernen und die Regel in einer kleinen Stadt von Hand anwenden.
+Etappe 2 (17 Min.): Wohlfühlfaktor variieren, den Anteil gleicher Nachbarn
+messen, Schaubild. Etappe 3 (5 Min.): Warum ist die Validierung hier besonders
+schwierig? Sicherung (8 Min.): Steckbrief 3. Zwei Zusatz-Etappen: eine
+getrennte Stadt wieder durchmischen (Regler «Vielfalt»); Mehrheit, Minderheit
+und Leerstand.
+
+Die Simulation folgt der «Parabel der Polygone» von Vi Hart und Nicky Case
+(gemeinfrei), die auf Schellings Modell von 1971 beruht. Masszahl ist der
+Anteil gleicher Nachbarn (50 % durchmischt, 100 % getrennt), weil er sich in
+einem Satz erklären lässt; die Parabel rechnet ihn auf eine Skala von 0 bis
+100 % um.
 
 Hier wenden die Schülerinnen und Schüler alle drei Schritte in einer Lektion
 selbst an. Das Modell ist bewusst ein gesellschaftliches: An ihm zeigt sich, wie

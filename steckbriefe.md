@@ -93,35 +93,35 @@ damit vergleichen, sobald Sie selbst etwas geschrieben haben.
 
 **Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Wie sich Menschen in einer Stadt auf die Quartiere verteilen – und wie daraus getrennte Quartiere entstehen können, ohne dass jemand eine starke Abneigung hat."></div>
 
 **Akteure** – Wer oder was handelt im Modell?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Personen aus zwei Gruppen (Dreiecke und Quadrate), jede auf einem Feld eines Rasters."></div>
 
 **Regeln** – Nach welchen Regeln verhalten sich die Akteure?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Wer weniger gleiche Nachbarn hat, als der Wohlfühlfaktor verlangt, ist unzufrieden und zieht in ein zufälliges freies Feld. Wer keine Nachbarn hat, ist zufrieden. Es zieht jeweils eine zufällig gewählte unzufriedene Person um."></div>
 
 **Parameter** – Was lässt sich einstellen?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Der Wohlfühlfaktor; in den Zusatz-Etappen auch die Obergrenze «Vielfalt», der Anteil der beiden Gruppen und der Anteil leerer Felder."></div>
 
 **Zufall** – Wo spielt der Zufall mit?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Bei der Startverteilung, bei der Wahl, wer umzieht, und beim neuen Feld."></div>
 
 **Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Der Anteil gleicher Nachbarn, gemittelt über alle Personen (50 % durchmischt, 100 % vollständig getrennt); dazu die Zahl der Umzüge, bis alle zufrieden sind."></div>
 
 **Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Mieten und Einkommen, Diskriminierung, Arbeitsweg, Familie, Schule, Stadtplanung, das Angebot an Wohnungen – und dass Umzüge teuer und selten sind. Alle Personen haben dieselbe Vorliebe."></div>
 
 **Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Die Entmischung echter Städte wird gemessen (z. B. mit einem Segregationsindex) und lässt sich vergleichen. Die Ursache aber kaum: Der Wohlfühlfaktor ist nicht messbar, Experimente sind unmöglich, und viele andere Gründe wirken mit. Das Modell zeigt, was möglich ist, nicht, was in einer bestimmten Stadt geschieht."></div>
 
 ## Steckbrief 4 – Krankheitsübertragung
 

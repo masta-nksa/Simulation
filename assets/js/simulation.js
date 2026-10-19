@@ -395,7 +395,7 @@
       hinweis.hidden = !m.some(function (q) { return q[2] >= 2; });
     }
 
-    var hinweis = el("p", { class: "schaubild-hinweis" }, "Punkt: ein Durchgang. Strich: Mittelwert der Durchgänge beim selben Abstand.");
+    var hinweis = el("p", { class: "schaubild-hinweis" }, "Punkt: ein Durchgang. Strich: Mittelwert der Durchgänge mit derselben Einstellung.");
     figur.appendChild(hinweis);
     if (!kasten.dataset.x || !kasten.dataset.y) {
       // Achsentitel aus der Messtabelle derselben Seite übernehmen

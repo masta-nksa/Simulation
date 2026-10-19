@@ -50,7 +50,8 @@ Zeile ist unten. Ein Stau erscheint dort als kräftiger Streifen aus stehenden A
 <div class="simulation" data-modell="stau"></div>
 
 Verändern Sie jeweils **nur einen** Parameter und stellen Sie die anderen auf die Ausgangswerte
-zurück (20 Autos, Höchsttempo 5, Trödeln 25 %).
+zurück (20 Autos, Höchsttempo 5, Trödeln 25 %). Klicken Sie nach jeder Änderung auf «Neu
+verteilen», damit die Autos wieder zufällig auf der Strasse stehen.
 
 **a) Anzahl Autos:** 10, 20, 40, 60. Was beobachten Sie?
 
@@ -60,9 +61,10 @@ zurück (20 Autos, Höchsttempo 5, Trödeln 25 %).
 
 <div class="antwort" data-zeilen="2" data-loesung="Alle fahren langsamer, aber gleichmässiger: Es stehen weniger Autos, die Staus werden kleiner oder verschwinden."></div>
 
-**c) Trödelwahrscheinlichkeit:** 0 %, 25 %, 50 %. Was beobachten Sie?
+**c) Trödelwahrscheinlichkeit:** 0 %, 25 %, 50 % – bei 20 Autos und Höchsttempo 5. Was
+beobachten Sie?
 
-<div class="antwort" data-zeilen="2" data-loesung="Bei 0 % lösen sich die Staus vom Anfang auf, und es entstehen keine neuen: Der Verkehr läuft gleichmässig. Je mehr getrödelt wird, desto häufiger und grösser werden die Staus."></div>
+<div class="antwort" data-zeilen="2" data-loesung="Bei 0 % entstehen keine neuen Staus, und alle fahren gleichmässig. Die Staus vom Anfang lösen sich meist nach wenigen Sekunden auf; manchmal bleibt ein kleiner Stau bestehen und wandert endlos rückwärts. Je mehr getrödelt wird, desto häufiger und grösser werden die Staus: Bei 50 % stehen etwa doppelt so viele Autos wie bei 25 %."></div>
 
 In welche Richtung wandert ein Stau im Raum-Zeit-Diagramm – mit der Fahrtrichtung oder
 dagegen?

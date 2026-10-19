@@ -988,19 +988,26 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .sim-regler output { font-family: var(--font-meta); font-size: .82rem; white-space: nowrap; }
 .sim-regler input[type="range"] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--accent); }
 
-/* Vergleich zweier Einstellungen (Modell «stau» mit data-vergleich): beide
-   Strecken übereinander, darunter die Regler in zwei Spalten A | B. */
+/* Vergleich zweier Einstellungen (Modell «stau» mit data-vergleich): oben die
+   gemeinsamen Knöpfe, darunter A und B in zwei klar getrennten Spalten, jede
+   mit Ring, Diagramm und Reglern. Auf dem Handy untereinander. */
+.sim-vergleich .sim-knoepfe { margin-bottom: .3rem; }
+.sim-vergleich .sim-status { min-height: 0; margin: 0 0 .9rem; }
+.sim-spalten { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 3.2rem; margin-bottom: 1.1rem; }
+.sim-spalte { display: grid; gap: .7rem; align-content: start; min-width: 0; position: relative; }
+/* Trennlinie mitten in der Lücke – beide Spalten bleiben gleich breit */
+.sim-spalte + .sim-spalte::before {
+  content: ""; position: absolute; left: -1.6rem; top: 0; bottom: 0;
+  border-left: 1px solid var(--border-strong);
+}
 .sim-seite {
-  margin: 0 0 .25rem; font-family: var(--font-meta); font-size: .76rem;
+  margin: 0; font-family: var(--font-meta); font-size: .76rem;
   font-weight: var(--label-weight); letter-spacing: var(--label-tracking); text-transform: var(--label-transform);
 }
-.sim-vergleich .sim-leinwand + .sim-seite { margin-top: .8rem; }
-.sim-vergleich-regler { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.6rem; margin-bottom: .9rem; }
-.sim-reglerspalte { display: grid; gap: .7rem; align-content: start; }
-.sim-reglerspalte + .sim-reglerspalte { border-left: 1px solid var(--border); padding-left: 1.6rem; }
 @media (max-width: 36rem) {
-  .sim-vergleich-regler { grid-template-columns: 1fr; }
-  .sim-reglerspalte + .sim-reglerspalte { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: .9rem; }
+  .sim-spalten { grid-template-columns: 1fr; }
+  .sim-spalte + .sim-spalte::before { display: none; }
+  .sim-spalte + .sim-spalte { border-top: 1px solid var(--border-strong); padding-top: 1.1rem; }
 }
 
 /* Messtabelle: von Hand ausgefüllt oder von einer Simulation geschrieben */

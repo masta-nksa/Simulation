@@ -28,7 +28,8 @@
 
      <div class="simulation" data-modell="stau" data-vergleich
           data-a="autos=15;vmax=5;troedeln=25" data-b="autos=30;vmax=3;troedeln=25"></div>
-     Vergleich: zwei Strecken A und B übereinander, jede mit eigenen Reglern,
+     Vergleich: zwei Strecken A und B in zwei Spalten nebeneinander (auf dem
+     Handy untereinander), jede mit Ring, Diagramm und eigenen Reglern,
      aber mit einem gemeinsamen Start und derselben Startverteilung – bei gleich
      vielen Autos stehen sie anfangs gleich. Ohne data-a/data-b beginnen beide
      mit den Ausgangswerten (20 Autos, Höchsttempo 5, Trödeln 25 %). Mit
@@ -84,10 +85,10 @@
     z.zeit = 0;
   }
 
-  // Zeichenmasse: gross für eine einzelne Simulation, flach im Vergleich, damit
-  // beide Strecken zusammen auf einen Laptop-Bildschirm passen.
-  var GROSS = { bw: 600, bh: 250, zeilen: 105, cx: 128, cy: 128, r: 98, x0: 285, zeit: "Zeit → (unten: jetzt)" };
-  var FLACH = { bw: 600, bh: 172, zeilen: 66, cx: 92, cy: 90, r: 66, x0: 236, zeit: "Zeit → jetzt" };
+  // Zeichenmasse: breit für eine einzelne Simulation (Ring links, Diagramm
+  // rechts), schmal und hoch für eine Spalte im Vergleich (Ring über Diagramm).
+  var BREIT = { bw: 600, bh: 250, zeilen: 105, cx: 128, cy: 128, r: 98, x0: 285, y0: 26 };
+  var SPALTE = { bw: 324, bh: 390, zeilen: 90, cx: 162, cy: 84, r: 66, x0: 20, y0: 190 };
 
   // Startwerte aus der Seite, z. B. data-a="autos=15;vmax=5;troedeln=25;name=A"
   function einstellungen(text) {
@@ -152,10 +153,10 @@
       }
 
       // Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, die neuste unten
-      var x0 = m.x0, y0 = 26, zb = 3, zh = 2;
+      var x0 = m.x0, y0 = m.y0, zb = 3, zh = 2;
       ctx.fillStyle = f.text; ctx.textAlign = "left";
-      ctx.fillText("Ort entlang der Strasse →", x0, 14);
-      ctx.save(); ctx.translate(x0 - 16, y0); ctx.rotate(Math.PI / 2); ctx.fillText(m.zeit, 0, 0); ctx.restore();
+      ctx.fillText("Ort entlang der Strasse →", x0, y0 - 12);
+      ctx.save(); ctx.translate(x0 - 16, y0); ctx.rotate(Math.PI / 2); ctx.fillText("Zeit → (unten: jetzt)", 0, 0); ctx.restore();
       ctx.lineWidth = 1; ctx.strokeStyle = f.linie;
       ctx.strokeRect(x0 - .5, y0 - .5, L * zb + 1, m.zeilen * zh + 1);
       var versatz = m.zeilen - verlauf.length;
@@ -182,7 +183,7 @@
   }
 
   // ------------------------------------------------------------ Modell «stau»
-  //   data-vergleich  zwei Strecken übereinander (A und B) mit gemeinsamem
+  //   data-vergleich  zwei Strecken nebeneinander (A und B) mit gemeinsamem
   //                   Start, gemeinsamem «Neu verteilen» und demselben Takt
   //   data-a, data-b  Startwerte der beiden Seiten, z. B.
   //                   "autos=15;vmax=5;troedeln=25;anfahren=0;name=A"
@@ -199,7 +200,7 @@
     var seiten = (vergleich ? ["a", "b"] : [""]).map(function (s) {
       var start = einstellungen(s ? kasten.dataset[s] : "");
       if (start.anfahren == null && kasten.dataset.anfahren) start.anfahren = kasten.dataset.anfahren;
-      var st = strecke(h, vergleich ? FLACH : GROSS, start, mitAnfahren, function () {
+      var st = strecke(h, vergleich ? SPALTE : BREIT, start, mitAnfahren, function () {
         st.neu(plan);
         if (seiten.length === 1) zeit = 0;
         fertig();
@@ -220,19 +221,19 @@
     if (ziel && !vergleich) leiste.appendChild(h.knopf("Messen", messen));
 
     if (vergleich) {
-      // Beide Strecken übereinander, darunter die Regler in zwei Spalten
+      // Oben die gemeinsamen Knöpfe, darunter A und B in je einer Spalte mit
+      // Ring, Diagramm und Reglern, zuunterst das Tempo der Anzeige.
       kasten.classList.add("sim-vergleich");
-      var spalten = h.el("div", { class: "sim-vergleich-regler" });
+      var spalten = h.el("div", { class: "sim-spalten" });
       seiten.forEach(function (st) {
-        kasten.append(h.el("p", { class: "sim-seite" }, st.name), st.bild.element);
-        var spalte = h.el("div", { class: "sim-reglerspalte" });
-        spalte.appendChild(h.el("p", { class: "sim-seite" }, st.name));
+        var spalte = h.el("div", { class: "sim-spalte" });
+        spalte.append(h.el("p", { class: "sim-seite" }, st.name), st.bild.element);
         st.regler.forEach(function (r) { spalte.appendChild(r); });
         spalten.appendChild(spalte);
       });
       var allgemein = h.el("div", { class: "sim-reglerfeld" });
       allgemein.appendChild(tempo.element);
-      kasten.append(status, leiste, spalten, allgemein);
+      kasten.append(leiste, status, spalten, allgemein);
     } else {
       var reglerBox = h.el("div", { class: "sim-reglerfeld" });
       seiten[0].regler.forEach(function (r) { reglerBox.appendChild(r); });
@@ -255,7 +256,7 @@
       for (i = 0; i < MESSDAUER; i++) {
         durch += schritt(z);
         summe += z.v.reduce(function (a, b) { return a + b; }, 0);
-        if (i >= MESSDAUER - GROSS.zeilen) st.merken();
+        if (i >= MESSDAUER - BREIT.zeilen) st.merken();
       }
       zeit += EINSCHWINGEN + MESSDAUER;
       var fluss = Math.round(durch / MESSDAUER * 3600);

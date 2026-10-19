@@ -44,7 +44,8 @@ Niemand trödelt:
 
 Links sehen Sie die Strasse als Ring; stehende Autos sind gelb. Rechts entsteht ein
 **Raum-Zeit-Diagramm**: Jede Zeile zeigt die ganze Strasse in einem Zeitschritt, die neuste
-Zeile ist unten. Ein Stau erscheint dort als dunkler Streifen.
+Zeile ist unten. Ein Stau erscheint dort als kräftiger Streifen aus stehenden Autos (Legende:
+«steht»).
 
 <div class="simulation" data-modell="stau"></div>
 

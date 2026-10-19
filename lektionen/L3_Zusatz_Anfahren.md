@@ -59,7 +59,7 @@ Stellen Sie 25 Autos ein und vergleichen Sie «Träges Anfahren» bei 0 % und be
 
 Was verändert sich im Raum-Zeit-Diagramm?
 
-<div class="antwort" data-zeilen="3" data-loesung="Mit trägem Anfahren lösen sich Staus viel langsamer auf: Die dunklen Streifen werden breiter und halten länger an. Vorne im Stau fahren die Autos nur zögernd weg, während hinten weiter Autos auflaufen."></div>
+<div class="antwort" data-zeilen="3" data-loesung="Mit trägem Anfahren lösen sich Staus viel langsamer auf: Die kräftigen Streifen der stehenden Autos werden breiter und halten länger an. Vorne im Stau fahren die Autos nur zögernd weg, während hinten weiter Autos auflaufen."></div>
 
 ## Aufgabe 3 – Lohnt sich die Erweiterung?
 

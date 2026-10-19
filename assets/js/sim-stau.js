@@ -76,7 +76,7 @@
     var ziel = kasten.dataset.ziel || "";
     var mitAnfahren = kasten.hasAttribute("data-anfahren");
     var BW = 600, BH = 250, ZEILEN = 105;
-    var bild = h.leinwand(BW, BH, "Links ein Ring mit Autos, rechts ein Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, dunkle Punkte sind stehende Autos.");
+    var bild = h.leinwand(BW, BH, "Links ein Ring mit Autos, rechts ein Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, stehende Autos sind kräftiger gezeichnet als fahrende.");
     var ctx = bild.ctx;
     var z = { pos: [], v: [], vmax: 5, p: 0.25, anfahren: 0, zeit: 0 };
     var verlauf = [];          // letzte Zeilen des Raum-Zeit-Diagramms

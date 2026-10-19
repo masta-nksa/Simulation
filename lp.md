@@ -44,8 +44,7 @@ ein bis zwei Minuten nach dem Push automatisch auf der Website.
 
 Die Einheit ist ein Selbstlernmodul. Jede Lektion beginnt mit einem kurzen Input und endet
 mit einer Phase, in der die Klasse ihre Erfahrungen festhält; dazwischen arbeiten die SuS in
-ihrem Tempo durch die Etappen. Die Lektionsuhr am unteren Rand zeigt, bei welchem Schritt man
-nach Plan steht.
+ihrem Tempo durch die Etappen.
 
 **Was die Seite selbst prüft:** Lücken, Auswahlfelder und Multiple Choice kontrolliert der Knopf
 «Prüfen». Bei offenen Fragen können die SuS ihre Antwort mit der Musterlösung vergleichen,

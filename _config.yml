@@ -51,13 +51,6 @@ hauptnav:
 # und der Hinweis in der Fusszeile entfällt.
 # goatcounter: "nksa"
 
-# Lektionsuhr (optional): Öffnet jemand eine Lektionsseite, startet eine Uhr.
-# Eine Leiste am unteren Rand zeigt danach auf jeder Seite, bei welchem Schritt
-# man nach Plan steht und wann man spätestens zum nächsten wechselt. Die Zeiten
-# kommen aus dem Ablauf der Lektionsseite ("ca. 13 Min."). Ohne diese Zeile
-# gibt es keine Uhr.
-lektionsuhr: true
-
 # Kein Theme: Layouts und CSS liegen vollständig in diesem Repo. GitHub Pages
 # würde sonst das Standard-Theme "primer" laden, dessen Stylesheet den Pfad
 # assets/css/style.css belegt – darum heisst unseres unterricht.css.

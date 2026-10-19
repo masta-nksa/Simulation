@@ -15,10 +15,6 @@
   <script src="{{ '/assets/js/sim-brown.js' | relative_url }}" defer></script>
   <script src="{{ '/assets/js/sim-stau.js' | relative_url }}" defer></script>
   <script src="{{ '/assets/js/uebungen.js' | relative_url }}" defer></script>
-  {%- comment -%} Lektionsuhr (nur mit "lektionsuhr: true" in _config.yml): zeigt, wann der nächste Schritt der Lektion spätestens beginnt {%- endcomment -%}
-  {%- if site.lektionsuhr %}
-  <script src="{{ '/assets/js/lektionsuhr.js' | relative_url }}" defer></script>
-  {%- endif %}
   {%- comment -%} Besucherstatistik (nur mit "goatcounter" in _config.yml): zählt Aufrufe ohne Cookies; lokale Vorschauen zählt das Skript von sich aus nicht mit {%- endcomment -%}
   {%- if site.goatcounter %}
   <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

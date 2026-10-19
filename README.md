@@ -23,7 +23,7 @@ Die Website wird von GitHub Pages direkt aus diesem Repository mit Jekyll gebaut
 ├── assets/css/unterricht.css   Gestaltung inkl. Dark Mode und Druckansicht
 └── assets/js/             uebungen.js (Eingabefelder mit Kontrolle), simulation.js
                            (Simulationen, Messtabellen, Schaubilder), sim-*.js (je ein
-                           Modell), lektionsuhr.js, dossier.js
+                           Modell), dossier.js
 ```
 
 ## Simulationen, Messtabellen, Schaubilder

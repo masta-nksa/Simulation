@@ -13,8 +13,7 @@
    4. Druckansicht
    5. Info-Kasten, Dossier
    6. Interaktive Übungen und kompakter Druck
-   7. Lektionsuhr (Leiste am unteren Rand, Uhrzeiten im Ablauf)
-   8. Simulationen, Messtabellen, Schaubilder (Ergänzung dieser Einheit)
+   7. Simulationen, Messtabellen, Schaubilder (Ergänzung dieser Einheit)
 
    FARBE ODER SCHRIFT ÄNDERN
    Fast alles ergibt sich aus den Variablen in Abschnitt 2. Wer dort bleibt,
@@ -400,6 +399,12 @@ a { color: var(--accent); text-decoration-thickness: .07em; text-underline-offse
   font-style: normal; font-family: var(--font-meta); font-size: .76em;
   color: var(--text-muted); white-space: nowrap;
 }
+/* Ein Schritt mit Unterlage ist als Ganzes klickbar – Nummer, Name und Text,
+   nicht nur der Link am Schluss. Der Link spannt sich über den ganzen Schritt. */
+.ablauf ol > li:has(a[href]) a[href]::after { content: ""; position: absolute; inset: 0; }
+.ablauf ol > li:has(a[href]):hover::before { background: var(--accent-soft); }
+.ablauf ol > li:has(a[href]):hover a[href] { text-decoration-thickness: 2px; }
+@media print { .ablauf ol > li a[href]::after { content: none; } }
 
 .card-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); }
 .card-list-breit { grid-template-columns: 1fr; margin-bottom: 1.4rem; }
@@ -952,84 +957,7 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
   .prose th { font-size: inherit; }
 }
 
-/* --- 7. Lektionsuhr ------------------------------------------------------ */
-/* assets/js/lektionsuhr.js liest die Richtzeiten aus dem Ablauf der
-   Lektionsseite und zeigt auf jeder Seite, was nach Plan dran ist: als Leiste
-   am unteren Rand und als Uhrzeiten im Ablauf. Die Leiste steht am Ende der
-   Seite und bleibt beim Scrollen am Fensterrand stehen. */
-
-.lektionsuhr {
-  position: sticky; bottom: 0; z-index: 40;
-  background: var(--bg-elev); border-top: 2px solid var(--linie);
-  font-size: .88rem; line-height: 1.4;
-}
-.lu-innen {
-  width: var(--wrap); margin-inline: auto;
-  display: flex; align-items: center; flex-wrap: wrap; gap: .2rem .9rem;
-  padding-block: .4rem;
-}
-.lu-marke, .lu-titel {
-  font-family: var(--font-meta); font-weight: var(--label-weight);
-  letter-spacing: var(--label-tracking); text-transform: var(--label-transform);
-}
-.lu-marke {
-  padding: .08rem .5rem; font-size: .7rem; white-space: nowrap;
-  background: var(--text); color: var(--bg); text-decoration: none;
-}
-.lu-text { flex: 1 1 16rem; min-width: 0; }
-.lu-text strong { font-family: var(--font-mono); font-weight: 500; white-space: nowrap; }
-.lu-rest { color: var(--text-muted); white-space: nowrap; }
-.lu-weiter { font-weight: 600; white-space: nowrap; }
-.lu-zu {
-  width: 1.9rem; height: 1.9rem; margin-left: auto; padding: 0; cursor: pointer;
-  font: inherit; font-size: 1.15rem; line-height: 1;
-  background: none; border: 0; color: inherit;
-}
-.lu-zu:hover { background: var(--accent-soft); }
-/* Handy: Etikett, Link und Schliessen in einer Zeile, der Text darunter. */
-@media (max-width: 36rem) {
-  .lu-weiter { order: 1; margin-left: auto; }
-  .lu-zu { order: 2; }
-  .lu-weiter + .lu-zu { margin-left: 0; }
-  .lu-text { order: 3; flex-basis: 100%; }
-}
-
-/* Die Zeit des Schritts ist um, und der nächste hat eine eigene Unterlage:
-   Die ganze Leiste bekommt den Leuchtstift. */
-.lektionsuhr.um { background: var(--marker); color: var(--on-marker); }
-.lektionsuhr.um a { color: inherit; }
-.lektionsuhr.um .lu-marke { background: var(--on-marker); color: var(--marker); }
-.lektionsuhr.um .lu-zu:hover { background: color-mix(in srgb, var(--on-marker) 14%, transparent); }
-.lektionsuhr.um :focus-visible { outline-color: var(--on-marker); }
-
-/* Die Meldung «Lösungen eingeblendet» rückt über die Leiste. */
-.hat-lektionsuhr #loesungen-banner { bottom: 4rem; }
-
-/* Im Ablauf der Lektionsseite: Stand der Uhr über der Liste, Uhrzeit hinter
-   jeder Richtzeit, der aktuelle Schritt im Leuchtstift. */
-.ablauf .lu-steuerung {
-  margin: 0 0 1rem; font-family: var(--font-meta); font-size: .76rem; color: var(--text-muted);
-}
-.lu-titel { margin-right: .3em; color: var(--text); cursor: help; }
-.lu-knopf {
-  font: inherit; padding: 0; cursor: pointer;
-  background: none; border: 0; color: inherit; text-decoration: underline;
-}
-.lu-knopf:hover { color: var(--text); }
-.lu-zeit {
-  margin-left: .5em; padding-inline: .35em;
-  font-family: var(--font-meta); font-size: .76em; color: var(--text-muted); white-space: nowrap;
-}
-.ablauf ol > li.lu-jetzt::before,
-.ablauf ol > li.lu-jetzt .lu-zeit { background: var(--marker); color: var(--on-marker); }
-.ablauf ol > li.lu-vorbei::before { border-color: var(--border-strong); color: var(--text-muted); }
-
-@media print {
-  .lektionsuhr, .lu-steuerung, .lu-zeit { display: none !important; }
-  .ablauf ol > li.lu-jetzt::before { background: none; }
-}
-
-/* --- 8. Simulationen, Messtabellen, Schaubilder -------------------------- */
+/* --- 7. Simulationen, Messtabellen, Schaubilder -------------------------- */
 /* Die Bausteine baut assets/js/simulation.js in leere Platzhalter
    (div.simulation, div.messtabelle, div.schaubild). Alle Farben kommen aus den
    Variablen von Abschnitt 2; die Leinwand liest sie beim Zeichnen aus. */

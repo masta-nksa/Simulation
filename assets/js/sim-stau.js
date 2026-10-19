@@ -26,6 +26,14 @@
                     soll dann nach Augenschein urteilen.
      data-anfahren  Regler «Träges Anfahren» mit diesem Startwert in Prozent
 
+     <div class="simulation" data-modell="stau" data-vergleich
+          data-a="autos=15;vmax=5;troedeln=25" data-b="autos=30;vmax=3;troedeln=25"></div>
+     Vergleich: zwei Strecken A und B übereinander, jede mit eigenen Reglern,
+     aber mit einem gemeinsamen Start und derselben Startverteilung – bei gleich
+     vielen Autos stehen sie anfangs gleich. Ohne data-a/data-b beginnen beide
+     mit den Ausgangswerten (20 Autos, Höchsttempo 5, Trödeln 25 %). Mit
+     «name=…» erhält eine Seite eine eigene Überschrift. Keine Messung.
+
      <div class="simulation" data-modell="stau-regeln"></div>
      Regel-Trainer: die vier Regeln von Hand anwenden, die Seite würfelt und
      kontrolliert.
@@ -37,7 +45,6 @@
   var L = 100;                 // Zellen im Ring
   var ZELLE_M = 7.5;           // Länge einer Zelle in Metern
   var KMH = ZELLE_M * 3.6;     // 1 Zelle pro Sekunde = 27 km/h
-  var EINSCHWINGEN = 300, MESSDAUER = 300;   // Zeitschritte für «Messen»
 
   function dichteKm(n) { return n / (L * ZELLE_M / 1000); }
 
@@ -62,71 +69,195 @@
     return durch;
   }
 
-  function verteilen(z, n) {
-    var frei = [], i;
-    for (i = 0; i < L; i++) frei.push(i);
-    for (i = L - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = frei[i]; frei[i] = frei[j]; frei[j] = t; }
-    z.pos = frei.slice(0, n).sort(function (a, b) { return a - b; });
-    z.v = z.pos.map(function () { return Math.floor(Math.random() * (z.vmax + 1)); });
+  // Startplan: eine zufällige Reihenfolge der Zellen und pro Zelle eine
+  // Zufallszahl fürs Anfangstempo. Im Vergleichsmodus teilen sich beide Seiten
+  // denselben Plan – bei gleich vielen Autos starten sie also gleich.
+  function startplan() {
+    var zellen = [], u = [], i;
+    for (i = 0; i < L; i++) { zellen.push(i); u.push(Math.random()); }
+    for (i = L - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = zellen[i]; zellen[i] = zellen[j]; zellen[j] = t; }
+    return { zellen: zellen, u: u };
+  }
+  function verteilen(z, n, plan) {
+    z.pos = plan.zellen.slice(0, n).sort(function (a, b) { return a - b; });
+    z.v = z.pos.map(function (c) { return Math.floor(plan.u[c] * (z.vmax + 1)); });
     z.zeit = 0;
   }
 
-  // ------------------------------------------------------------ Modell «stau»
-  function bauen(kasten, h) {
-    var ziel = kasten.dataset.ziel || "";
-    var mitAnfahren = kasten.hasAttribute("data-anfahren");
-    var BW = 600, BH = 250, ZEILEN = 105;
-    var bild = h.leinwand(BW, BH, "Links ein Ring mit Autos, rechts ein Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, stehende Autos sind kräftiger gezeichnet als fahrende.");
+  // Zeichenmasse: gross für eine einzelne Simulation, flach im Vergleich, damit
+  // beide Strecken zusammen auf einen Laptop-Bildschirm passen.
+  var GROSS = { bw: 600, bh: 250, zeilen: 105, cx: 128, cy: 128, r: 98, x0: 285, zeit: "Zeit → (unten: jetzt)" };
+  var FLACH = { bw: 600, bh: 172, zeilen: 66, cx: 92, cy: 90, r: 66, x0: 236, zeit: "Zeit → jetzt" };
+
+  // Startwerte aus der Seite, z. B. data-a="autos=15;vmax=5;troedeln=25;name=A"
+  function einstellungen(text) {
+    var e = {};
+    String(text || "").split(";").forEach(function (teil) {
+      var k = teil.indexOf("=");
+      if (k > 0) e[teil.slice(0, k).trim()] = teil.slice(k + 1).trim();
+    });
+    return e;
+  }
+
+  // ------------------------------------------------------------ Eine Strecke
+  // Ring, Raum-Zeit-Diagramm und die Regler für Autos, Höchsttempo, Trödeln
+  // (auf Wunsch auch träges Anfahren). Start, Takt und Knöpfe besorgt bauen().
+  function strecke(h, m, start, mitAnfahren, beiAutos) {
+    var bild = h.leinwand(m.bw, m.bh, "Links ein Ring mit Autos, rechts ein Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, stehende Autos sind kräftiger gezeichnet als fahrende.");
     var ctx = bild.ctx;
     var z = { pos: [], v: [], vmax: 5, p: 0.25, anfahren: 0, zeit: 0 };
     var verlauf = [];          // letzte Zeilen des Raum-Zeit-Diagramms
-    var laeuft = false, rahmen = null, letzte = 0;
+    function zahl(k, ersatz) { var x = parseInt(start[k], 10); return isNaN(x) ? ersatz : x; }
 
-    var autos = h.regler({ titel: "Anzahl Autos", min: 5, max: 90, wert: 20, beiAenderung: neu,
+    var autos = h.regler({ titel: "Anzahl Autos", min: 5, max: 90, wert: zahl("autos", 20), beiAenderung: function () { beiAutos(); },
       format: function (v) { return v + " (" + Math.round(dichteKm(v)) + " Fz/km)"; } });
-    var vmax = h.regler({ titel: "Höchsttempo", min: 1, max: 5, wert: 5, beiAenderung: function (v) { z.vmax = v; },
+    var vmax = h.regler({ titel: "Höchsttempo", min: 1, max: 5, wert: zahl("vmax", 5), beiAenderung: function (v) { z.vmax = v; },
       format: function (v) { return v + " Zellen/s (" + Math.round(v * KMH) + " km/h)"; } });
-    var troedeln = h.regler({ titel: "Trödelwahrscheinlichkeit", min: 0, max: 60, schritt: 5, wert: 25, einheit: "%", beiAenderung: function (v) { z.p = v / 100; } });
-    var anfahren = mitAnfahren ? h.regler({ titel: "Träges Anfahren", min: 0, max: 100, schritt: 10, wert: parseInt(kasten.dataset.anfahren, 10) || 0, einheit: "%", beiAenderung: function (v) { z.anfahren = v / 100; } }) : null;
-    var TAKT = [330, 100, 16], TAKT_NAME = ["langsam", "mittel", "schnell"];
-    var tempo = h.regler({ titel: "Tempo der Anzeige", min: 0, max: 2, wert: 1, format: function (v) { return TAKT_NAME[v]; } });
+    var troedeln = h.regler({ titel: "Trödelwahrscheinlichkeit", min: 0, max: 60, schritt: 5, wert: zahl("troedeln", 25), einheit: "%", beiAenderung: function (v) { z.p = v / 100; } });
+    var anfahren = mitAnfahren ? h.regler({ titel: "Träges Anfahren", min: 0, max: 100, schritt: 10, wert: zahl("anfahren", 0), einheit: "%", beiAenderung: function (v) { z.anfahren = v / 100; } }) : null;
+    z.vmax = vmax.wert(); z.p = troedeln.wert() / 100;
     if (anfahren) z.anfahren = anfahren.wert() / 100;
 
-    var status = h.el("p", { class: "sim-status", "aria-live": "off" });
-    var meldung = h.el("p", { class: "sim-status sim-meldung", "aria-live": "polite" });
-    var knopfStart = h.knopf("Start", function () { laeuft = !laeuft; beschriften(); if (laeuft) schleife(); }, "haupt");
-    var knopfNeu = h.knopf("Neu verteilen", function () { neu(); });
-    var leiste = h.el("div", { class: "sim-knoepfe" });
-    leiste.append(knopfStart, knopfNeu);
-    if (ziel) leiste.appendChild(h.knopf("Messen", messen));
-    var reglerBox = h.el("div", { class: "sim-reglerfeld" });
-    reglerBox.append(autos.element, vmax.element, troedeln.element);
-    if (anfahren) reglerBox.appendChild(anfahren.element);
-    reglerBox.appendChild(tempo.element);
-    kasten.append(bild.element, status, leiste, meldung, reglerBox);
+    var regler = [autos.element, vmax.element, troedeln.element];
+    if (anfahren) regler.push(anfahren.element);
 
     function merken() {
       var zeile = new Int8Array(L).fill(-1);
       for (var i = 0; i < z.pos.length; i++) zeile[z.pos[i]] = z.v[i];
       verlauf.push(zeile);
-      if (verlauf.length > ZEILEN) verlauf.shift();
+      if (verlauf.length > m.zeilen) verlauf.shift();
     }
+
+    function zeichne() {
+      var f = h.farben(), i;
+      ctx.fillStyle = f.grund; ctx.fillRect(0, 0, m.bw, m.bh);
+      ctx.font = "500 11px " + (getComputedStyle(document.documentElement).getPropertyValue("--font-mono") || "monospace");
+
+      // Ring: Fahrbahn, Messstelle, Autos (stehende gelb)
+      var cx = m.cx, cy = m.cy, r = m.r;
+      ctx.lineWidth = 1; ctx.strokeStyle = f.linie;
+      ctx.beginPath(); ctx.arc(cx, cy, r + 7, 0, 2 * Math.PI); ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, r - 7, 0, 2 * Math.PI); ctx.stroke();
+      ctx.lineWidth = 2; ctx.strokeStyle = f.text;
+      ctx.beginPath(); ctx.moveTo(cx, cy - r - 12); ctx.lineTo(cx, cy - r + 12); ctx.stroke();
+      ctx.fillStyle = f.text; ctx.textAlign = "center";
+      ctx.fillText("Messstelle", cx, cy - r + 26);
+      ctx.fillText("Fahrtrichtung ↻", cx, cy + 4);
+      for (i = 0; i < z.pos.length; i++) {
+        var w = (z.pos[i] + 0.5) / L * 2 * Math.PI - Math.PI / 2;
+        var x = cx + r * Math.cos(w), y = cy + r * Math.sin(w);
+        ctx.beginPath(); ctx.arc(x, y, 3.6, 0, 2 * Math.PI);
+        if (z.v[i] === 0) { ctx.fillStyle = f.marker; ctx.fill(); ctx.lineWidth = 1.2; ctx.strokeStyle = f.text; ctx.stroke(); }
+        else { ctx.fillStyle = f.text; ctx.fill(); }
+      }
+
+      // Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, die neuste unten
+      var x0 = m.x0, y0 = 26, zb = 3, zh = 2;
+      ctx.fillStyle = f.text; ctx.textAlign = "left";
+      ctx.fillText("Ort entlang der Strasse →", x0, 14);
+      ctx.save(); ctx.translate(x0 - 16, y0); ctx.rotate(Math.PI / 2); ctx.fillText(m.zeit, 0, 0); ctx.restore();
+      ctx.lineWidth = 1; ctx.strokeStyle = f.linie;
+      ctx.strokeRect(x0 - .5, y0 - .5, L * zb + 1, m.zeilen * zh + 1);
+      var versatz = m.zeilen - verlauf.length;
+      for (var k = 0; k < verlauf.length; k++) {
+        var zeile = verlauf[k], yy = y0 + (versatz + k) * zh;
+        for (i = 0; i < L; i++) {
+          if (zeile[i] < 0) continue;
+          ctx.fillStyle = zeile[i] === 0 ? f.text : f.linie;
+          ctx.fillRect(x0 + i * zb, yy, zb - 1, zh);
+        }
+      }
+      // Legende
+      var ly = y0 + m.zeilen * zh + 14;
+      ctx.fillStyle = f.linie; ctx.fillRect(x0, ly - 8, 9, 6);
+      ctx.fillStyle = f.text; ctx.fillText("fährt", x0 + 14, ly - 2);
+      ctx.fillRect(x0 + 70, ly - 8, 9, 6); ctx.fillText("steht", x0 + 84, ly - 2);
+    }
+
+    return {
+      z: z, bild: bild, regler: regler, merken: merken, zeichne: zeichne,
+      neu: function (plan) { verteilen(z, autos.wert(), plan); verlauf = []; merken(); },
+      schritt: function () { schritt(z); merken(); }
+    };
+  }
+
+  // ------------------------------------------------------------ Modell «stau»
+  //   data-vergleich  zwei Strecken übereinander (A und B) mit gemeinsamem
+  //                   Start, gemeinsamem «Neu verteilen» und demselben Takt
+  //   data-a, data-b  Startwerte der beiden Seiten, z. B.
+  //                   "autos=15;vmax=5;troedeln=25;anfahren=0;name=A"
+  //                   (name ersetzt die Überschrift «A» bzw. «B»)
+  function bauen(kasten, h) {
+    var ziel = kasten.dataset.ziel || "";
+    var vergleich = kasten.hasAttribute("data-vergleich");
+    var mitAnfahren = kasten.hasAttribute("data-anfahren");
+    var plan = startplan();
+    var laeuft = false, rahmen = null, letzte = 0, zeit = 0;
+
+    // Ändert eine Seite die Anzahl Autos, beginnt nur sie neu (mit demselben
+    // Startplan); die andere läuft weiter.
+    var seiten = (vergleich ? ["a", "b"] : [""]).map(function (s) {
+      var start = einstellungen(s ? kasten.dataset[s] : "");
+      if (start.anfahren == null && kasten.dataset.anfahren) start.anfahren = kasten.dataset.anfahren;
+      var st = strecke(h, vergleich ? FLACH : GROSS, start, mitAnfahren, function () {
+        st.neu(plan);
+        if (seiten.length === 1) zeit = 0;
+        fertig();
+      });
+      st.name = start.name || s.toUpperCase();
+      return st;
+    });
+
+    var TAKT = [330, 100, 16], TAKT_NAME = ["langsam", "mittel", "schnell"];
+    var tempo = h.regler({ titel: "Tempo der Anzeige", min: 0, max: 2, wert: 1, format: function (v) { return TAKT_NAME[v]; } });
+
+    var status = h.el("p", { class: "sim-status", "aria-live": "off" });
+    var meldung = h.el("p", { class: "sim-status sim-meldung", "aria-live": "polite" });
+    var knopfStart = h.knopf("Start", function () { laeuft = !laeuft; beschriften(); if (laeuft) schleife(); }, "haupt");
+    var knopfNeu = h.knopf("Neu verteilen", function () { plan = startplan(); neu(); });
+    var leiste = h.el("div", { class: "sim-knoepfe" });
+    leiste.append(knopfStart, knopfNeu);
+    if (ziel && !vergleich) leiste.appendChild(h.knopf("Messen", messen));
+
+    if (vergleich) {
+      // Beide Strecken übereinander, darunter die Regler in zwei Spalten
+      kasten.classList.add("sim-vergleich");
+      var spalten = h.el("div", { class: "sim-vergleich-regler" });
+      seiten.forEach(function (st) {
+        kasten.append(h.el("p", { class: "sim-seite" }, st.name), st.bild.element);
+        var spalte = h.el("div", { class: "sim-reglerspalte" });
+        spalte.appendChild(h.el("p", { class: "sim-seite" }, st.name));
+        st.regler.forEach(function (r) { spalte.appendChild(r); });
+        spalten.appendChild(spalte);
+      });
+      var allgemein = h.el("div", { class: "sim-reglerfeld" });
+      allgemein.appendChild(tempo.element);
+      kasten.append(status, leiste, spalten, allgemein);
+    } else {
+      var reglerBox = h.el("div", { class: "sim-reglerfeld" });
+      seiten[0].regler.forEach(function (r) { reglerBox.appendChild(r); });
+      reglerBox.appendChild(tempo.element);
+      kasten.append(seiten[0].bild.element, status, leiste, meldung, reglerBox);
+    }
+
+    function zeichne() { seiten.forEach(function (st) { st.zeichne(); }); }
+    function fertig() { meldung.textContent = ""; beschriften(); zeichne(); }
     function neu() {
-      verteilen(z, autos.wert());
-      verlauf = []; merken();
-      meldung.textContent = "";
-      beschriften(); zeichne();
+      seiten.forEach(function (st) { st.neu(plan); });
+      zeit = 0; fertig();
     }
 
     // «Messen»: erst einschwingen lassen, dann über eine feste Dauer zählen.
     function messen() {
-      var i, durch = 0, summe = 0;
+      var EINSCHWINGEN = 300, MESSDAUER = 300;
+      var st = seiten[0], z = st.z, i, durch = 0, summe = 0;
       for (i = 0; i < EINSCHWINGEN; i++) schritt(z);
       for (i = 0; i < MESSDAUER; i++) {
         durch += schritt(z);
         summe += z.v.reduce(function (a, b) { return a + b; }, 0);
-        if (i >= MESSDAUER - ZEILEN) merken();
+        if (i >= MESSDAUER - GROSS.zeilen) st.merken();
       }
+      zeit += EINSCHWINGEN + MESSDAUER;
       var fluss = Math.round(durch / MESSDAUER * 3600);
       var kmh = Math.round(summe / (MESSDAUER * z.pos.length) * KMH);
       h.Daten.anhaengen(ziel, [Math.round(dichteKm(z.pos.length)), fluss, kmh, z.vmax, Math.round(z.p * 100)]);
@@ -147,7 +278,7 @@
         var faellig = Math.min(20, Math.floor((jetzt - letzte) / takt_ms));
         if (faellig > 0) {
           letzte = faellig === 20 ? jetzt : letzte + faellig * takt_ms;
-          for (var k = 0; k < faellig; k++) { schritt(z); merken(); }
+          for (var k = 0; k < faellig; k++) { seiten.forEach(function (st) { st.schritt(); }); zeit++; }
           zeichne(); beschriften();
         }
         rahmen = requestAnimationFrame(takt);
@@ -155,60 +286,15 @@
     }
 
     function beschriften() {
-      knopfStart.textContent = laeuft ? "Pause" : (z.zeit ? "Weiter" : "Start");
-      var stehend = z.v.filter(function (x) { return x === 0; }).length;
-      var t = "Zeit: " + z.zeit + " s";
-      if (ziel) {
+      knopfStart.textContent = laeuft ? "Pause" : (zeit ? "Weiter" : "Start");
+      var t = "Zeit: " + zeit + " s";
+      if (ziel && !vergleich) {
+        var z = seiten[0].z;
+        var stehend = z.v.filter(function (x) { return x === 0; }).length;
         var mittel = z.v.reduce(function (a, b) { return a + b; }, 0) / z.pos.length * KMH;
         t += " · mittleres Tempo: " + Math.round(mittel) + " km/h · stehende Autos: " + stehend;
       }
       status.textContent = t;
-    }
-
-    function zeichne() {
-      var f = h.farben(), i;
-      ctx.fillStyle = f.grund; ctx.fillRect(0, 0, BW, BH);
-      ctx.font = "500 11px " + (getComputedStyle(document.documentElement).getPropertyValue("--font-mono") || "monospace");
-
-      // Ring: Fahrbahn, Messstelle, Autos (stehende gelb)
-      var cx = 128, cy = 128, r = 98;
-      ctx.lineWidth = 1; ctx.strokeStyle = f.linie;
-      ctx.beginPath(); ctx.arc(cx, cy, r + 7, 0, 2 * Math.PI); ctx.stroke();
-      ctx.beginPath(); ctx.arc(cx, cy, r - 7, 0, 2 * Math.PI); ctx.stroke();
-      ctx.lineWidth = 2; ctx.strokeStyle = f.text;
-      ctx.beginPath(); ctx.moveTo(cx, cy - r - 12); ctx.lineTo(cx, cy - r + 12); ctx.stroke();
-      ctx.fillStyle = f.text; ctx.textAlign = "center";
-      ctx.fillText("Messstelle", cx, cy - r + 26);
-      ctx.fillText("Fahrtrichtung ↻", cx, cy + 4);
-      for (i = 0; i < z.pos.length; i++) {
-        var w = (z.pos[i] + 0.5) / L * 2 * Math.PI - Math.PI / 2;
-        var x = cx + r * Math.cos(w), y = cy + r * Math.sin(w);
-        ctx.beginPath(); ctx.arc(x, y, 3.6, 0, 2 * Math.PI);
-        if (z.v[i] === 0) { ctx.fillStyle = f.marker; ctx.fill(); ctx.lineWidth = 1.2; ctx.strokeStyle = f.text; ctx.stroke(); }
-        else { ctx.fillStyle = f.text; ctx.fill(); }
-      }
-
-      // Raum-Zeit-Diagramm: jede Zeile ein Zeitschritt, die neuste unten
-      var x0 = 285, y0 = 26, zb = 3, zh = 2;
-      ctx.fillStyle = f.text; ctx.textAlign = "left";
-      ctx.fillText("Ort entlang der Strasse →", x0, 14);
-      ctx.save(); ctx.translate(x0 - 16, y0); ctx.rotate(Math.PI / 2); ctx.fillText("Zeit → (unten: jetzt)", 0, 0); ctx.restore();
-      ctx.lineWidth = 1; ctx.strokeStyle = f.linie;
-      ctx.strokeRect(x0 - .5, y0 - .5, L * zb + 1, ZEILEN * zh + 1);
-      var versatz = ZEILEN - verlauf.length;
-      for (var k = 0; k < verlauf.length; k++) {
-        var zeile = verlauf[k], yy = y0 + (versatz + k) * zh;
-        for (i = 0; i < L; i++) {
-          if (zeile[i] < 0) continue;
-          ctx.fillStyle = zeile[i] === 0 ? f.text : f.linie;
-          ctx.fillRect(x0 + i * zb, yy, zb - 1, zh);
-        }
-      }
-      // Legende
-      var ly = y0 + ZEILEN * zh + 14;
-      ctx.fillStyle = f.linie; ctx.fillRect(x0, ly - 8, 9, 6);
-      ctx.fillStyle = f.text; ctx.fillText("fährt", x0 + 14, ly - 2);
-      ctx.fillRect(x0 + 70, ly - 8, 9, 6); ctx.fillText("steht", x0 + 84, ly - 2);
     }
 
     document.addEventListener("sim:farben", zeichne);

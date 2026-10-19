@@ -53,9 +53,11 @@ Mit trägem Anfahren werden die Staus
 
 ## Aufgabe 2 – Ausprobieren
 
-Stellen Sie 25 Autos ein und vergleichen Sie «Träges Anfahren» bei 0 % und bei 90 %.
+Beide Strecken haben 25 Autos und beginnen gleich. Bei A ist träges Anfahren ausgeschaltet
+(0 %), bei B fahren stehende Autos mit 90 % Wahrscheinlichkeit verzögert an. Starten Sie und
+vergleichen Sie.
 
-<div class="simulation" data-modell="stau" data-anfahren="90"></div>
+<div class="simulation" data-modell="stau" data-vergleich data-anfahren data-a="autos=25;anfahren=0;name=A – ohne träges Anfahren" data-b="autos=25;anfahren=90;name=B – mit trägem Anfahren (90 %)"></div>
 
 Was verändert sich im Raum-Zeit-Diagramm?
 

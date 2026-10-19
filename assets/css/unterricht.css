@@ -988,6 +988,21 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .sim-regler output { font-family: var(--font-meta); font-size: .82rem; white-space: nowrap; }
 .sim-regler input[type="range"] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--accent); }
 
+/* Vergleich zweier Einstellungen (Modell «stau» mit data-vergleich): beide
+   Strecken übereinander, darunter die Regler in zwei Spalten A | B. */
+.sim-seite {
+  margin: 0 0 .25rem; font-family: var(--font-meta); font-size: .76rem;
+  font-weight: var(--label-weight); letter-spacing: var(--label-tracking); text-transform: var(--label-transform);
+}
+.sim-vergleich .sim-leinwand + .sim-seite { margin-top: .8rem; }
+.sim-vergleich-regler { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.6rem; margin-bottom: .9rem; }
+.sim-reglerspalte { display: grid; gap: .7rem; align-content: start; }
+.sim-reglerspalte + .sim-reglerspalte { border-left: 1px solid var(--border); padding-left: 1.6rem; }
+@media (max-width: 36rem) {
+  .sim-vergleich-regler { grid-template-columns: 1fr; }
+  .sim-reglerspalte + .sim-reglerspalte { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: .9rem; }
+}
+
 /* Messtabelle: von Hand ausgefüllt oder von einer Simulation geschrieben */
 .messtabelle { margin: 1.1rem 0; }
 .messtabelle .table-scroll { margin-bottom: .3rem; }

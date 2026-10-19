@@ -66,8 +66,10 @@ zweite Runde hängt vom Würfel ab.
 - a) Bei 10 Autos fahren alle frei. Ab etwa 15 bis 20 Autos entstehen Staus; je mehr Autos,
   desto mehr stehen.
 - b) Mit Höchsttempo 2 fahren alle langsamer, aber gleichmässiger; es stehen weniger Autos.
-- c) Ohne Trödeln lösen sich die Staus auf, und es entstehen keine neuen. Je mehr getrödelt
-  wird, desto häufiger und grösser sind sie.
+- c) Ohne Trödeln entstehen keine neuen Staus. Die Staus vom Anfang lösen sich meist nach
+  wenigen Sekunden auf; manchmal bleibt ein kleiner Stau bestehen und wandert endlos
+  rückwärts (20 Autos sind für Höchsttempo 5 knapp zu viele). Je mehr getrödelt wird, desto
+  häufiger und grösser sind die Staus.
 - Der Stau wandert **gegen die Fahrtrichtung**.
 
 **Aufgabe 3.** Hier gibt es keine richtige Antwort. Solange nicht festgelegt ist, was «gut

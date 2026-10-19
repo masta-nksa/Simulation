@@ -37,7 +37,9 @@ Markdown stehen dafür leere Platzhalter, die `assets/js/simulation.js` beim Lad
 <div class="schaubild" data-quelle="brown" data-kurven="linear;quadratisch"></div>
 ```
 
-Alle Attribute sind im Kopf von `simulation.js` beschrieben. Ein neues Modell ist eine Datei
+Alle Attribute sind im Kopf von `simulation.js` beschrieben, die modelleigenen im Kopf der
+jeweiligen `sim-*.js` – etwa `data-vergleich` für zwei Stau-Strecken A und B mit gemeinsamem
+Start (L3, Etappe 3 und Zusatz «Träges Anfahren»). Ein neues Modell ist eine Datei
 `assets/js/sim-<name>.js`, die sich mit `Simulation.modell("<name>", …)` anmeldet und in
 `_layouts/default.html` geladen wird. Eingabefelder (`span.luecke`, `span.wahl`,
 `div.antwort`, Multiple Choice) sind im Kopf von `uebungen.js` beschrieben.

@@ -55,6 +55,10 @@ Begründungen anhören.
   der Simulation ist die Wahrscheinlichkeit ein Parameter (Ausgangswert 25 %).
 - **Etappe 3 zeigt bewusst keine Zahlen.** Die Klasse soll nach Augenschein urteilen und
   merken, dass das nicht reicht.
+- **Zwei Strecken nebeneinander:** In Etappe 3 (Aufgaben 2 und 3) und in der Zusatz-Etappe
+  laufen zwei Strecken A und B mit gemeinsamem Start. «Neu verteilen» gibt beiden dieselbe
+  Startverteilung; bei gleich vielen Autos unterscheiden sie sich anfangs nur im veränderten
+  Parameter – ein kontrolliertes Experiment wie in Lektion 1.
 - **Was sich gegenüber dem bisherigen Python-Programm geändert hat:** Der Ring hat 100 statt
   28 Zellen, damit sich Stauwellen ausbilden können. Neben dem Ring zeigt ein
   Raum-Zeit-Diagramm, wie Staus rückwärts wandern. Die Zusatzregel für stehende Autos ist

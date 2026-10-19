@@ -47,22 +47,26 @@ Links sehen Sie die Strasse als Ring; stehende Autos sind gelb. Rechts entsteht 
 Zeile ist unten. Ein Stau erscheint dort als kräftiger Streifen aus stehenden Autos (Legende:
 «steht»).
 
-<div class="simulation" data-modell="stau"></div>
+Die Simulation zeigt zwei Strecken, A und B. Beide beginnen mit den Ausgangswerten (20 Autos,
+Höchsttempo 5, Trödeln 25 %) und starten mit demselben Knopf.
 
-Verändern Sie jeweils **nur einen** Parameter und stellen Sie die anderen auf die Ausgangswerte
-zurück (20 Autos, Höchsttempo 5, Trödeln 25 %). Klicken Sie nach jeder Änderung auf «Neu
-verteilen», damit die Autos wieder zufällig auf der Strasse stehen.
+<div class="simulation" data-modell="stau" data-vergleich></div>
 
-**a) Anzahl Autos:** 10, 20, 40, 60. Was beobachten Sie?
+Lassen Sie A auf den Ausgangswerten und verändern Sie bei B jeweils **nur einen** Parameter.
+Klicken Sie danach auf «Neu verteilen»: Bei gleich vielen Autos beginnen dann beide Strecken
+mit derselben Verteilung, und Sie sehen nur die Wirkung Ihrer Änderung.
+
+**a) Anzahl Autos:** B auf 10, 40 und 60 Autos. Was beobachten Sie?
 
 <div class="antwort" data-zeilen="2" data-loesung="Bei 10 Autos fahren alle frei. Ab etwa 15 bis 20 Autos entstehen Staus, die sich wieder auflösen und an anderer Stelle neu bilden. Je mehr Autos, desto mehr von ihnen stehen."></div>
 
-**b) Höchsttempo:** bei 30 Autos von 5 auf 2 senken. Was beobachten Sie?
+**b) Höchsttempo:** Stellen Sie bei A und B je 30 Autos ein und senken Sie bei B das
+Höchsttempo von 5 auf 2. Was beobachten Sie?
 
 <div class="antwort" data-zeilen="2" data-loesung="Alle fahren langsamer, aber gleichmässiger: Es stehen weniger Autos, die Staus werden kleiner oder verschwinden."></div>
 
-**c) Trödelwahrscheinlichkeit:** 0 %, 25 %, 50 % – bei 20 Autos und Höchsttempo 5. Was
-beobachten Sie?
+**c) Trödelwahrscheinlichkeit:** wieder 20 Autos und Höchsttempo 5; B auf 0 % und auf 50 %,
+A bleibt bei 25 %. Was beobachten Sie?
 
 <div class="antwort" data-zeilen="2" data-loesung="Bei 0 % entstehen keine neuen Staus, und alle fahren gleichmässig. Die Staus vom Anfang lösen sich meist nach wenigen Sekunden auf; manchmal bleibt ein kleiner Stau bestehen und wandert endlos rückwärts. Je mehr getrödelt wird, desto häufiger und grösser werden die Staus: Bei 50 % stehen etwa doppelt so viele Autos wie bei 25 %."></div>
 
@@ -82,6 +86,8 @@ Vergleichen Sie zwei Einstellungen:
 |---|---|---|---|
 | **A** | 15 | 5 | 25 % |
 | **B** | 30 | 3 | 25 % |
+
+<div class="simulation" data-modell="stau" data-vergleich data-a="autos=15;vmax=5;troedeln=25" data-b="autos=30;vmax=3;troedeln=25"></div>
 
 Der Verkehr fliesst besser bei
 <span class="wahl" data-optionen="A;B;beide gleich"></span>

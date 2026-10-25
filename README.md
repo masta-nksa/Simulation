@@ -40,7 +40,9 @@ Markdown stehen dafür leere Platzhalter, die `assets/js/simulation.js` beim Lad
 Alle Attribute sind im Kopf von `simulation.js` beschrieben, die modelleigenen im Kopf der
 jeweiligen `sim-*.js` – etwa `data-vergleich` für zwei Stau-Strecken A und B mit gemeinsamem
 Start (L3, Etappe 3 und Zusatz «Träges Anfahren») oder `data-regler`, `data-start` und
-`data-messen` für die Erweiterungen des Segregationsmodells (L5, Zusatz-Etappen). Ein neues Modell ist eine Datei
+`data-messen` für die Erweiterungen des Segregationsmodells (L5, Zusatz-Etappen) oder
+`data-laender` für die Parametersätze Eswatini 2011/2016 und Südafrika 2024 im HIV-Modell (L6,
+Etappe 2). Ein neues Modell ist eine Datei
 `assets/js/sim-<name>.js`, die sich mit `Simulation.modell("<name>", …)` anmeldet und in
 `_layouts/default.html` geladen wird. Eingabefelder (`span.luecke`, `span.wahl`,
 `div.antwort`, Multiple Choice) sind im Kopf von `uebungen.js` beschrieben.
@@ -54,7 +56,7 @@ Lektion 1 erscheinen in Lektion 2 wieder.
 | Brownsche Bewegung | `sim-brown.js` | 2 | fertig |
 | Stau (Nagel-Schreckenberg) | `sim-stau.js` (Modelle `stau` und `stau-regeln`) | 3, 4 | fertig |
 | Segregation (Schelling) | `sim-segregation.js` (Modelle `segregation` und `segregation-hand`) | 5 | fertig |
-| Krankheitsübertragung (HIV) | – | 6 | offen |
+| Krankheitsübertragung (HIV) | `sim-hiv.js` (Modell `hiv`, nach NetLogo «HIV», CC BY-NC-SA 3.0) | 6 | fertig |
 
 ## Wer sieht was
 

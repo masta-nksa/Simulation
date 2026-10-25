@@ -134,7 +134,7 @@ zurückliegt, holt in der Pufferlektion auf.
 | 3 | Stau: modellieren und simulieren | Selbstlernphase mit Regel-Trainer | Regeln von Hand angewendet, erste Parameterstudie |
 | 4 | Stau: validieren | Selbstlernphase, Sicherung im Plenum | Fluss-Dichte-Diagramm, Steckbrief 2 |
 | 5 | Segregation | Selbstlernphase, Sicherung im Plenum | Messreihe zum Wohlfühlfaktor, Steckbrief 3 |
-| 6 | Krankheitsübertragung (HIV) | Selbstlernphase, Sicherung im Plenum | Massnahmen mit Begründung, Steckbrief 4 |
+| 6 | Krankheitsübertragung (HIV) | Selbstlernphase, Sicherung im Plenum | Empfehlung mit Begründung, Steckbrief 4 |
 | 7 | Vier Modelle, eine Methode | Selbstlernphase, Sicherung im Plenum | Modellvergleich, Selbsttest |
 | 8 | Puffer | individuell | offene Etappen abgeschlossen |
 
@@ -221,16 +221,20 @@ Realität aufhört.
 
 ### Lektion 6: Krankheitsübertragung
 
-Input (5 Min.): Sie beraten das Gesundheitsministerium – welche Massnahme wirkt?
-Etappe 1 (15 Min.): Standardlauf, Einfluss einzelner Parameter
-(Paarbildung, Dauer der Beziehung, Kondomgebrauch, Testhäufigkeit). Etappe 2
-(15 Min.): Massnahmen formulieren und prüfen; Übertragung auf andere
-Krankheiten. Sicherung (10 Min.): Massnahmen vergleichen, Steckbrief 4.
+Input (5 Min.): Sie beraten das Gesundheitsministerium eines Landes im südlichen Afrika – welche
+Kampagne wirkt? Etappe 1 (15 Min.): Modell und Regeln, Standardlauf, Einfluss einzelner
+Parameter (Paarbildung, Dauer der Beziehung, Kondomgebrauch, Testhäufigkeit). Etappe 2
+(15 Min.): Das Modell an Daten aus Eswatini prüfen (an 2011 angepasst, Vorhersage für 2016) und
+eine Empfehlung für Südafrika ableiten (nicht validiert). Sicherung (10 Min.): Empfehlungen
+vergleichen, Grippe-Frage, Steckbrief 4. Zusatz-Etappen: «Eine andere Krankheit» (Ansteckung,
+Symptome) und «Testen allein genügt nicht» (Test und Therapie beeinflussen sich gegenseitig).
 
 HIV bleibt das Thema: Es liegt in der Lebenswelt junger Erwachsener, und die
 Parameter des Modells entsprechen Verhaltensweisen, über die sich konkret reden
-lässt. Die Frage «Was müsste man am Modell für eine Grippe ändern?» zeigt, was
-am Modell krankheitsspezifisch ist.
+lässt. Das Modell folgt dem NetLogo-Modell «HIV» (Wilensky 1997), rechnet aber mit einer
+realistischen Ansteckung (0,75 % statt 50 % pro Woche) und trennt Test und Therapie. Mit echten
+Länderdaten wird die Lektion zum Validierungsbeispiel: Anpassen ist nicht Prüfen. Die Frage «Was
+müsste man am Modell für eine Grippe ändern?» zeigt, was am Modell krankheitsspezifisch ist.
 
 ### Lektion 7: Vier Modelle, eine Methode
 

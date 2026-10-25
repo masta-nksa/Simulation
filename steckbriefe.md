@@ -129,32 +129,32 @@ damit vergleichen, sobald Sie selbst etwas geschrieben haben.
 
 **Realitätsausschnitt** – Welchen Vorgang der Wirklichkeit bildet das Modell ab?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Die Ausbreitung von HIV durch Sex in Partnerschaften in einer Bevölkerung – und wie Tests, Therapie und Kondome sie bremsen."></div>
 
 **Akteure** – Wer oder was handelt im Modell?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Personen, die umhergehen, Partnerschaften eingehen und sich wieder trennen. Jede Person ist HIV-negativ oder HIV-positiv, weiss es oder nicht und ist wirksam behandelt oder nicht."></div>
 
 **Regeln** – Nach welchen Regeln verhalten sich die Akteure?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Wer allein ist, geht einen Schritt; treffen sich zwei Freie, werden sie ein Paar, wenn beide wollen; ein Paar trennt sich, wenn einer nicht mehr bleiben will; ohne Kondom steckt eine ansteckende Person ihr Gegenüber mit 0,75 % pro Woche an; wer sich testen lässt oder Symptome bekommt, erfährt davon und wird (zum eingestellten Anteil) behandelt."></div>
 
 **Parameter** – Was lässt sich einstellen?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Paarbildung, Dauer einer Beziehung, Kondom, Test; dazu Therapie, Ansteckung, Zeit bis zu den Symptomen und die Ausgangslage eines Landes (wie viele HIV-positiv sind und es wissen)."></div>
 
 **Zufall** – Wo spielt der Zufall mit?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Wer wohin geht und wem begegnet, ob ein Paar entsteht, ob ein Kondom benutzt wird, ob sich jemand ansteckt, wer sich testen lässt; dazu die persönlichen Neigungen."></div>
 
 **Masszahl** – Was wird gemessen, um Durchgänge zu vergleichen?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Anteil HIV-Positiver nach 30 Jahren; für die Länder die Neuansteckungen pro 100 HIV-negative Personen und Jahr."></div>
 
 **Vernachlässigt** – Was kommt im Modell nicht vor, obwohl es in der Wirklichkeit eine Rolle spielt?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Andere Übertragungswege, Alter und Geschlecht, Todesfälle und Geburten, mehrere Partner gleichzeitig, frisch Angesteckte, die besonders ansteckend sind, Sex ausserhalb einer Partnerschaft, Verhaltensänderung nach einem positiven Test."></div>
 
 **Validierung** – Womit lässt sich das Ergebnis vergleichen, und wie gut gelingt das?
 
-<div class="antwort" data-zeilen="2"></div>
+<div class="antwort" data-zeilen="2" data-loesung="Mit landesweiten Erhebungen in Eswatini: Das Modell wurde an 2011 angepasst und sagte für 2016 einen Rückgang voraus – Richtung und Grössenordnung stimmen, die Abnahme ist zu gross. Für Südafrika fehlen vergleichbare Messungen, die Vorhersage ist nicht geprüft."></div>

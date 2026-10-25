@@ -42,7 +42,7 @@ Haken Sie ab, was Sie sicher können. Wo es noch hapert, hilft die Zusammenfassu
 | Schritt | Beim Stau (Lektionen 3 und 4) | Bei der Segregation |
 |---|---|---|
 | **Modellieren** | Autos auf einem Ring, vier Regeln | Personen auf einem Raster, eine Regel |
-| **Simulieren** | Dichte verändern, Verkehrsfluss messen | Wohlfühlfaktor verändern, Anteil gleicher Nachbarn messen |
+| **Simulieren** | Dichte, Höchsttempo und Trödeln verändern, Verkehrsfluss messen | Wohlfühlfaktor verändern, Anteil gleicher Nachbarn messen |
 | **Validieren** | Ringversuche, Zähldaten – gut möglich | Entmischung messbar, Ursache kaum – sehr schwierig |
 
 ## Das Modell

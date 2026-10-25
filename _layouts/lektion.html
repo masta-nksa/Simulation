@@ -38,7 +38,7 @@ layout: default
     <ul class="card-list">
       {%- for m in fuer_sus %}
       <li class="card">
-        <a href="{{ m.url | relative_url }}">
+        <a href="{{ m.url | relative_url }}" data-fs-url="{{ m.url | relative_url }}">
           <span class="badge badge-{{ m.art }}">{{ site.art_labels[m.art] }}</span>
           <strong>{{ m.titel }}</strong>
           <span class="card-kurz">{{ m.kurz }}</span>

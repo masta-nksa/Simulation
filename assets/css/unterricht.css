@@ -14,6 +14,9 @@
    5. Info-Kasten, Dossier
    6. Interaktive Übungen und kompakter Druck
    7. Simulationen, Messtabellen, Schaubilder (Ergänzung dieser Einheit)
+   8. Fortschritt: Farbe der Seite, Leisten, Zähler (fortschritt.js)
+   9. Design «Blüte» und Design-Knopf (design.js)
+  10. Feier-Effekte und Meldungen (feier.js)
 
    FARBE ODER SCHRIFT ÄNDERN
    Fast alles ergibt sich aus den Variablen in Abschnitt 2. Wer dort bleibt,
@@ -1145,4 +1148,343 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
   .prose figure.grafik { border-color: #999; break-inside: avoid; max-width: 13cm; }
   .schaubild svg .punkt { fill: #000; fill-opacity: 1; }
   .prose details.regeln { break-inside: avoid; }
+}
+
+/* --- 8. Fortschritt ------------------------------------------------------ */
+/* fortschritt.js setzt data-fs-stufe (0–4) und --fs-anteil (0–1) an <html>
+   (Stand der Seite) und an Karten, Lektionszeilen und Lektionsnummern. Die
+   Stufen gelten in beiden Designs gleich, damit die Lehrperson sie im
+   Vorbeigehen lesen kann:
+     0 keine Farbe · 1 Orange: begonnen · 2 Gelb: gut unterwegs
+     3 Hellgrün: fast fertig · 4 Grün: fertig */
+
+:root {
+  --fs-1: #f28c28;
+  --fs-2: #f2c318;
+  --fs-3: #95cc3a;
+  --fs-4: #1f9d55;
+  --fs-ton: 9%;   /* so stark färbt die Stufe den Grund der Seite */
+}
+@media (prefers-color-scheme: dark) {
+  :root { --fs-1: #f59a3c; --fs-2: #ecc63a; --fs-3: #a4d65a; --fs-4: #35c174; --fs-ton: 13%; }
+}
+[data-fs-stufe="0"] { --fs-farbe: var(--border); }
+[data-fs-stufe="1"] { --fs-farbe: var(--fs-1); }
+[data-fs-stufe="2"] { --fs-farbe: var(--fs-2); }
+[data-fs-stufe="3"] { --fs-farbe: var(--fs-3); }
+[data-fs-stufe="4"] { --fs-farbe: var(--fs-4); }
+
+/* Die ganze Seite: leichter Grundton, Rahmen und Schimmer am Rand */
+html[data-fs-stufe]:not([data-fs-stufe="0"]) body,
+html[data-fs-stufe]:not([data-fs-stufe="0"]) .site-header {
+  background-color: color-mix(in oklab, var(--fs-farbe) var(--fs-ton), var(--bg));
+  transition: background-color .6s;
+}
+html[data-fs-stufe]:not([data-fs-stufe="0"]) body::after {
+  content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none;
+  box-shadow: inset 0 0 0 6px var(--fs-farbe), inset 0 0 70px -24px var(--fs-farbe);
+  transition: box-shadow .6s;
+}
+
+/* Leiste am unteren Rand der Kopfzeile */
+.fs-leiste {
+  position: absolute; left: 0; right: 0; bottom: -2px; height: 6px;
+  background: color-mix(in srgb, var(--fs-farbe, var(--border)) 25%, transparent);
+}
+.fs-leiste > span {
+  display: block; height: 100%; width: calc(var(--fs-anteil, 0) * 100%);
+  background: var(--fs-farbe); transition: width .5s ease, background-color .5s;
+}
+
+/* Zähler neben den Badges einer Unterlage bzw. unter dem Titel der Lektion */
+.fs-zaehler {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--font-meta); font-size: .74rem; color: var(--text-muted);
+}
+.fs-zaehler::before {
+  content: ""; flex: none; width: .75rem; height: .75rem; border-radius: 50%;
+  background: var(--fs-farbe); box-shadow: 0 0 0 1px var(--border-strong);
+}
+.lektion-header > .fs-zaehler { display: flex; margin-top: .9rem; }
+
+/* Kleine Leiste mit Text: Karten der Lektionsseite, Lektionsliste der Startseite */
+.fs-mini {
+  display: flex; align-items: center; gap: .55rem; margin-top: auto; padding-top: .3rem;
+  font-family: var(--font-meta); font-size: .7rem; line-height: 1.3; color: var(--text-muted);
+}
+.fs-mini-leiste {
+  position: relative; flex: 0 0 6.5rem; height: 5px; overflow: hidden;
+  background: var(--border); border-radius: var(--radius-pill);
+}
+.fs-mini-leiste::after {
+  content: ""; position: absolute; inset: 0 auto 0 0;
+  width: calc(var(--fs-anteil, 0) * 100%); background: var(--fs-farbe);
+}
+.card a:hover .fs-mini, .lektion-list > li > a:hover .fs-mini { color: inherit; }
+.card a[data-fs-stufe]:not([data-fs-stufe="0"]) { box-shadow: inset 5px 0 0 var(--fs-farbe); }
+.lektion-list > li > a[data-fs-stufe]:not([data-fs-stufe="0"]) .lektion-nr {
+  text-decoration: underline; text-decoration-color: var(--fs-farbe);
+  text-decoration-thickness: 5px; text-underline-offset: 7px; text-decoration-skip-ink: none;
+}
+/* Lektionsnummern in der Kopfzeile: Strich in der Farbe der Stufe */
+.site-nav a[data-fs-stufe]:not([data-fs-stufe="0"]) { box-shadow: inset 0 -4px 0 var(--fs-farbe); }
+
+/* Legende der Stufen (Bereich der Lehrperson) */
+.fs-legende { list-style: none; padding: 0; margin: 0 0 1.2rem; display: grid; gap: .35rem; }
+.prose .fs-legende li { display: flex; align-items: center; gap: .7rem; margin: 0; }
+.fs-muster {
+  flex: none; width: 2.6rem; height: 1.6rem; border-radius: var(--radius-code);
+  background: color-mix(in oklab, var(--fs-farbe) 14%, var(--bg-elev));
+  box-shadow: inset 0 0 0 4px var(--fs-farbe);
+}
+.fs-legende [data-fs-stufe="0"] .fs-muster { background: var(--bg-elev); box-shadow: inset 0 0 0 1px var(--border-strong); }
+
+@media print {
+  .fs-leiste, .fs-zaehler, .fs-mini, .design-knopf, .feier-leinwand, .feier-meldung { display: none !important; }
+  html[data-fs-stufe] body { background: #fff !important; }
+  html[data-fs-stufe] body::after { display: none; }
+  .card a[data-fs-stufe], .site-nav a[data-fs-stufe] { box-shadow: none !important; }
+}
+
+/* --- 9. Design «Blüte» und Design-Knopf ---------------------------------- */
+/* Zweites Design, umschaltbar über den Knopf in der Kopfzeile (design.js):
+   Pastell statt Tinte, runde Formen, weiche Schatten, Verläufe und Blüten,
+   dazu die Feier-Effekte aus feier.js. Es setzt dieselben Variablen wie
+   Abschnitt 2 und ergänzt nur, was sich damit nicht sagen lässt. Gedruckt
+   wird immer klassisch – darum steht alles unter @media screen. */
+
+.design-knopf {
+  display: inline-flex; align-items: center; gap: .4rem; flex: none;
+  padding: .25rem .65rem; cursor: pointer; white-space: nowrap;
+  font-family: var(--font-meta); font-size: .76rem; font-weight: var(--label-weight);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-knopf);
+  background: none; color: var(--text);
+}
+.design-knopf[hidden] { display: none; }
+.design-knopf:hover { background: var(--accent-soft); }
+.design-muster { flex: none; width: .95rem; height: .95rem; border-radius: 50%; }
+.design-knopf[data-ziel="bluete"] .design-muster { background: conic-gradient(#ff8fc2, #c7b3ff, #8fe3cf, #ffd88a, #ff8fc2); }
+.design-knopf[data-ziel="klassisch"] .design-muster { background: linear-gradient(135deg, #14161a 50%, #ffd83a 50%); box-shadow: 0 0 0 1px #14161a; }
+/* Sobald die Navigation unter die Wortmarke rückt, steht der Knopf rechts
+   neben der Wortmarke – sonst bräche die Reihe der Lektionsnummern um. */
+@media (max-width: 46rem) {
+  .header-inner { position: relative; }
+  .design-knopf { position: absolute; right: 0; top: .3rem; padding-block: .15rem; }
+}
+
+@media screen {
+  html[data-design="bluete"] {
+    --bg:            #fff7fb;
+    --bg-elev:       #ffffff;
+    --text:          #3a2140;
+    --text-muted:    #7a5f80;
+    --border:        #f2d6e6;
+    --border-strong: #d9a6c5;
+    --accent:        #b8327a;
+    --accent-soft:   #fde6f1;
+    --marker:        #ffc4e1;
+    --on-marker:     #3a2140;
+    --lp:            #7d4cc9;
+    --lp-soft:       #f1e8ff;
+    --sus:           #13866a;
+    --sus-soft:      #ddf6ed;
+    --linie:         #e4a9ca;
+    --linie-b:       1.5px;
+
+    --font-meta: var(--font-body);
+    --font-display: var(--font-body);
+    --head-weight:    750;
+    --display-weight: 800;
+    --label-weight:   650;
+    --label-transform: none;
+    --label-tracking:  .01em;
+
+    --radius-karte: 22px;
+    --radius-feld:  16px;
+    --radius-block: 14px;
+    --radius-knopf: 999px;
+    --radius-marke: 999px;
+    --radius-code:  6px;
+    --radius-pill:  999px;
+    --shadow:       0 12px 30px -18px rgba(184, 50, 122, .55);
+
+    --verlauf:      linear-gradient(120deg, #e0418f, #9b5de5);
+    --verlauf-text: linear-gradient(100deg, #c2185b, #7b3fd1 60%, #1f8f78);
+    --header-bg:     color-mix(in srgb, var(--bg) 80%, transparent);
+    --header-filter: blur(12px) saturate(1.4);
+    --hero-bg:
+      radial-gradient(55rem 20rem at 12% 0%, #ffdcee 0, transparent 62%),
+      radial-gradient(40rem 20rem at 92% 12%, #ebe2ff 0, transparent 62%),
+      radial-gradient(34rem 16rem at 55% 105%, #dbf6ec 0, transparent 62%);
+    --tupfen: rgba(184, 50, 122, .085);
+    --fs-ton: 11%;
+  }
+}
+@media screen and (prefers-color-scheme: dark) {
+  html[data-design="bluete"] {
+    --bg:            #1d1322;
+    --bg-elev:       #29192f;
+    --text:          #f8e9f2;
+    --text-muted:    #c9a9c0;
+    --border:        #4a2f52;
+    --border-strong: #82598c;
+    --accent:        #ff8cc6;
+    --accent-soft:   #45213d;
+    --marker:        #ff9fd0;
+    --on-marker:     #2a0f22;
+    --lp:            #c9a2ff;
+    --lp-soft:       #2e2142;
+    --sus:           #6fe0b9;
+    --sus-soft:      #15302a;
+    --linie:         #8c5a87;
+    --shadow:       0 14px 32px -18px rgba(0, 0, 0, .8);
+    --verlauf:      linear-gradient(120deg, #d63384, #8e5be0);
+    --verlauf-text: linear-gradient(100deg, #ff8cc6, #c7a6ff 60%, #7fe3c8);
+    --hero-bg:
+      radial-gradient(55rem 20rem at 12% 0%, #3d1934 0, transparent 62%),
+      radial-gradient(40rem 20rem at 92% 12%, #2b2045 0, transparent 62%),
+      radial-gradient(34rem 16rem at 55% 105%, #173329 0, transparent 62%);
+    --tupfen: rgba(255, 140, 198, .07);
+    --fs-ton: 14%;
+  }
+}
+
+@media screen {
+  html[data-design="bluete"] body {
+    background-image: radial-gradient(circle at 1px 1px, var(--tupfen) 1.2px, transparent 0);
+    background-size: 22px 22px;
+  }
+  html[data-design="bluete"] ::selection { background: var(--marker); color: var(--on-marker); }
+
+  /* Kopfzeile: durchscheinend, Blüte vor der Wortmarke, aktuelle Seite im Verlauf */
+  html[data-design="bluete"] .site-header { border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px -20px rgba(184, 50, 122, .7); }
+  html[data-design="bluete"] .brand-text strong::before { content: "\273F"; margin-right: .4rem; color: var(--accent); }
+  html[data-design="bluete"] .site-nav a:hover { background: var(--accent-soft); }
+  html[data-design="bluete"] .site-nav a[aria-current="page"] { background: var(--verlauf); color: #fff; }
+
+  /* Startseite */
+  html[data-design="bluete"] .hero { position: relative; overflow: hidden; }
+  html[data-design="bluete"] .hero::after {
+    content: "\2726  \2727  \273F"; position: absolute; right: max(1.5rem, 8vw); top: 1.6rem;
+    font-size: 1.5rem; letter-spacing: .3em; color: var(--accent); opacity: .45; pointer-events: none;
+  }
+  html[data-design="bluete"] .hero h1,
+  html[data-design="bluete"] .lektion-header h1,
+  html[data-design="bluete"] .prose h1 {
+    background: var(--verlauf-text); -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  }
+  html[data-design="bluete"] .hero h1 { letter-spacing: -.035em; padding-bottom: .08em; }
+  html[data-design="bluete"] .signet { border-top-width: 1px; }
+  html[data-design="bluete"] .signet-zeile > * { border-bottom-width: 1px; }
+  html[data-design="bluete"] .section-title { font-size: .95rem; color: var(--accent); }
+
+  html[data-design="bluete"] .lektion-list { border-top: 0; display: grid; gap: .75rem; }
+  html[data-design="bluete"] .lektion-list > li > a {
+    align-items: center; padding: .85rem 1.1rem .9rem .9rem;
+    border: 1px solid var(--border); border-radius: var(--radius-karte);
+    background: var(--bg-elev); box-shadow: var(--shadow);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  html[data-design="bluete"] .lektion-list > li > a:hover,
+  html[data-design="bluete"] .lektion-list > li > a:focus-visible {
+    background: var(--bg-elev); color: inherit; transform: translateY(-2px);
+    box-shadow: 0 18px 34px -18px rgba(184, 50, 122, .65);
+  }
+  html[data-design="bluete"] .lektion-list > li > a:hover .lektion-kurz { color: var(--text-muted); }
+  html[data-design="bluete"] .lektion-nr {
+    display: grid; place-items: center; width: 3.1rem; height: 3.1rem; border-radius: 50%;
+    background: var(--verlauf); color: #fff; font-family: var(--font-body); font-weight: 800; font-size: 1.2rem;
+  }
+  /* Fortschritt: Ring in der Farbe der Stufe um die Nummer */
+  html[data-design="bluete"] .lektion-list > li > a[data-fs-stufe]:not([data-fs-stufe="0"]) .lektion-nr {
+    text-decoration: none; box-shadow: 0 0 0 3px var(--bg-elev), 0 0 0 6px var(--fs-farbe);
+  }
+  html[data-design="bluete"] .lektion-stichwort { padding: .1rem .65rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+  @media (max-width: 36rem) {
+    html[data-design="bluete"] .lektion-list > li > a { grid-template-columns: 3.2rem minmax(0, 1fr); }
+    html[data-design="bluete"] .lektion-nr { width: 2.6rem; height: 2.6rem; font-size: 1.05rem; }
+  }
+
+  /* Lektionsseite und Karten */
+  html[data-design="bluete"] .material-block { border: 1px solid var(--border); box-shadow: var(--shadow); }
+  html[data-design="bluete"] .material-block h2 {
+    border-bottom: 1px solid var(--border); border-radius: var(--radius-karte) var(--radius-karte) 0 0;
+    background: linear-gradient(90deg, var(--accent-soft), var(--lp-soft)); font-size: .9rem;
+  }
+  html[data-design="bluete"] .block-icon { display: inline; }
+  html[data-design="bluete"] .card a {
+    border: 1px solid var(--border); background: var(--bg-elev); box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  html[data-design="bluete"] .card a:hover { background: var(--bg-elev); color: inherit; border-color: var(--border-strong); transform: translateY(-2px); }
+  html[data-design="bluete"] .card a:hover .card-kurz { color: var(--text-muted); }
+  html[data-design="bluete"] .card a:hover .badge,
+  html[data-design="bluete"] .badge { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+  html[data-design="bluete"] .badge-zielgruppe-sus { background: none; color: var(--text-muted); }
+  html[data-design="bluete"] .card a[data-fs-stufe]:not([data-fs-stufe="0"]) { box-shadow: var(--shadow), inset 5px 0 0 var(--fs-farbe); }
+  html[data-design="bluete"] .ablauf ol > li::before { border-radius: 50%; border: 0; background: var(--verlauf); color: #fff; font-family: var(--font-body); font-weight: 750; }
+  html[data-design="bluete"] .ablauf ol > li:has(a[href]):hover::before { background: var(--accent); }
+
+  /* Fliesstext */
+  html[data-design="bluete"] .prose h2 {
+    border-bottom: 0; padding-bottom: .45rem;
+    background: var(--verlauf) left bottom / 3.2rem 3px no-repeat;
+  }
+  html[data-design="bluete"] .prose h2::before { content: "\273F"; margin-right: .45rem; color: var(--accent); font-weight: 400; }
+  html[data-design="bluete"] .prose blockquote { border-left-color: var(--marker); }
+  html[data-design="bluete"] .prose table { border-top-width: 1px; border-bottom-width: 1px; }
+  html[data-design="bluete"] .kasten,
+  html[data-design="bluete"] .prose ul.tipps, html[data-design="bluete"] .prose ol.tipps { border-radius: var(--radius-block); }
+  html[data-design="bluete"] .pager { border-top: 1px solid var(--border); }
+  html[data-design="bluete"] .pager a:hover { background: var(--accent-soft); color: inherit; }
+  html[data-design="bluete"] .site-footer { border-top: 1px solid var(--border); }
+  html[data-design="bluete"] .print-btn { border: 1px solid var(--border-strong); }
+  html[data-design="bluete"] .print-btn:hover { background: var(--accent-soft); color: var(--text); }
+
+  /* Übungen */
+  html[data-design="bluete"] .luecke-feld { border-radius: 8px 8px 0 0; }
+  html[data-design="bluete"] .chip[aria-pressed="true"] { color: #fff; }
+  html[data-design="bluete"] .pruefen-knopf {
+    border: 0; background: var(--verlauf); color: #fff; padding: .38rem 1.1rem;
+    box-shadow: 0 8px 18px -10px rgba(184, 50, 122, .9); transition: transform .12s ease;
+  }
+  html[data-design="bluete"] .pruefen-knopf:hover { transform: translateY(-1px); filter: brightness(1.07); }
+  html[data-design="bluete"] .pruefen-knopf:active { transform: scale(.97); }
+  html[data-design="bluete"] .pruefen-meldung.ok::after { content: " \273F"; }
+
+  /* Simulationen */
+  html[data-design="bluete"] .simulation { border: 1px solid var(--border); border-radius: var(--radius-block); box-shadow: var(--shadow); }
+  html[data-design="bluete"] .schaubild-figur { border-radius: var(--radius-block); }
+  html[data-design="bluete"] .sim-knopf.haupt { border: 0; background: var(--verlauf); color: #fff; }
+}
+
+/* --- 10. Feier-Effekte und Meldungen ------------------------------------- */
+/* feier.js zeichnet die Effekte auf eine Leinwand über der Seite und zeigt
+   Meldungen oben in der Mitte. Im Design «Klassisch» nur die Meldungen. */
+
+.feier-leinwand { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 95; pointer-events: none; }
+.feier-meldung {
+  position: fixed; left: 50%; top: 4.6rem; z-index: 96;
+  width: max-content; max-width: min(32rem, calc(100% - 2rem)); padding: .7rem 1.1rem;
+  background: var(--bg-elev); color: var(--text);
+  border: var(--linie-b) solid var(--linie); border-left: 6px solid var(--marker);
+  border-radius: var(--radius-block); box-shadow: var(--shadow);
+  font-weight: 650; font-size: .98rem;
+  opacity: 0; transform: translate(-50%, -.8rem); transition: opacity .35s ease, transform .35s ease;
+}
+.feier-meldung.da { opacity: 1; transform: translate(-50%, 0); }
+.feier-meldung.gross { font-size: 1.12rem; }
+.feier-meldung a { display: block; margin-top: .2rem; font-weight: 600; font-size: .9rem; }
+@media screen {
+  html[data-design="bluete"] .feier-meldung {
+    border: 2px solid transparent; border-radius: 18px;
+    background: linear-gradient(var(--bg-elev), var(--bg-elev)) padding-box, var(--verlauf) border-box;
+    box-shadow: 0 18px 40px -16px rgba(184, 50, 122, .6);
+  }
+  html[data-design="bluete"] .feier-meldung::before { content: "\273F"; margin-right: .45rem; color: var(--accent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feier-meldung { transition: none; }
+  html[data-design="bluete"] .lektion-list > li > a, html[data-design="bluete"] .card a { transition: none; }
 }

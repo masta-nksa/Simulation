@@ -50,7 +50,10 @@
    anklickbaren Checklisten.
 
    Pro Abschnitt (h2/h3) mit prüfbaren Feldern erscheint automatisch ein
-   Knopf «Prüfen».
+   Knopf «Prüfen». Jeder Klick darauf meldet sich als Ereignis
+   «uebungen:geprueft» (detail: alleRichtig, seiteRichtig, knopf), «Alle
+   Eingaben löschen» als «uebungen:geloescht» – darauf hören fortschritt.js
+   und feier.js.
 
    Trennzeichen ist das Semikolon, nicht «|» – ein senkrechter Strich würde
    in Markdown-Tabellen die Spalten trennen. Eingaben bleiben im Browser gespeichert (localStorage) –
@@ -115,7 +118,7 @@
     container.dataset.uebungenBereit = "1";
     var nr = 0;
     function schluessel() { return "uebung:" + schluesselBasis + ":" + (nr++); }
-    var pruefbar = [];   // { element, pruefe(), zuruecksetzen() }
+    var pruefbar = [];   // { element, richtig() ohne Markierung, pruefe() mit Markierung }
     var alleFelder = []; // für «Eingaben löschen»
 
     // --- Lücken (Text, Zahl, Auswahl)
@@ -152,7 +155,7 @@
       }
       alleFelder.push(function () { feld.value = ""; schreiben(key, ""); feld.classList.remove("richtig", "falsch"); });
       if (feld.dataset.antwort) {
-        pruefbar.push({ element: feld, pruefe: function () {
+        pruefbar.push({ element: feld, richtig: function () { return stimmt(feld, feld.value); }, pruefe: function () {
           var ok = stimmt(feld, feld.value);
           feld.classList.toggle("richtig", ok); feld.classList.toggle("falsch", !ok);
           return ok;
@@ -187,13 +190,16 @@
         gruppe.classList.remove("richtig", "falsch", "teilweise"); schreiben(key, "");
       });
       if (gruppe.dataset.antwort) {
-        pruefbar.push({ element: gruppe, pruefe: function () {
-          var muss = gruppe.dataset.antwort.split("+"), auch = (gruppe.dataset.auch || "").split("+").filter(Boolean);
+        var muss = gruppe.dataset.antwort.split("+"), auch = (gruppe.dataset.auch || "").split("+").filter(Boolean);
+        var wahlRichtig = function () {
           var g = aktuelle();
           var alleDa = muss.every(function (m) { return g.indexOf(m) !== -1; });
           var nurErlaubte = g.every(function (x) { return muss.indexOf(x) !== -1 || auch.indexOf(x) !== -1; });
-          var ok = alleDa && nurErlaubte;
-          var teil = !ok && g.some(function (x) { return muss.indexOf(x) !== -1; });
+          return alleDa && nurErlaubte;
+        };
+        pruefbar.push({ element: gruppe, richtig: wahlRichtig, pruefe: function () {
+          var ok = wahlRichtig();
+          var teil = !ok && aktuelle().some(function (x) { return muss.indexOf(x) !== -1; });
           gruppe.classList.toggle("richtig", ok); gruppe.classList.toggle("teilweise", teil); gruppe.classList.toggle("falsch", !ok && !teil);
           return ok;
         } });
@@ -288,8 +294,9 @@
       if (ul.classList.contains("mc") && ul.dataset.antwort) {
         var richtigeNr = ul.dataset.antwort.split(/[\s,]+/).map(Number);
         boxen.forEach(function (b, i) { if (richtigeNr.indexOf(i + 1) !== -1) b.parentNode.classList.add("ist-loesung"); });
-        pruefbar.push({ element: ul, pruefe: function () {
-          var ok = boxen.every(function (b, i) { return b.checked === (richtigeNr.indexOf(i + 1) !== -1); });
+        var mcRichtig = function () { return boxen.every(function (b, i) { return b.checked === (richtigeNr.indexOf(i + 1) !== -1); }); };
+        pruefbar.push({ element: ul, richtig: mcRichtig, pruefe: function () {
+          var ok = mcRichtig();
           ul.classList.toggle("richtig", ok); ul.classList.toggle("falsch", !ok);
           return ok;
         } });
@@ -336,6 +343,13 @@
           ? "✓ Alles richtig!"
           : richtig + " von " + g.felder.length + " richtig – die markierten Stellen nochmals anschauen.";
         meldung.className = "pruefen-meldung " + (richtig === g.felder.length ? "ok" : "noch-nicht");
+        // Für Fortschritt und Feier-Effekte (fortschritt.js, feier.js): Ist der
+        // Abschnitt richtig – und ist es jetzt sogar die ganze Seite?
+        document.dispatchEvent(new CustomEvent("uebungen:geprueft", { detail: {
+          container: container, knopf: knopf,
+          alleRichtig: richtig === g.felder.length,
+          seiteRichtig: pruefbar.every(function (p) { return p.richtig(); })
+        } }));
       });
       leiste.append(knopf, meldung);
       g.letztes.parentNode.insertBefore(leiste, g.letztes.nextSibling);
@@ -351,6 +365,7 @@
           Array.prototype.forEach.call(container.querySelectorAll(".pruefen-meldung"), function (m) { m.textContent = ""; });
           // Auch die Simulationen der Seite merken sich ihren Stand (simulation.js).
           if (window.Simulation && window.Simulation.allesZuruecksetzen) window.Simulation.allesZuruecksetzen(container);
+          document.dispatchEvent(new CustomEvent("uebungen:geloescht", { detail: { container: container } }));
         }
       });
       reset.appendChild(b);

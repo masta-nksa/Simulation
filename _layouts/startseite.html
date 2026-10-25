@@ -36,7 +36,7 @@ layout: default
   <ol class="lektion-list">
     {%- for l in lektionen %}
     <li>
-      <a href="{{ l.url | relative_url }}">
+      <a href="{{ l.url | relative_url }}" data-fs-lektion="{{ l.lektion }}">
         <span class="lektion-nr">{{ l.lektion | prepend: "0" | slice: -2, 2 }}</span>
         <span class="lektion-body">
           <strong>{{ l.titel }}</strong>

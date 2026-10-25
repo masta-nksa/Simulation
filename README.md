@@ -23,7 +23,9 @@ Die Website wird von GitHub Pages direkt aus diesem Repository mit Jekyll gebaut
 ├── assets/css/unterricht.css   Gestaltung inkl. Dark Mode und Druckansicht
 └── assets/js/             uebungen.js (Eingabefelder mit Kontrolle), simulation.js
                            (Simulationen, Messtabellen, Schaubilder), sim-*.js (je ein
-                           Modell), dossier.js
+                           Modell), dossier.js, fortschritt.js (Farbe nach Fortschritt),
+                           feier.js (Effekte bei richtigen Antworten), design.js
+                           (Umschalter Klassisch/Blüte)
 ```
 
 ## Simulationen, Messtabellen, Schaubilder
@@ -108,10 +110,26 @@ neuen Tab (Skript in `_layouts/default.html`), interne Links bleiben im selben T
 
 ## Gestaltung
 
-Es gibt genau ein Design. Es ist als gemeinsames Design aller Unterrichtseinheiten gedacht
-und steckt so auch im Gerüst für neue Einheiten: Tinte auf Papier, Schreibmaschinenschrift (IBM Plex Mono) für Titel, Nummern und Etiketten, Inter für
-den Lesetext, Leuchtstift-Gelb als einzige Farbe. Dark Mode folgt der Einstellung des Geräts.
-Die Schriften liegen in `assets/fonts/`, es wird nichts von fremden Servern geladen.
+Es gibt zwei Designs, umschaltbar über den Knopf rechts in der Kopfzeile:
+
+- **Klassisch** (Standard) ist als gemeinsames Design aller Unterrichtseinheiten gedacht und
+  steckt so auch im Gerüst für neue Einheiten: Tinte auf Papier, Schreibmaschinenschrift
+  (IBM Plex Mono) für Titel, Nummern und Etiketten, Inter für den Lesetext, Leuchtstift-Gelb
+  als einzige Farbe.
+- **Blüte** richtet sich an eine verspieltere Lesart, vor allem an Schülerinnen: Pastell
+  (Rosé, Lavendel, Mint), runde Karten mit weichen Schatten, Verläufe in Titeln und Knöpfen,
+  Blüten als Schmuckzeichen. Dazu kommen Feier-Effekte (`feier.js`): Ist ein geprüfter Abschnitt
+  ganz richtig, gibt es abwechselnd Konfetti, Herzen, Glitzer, Blüten oder Seifenblasen – nie
+  zweimal dasselbe hintereinander. Eine fehlerfrei geprüfte Unterlage und eine fertige Lektion
+  feiern mit Feuerwerk, Konfetti- oder Herzregen und einer Meldung (je einmal). Im Design
+  «Klassisch» und bei «Bewegung reduzieren» im Betriebssystem erscheinen nur die Meldungen.
+
+Die Wahl bleibt im Browser gespeichert (`unterricht:design`) und gilt für alle Einheiten auf
+derselben Website; gesetzt wird sie schon im `<head>`, damit nichts aufblitzt. Gedruckt wird
+immer klassisch. Dark Mode folgt in beiden Designs der Einstellung des Geräts. Die Schriften
+liegen in `assets/fonts/`, es wird nichts von fremden Servern geladen. Ein weiteres Design
+ist ein Eintrag in `DESIGNS` (`design.js`) und ein Block `html[data-design="…"]` im
+Stylesheet (Abschnitt 9 als Vorlage).
 
 Was diese Einheit von anderen unterscheidet, steht nicht im Stylesheet, sondern hier:
 
@@ -126,6 +144,35 @@ Einstiegstext von `index.md` bekommt den Leuchtstift – gedacht für die Leitfr
 
 Farben, Linien und Schriften hängen an den Variablen in Abschnitt 2 von
 `assets/css/unterricht.css`. Gedruckt wird in der Systemschrift des Geräts, schwarz auf weiss.
+
+## Fortschritt auf einen Blick
+
+In beiden Designs färbt sich eine Unterlage, je mehr ihrer Aufgaben bearbeitet sind
+(`assets/js/fortschritt.js`): Rahmen um den Bildschirm, leichter Grundton und eine Leiste unter
+der Kopfzeile. So sieht die Lehrperson im Vorbeigehen, wie weit jemand ist.
+
+| Stufe | Farbe | Anteil bearbeitet |
+|---|---|---|
+| 0 | keine | noch nicht begonnen |
+| 1 | Orange | unter einem Drittel |
+| 2 | Gelb | ab einem Drittel |
+| 3 | Hellgrün | ab zwei Dritteln |
+| 4 | Grün | alles |
+
+Als Aufgabe zählen Lücken, Auswahllisten, Auswahl-Chips, Antwortfelder (ab drei Zeichen),
+Multiple Choice, Checklisten (als Ganzes, sobald ein Punkt abgehakt ist) und Messtabellen (sobald
+eine Zeile Werte hat) – ob die Antwort stimmt, spielt für die Farbe keine Rolle. Wer eine ganze
+Unterlage fehlerfrei prüft, bekommt einen Stern (★). Die Lektionsseite trägt die Farbe der ganzen
+Lektion (Durchschnitt ihrer Unterlagen ohne Zusatz-Etappen) und zeigt den Stand jeder Unterlage;
+die Startseite zeigt jede Lektion, die Kopfzeile einen Strich unter jeder Lektionsnummer.
+Gezählt wird auf allen Unterlagen ausser denen für die Lehrperson, Musterlösungen und dem
+Dossier. Welche Unterlagen zu einer Lektion gehören, schreibt Jekyll beim Bauen an die
+Lektionsnummern der Kopfzeile (`data-fs-seiten`) – es muss nichts gepflegt werden.
+
+Der Stand liegt wie alle Eingaben nur im Browser des Geräts (`fortschritt:<Adresse>`); eine
+Klassenübersicht gibt es darum nicht. Farben und Schwellen stehen im Kopf von `fortschritt.js`
+und in Abschnitt 8 des Stylesheets (`--fs-1` … `--fs-4`); die Legende für die Lehrperson steht
+unter `/LP/`.
 
 ## Lokale Vorschau (optional)
 

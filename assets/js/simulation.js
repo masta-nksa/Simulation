@@ -421,10 +421,12 @@
     };
     return farbCache;
   }
+  // Neu zeichnen, wenn der Dark Mode oder das Design (design.js) wechselt
+  var farbenNeu = function () { farbCache = null; document.dispatchEvent(new CustomEvent("sim:farben")); };
+  document.addEventListener("design:gewechselt", farbenNeu);
   if (window.matchMedia) {
     var dunkel = window.matchMedia("(prefers-color-scheme: dark)");
-    var neu = function () { farbCache = null; document.dispatchEvent(new CustomEvent("sim:farben")); };
-    if (dunkel.addEventListener) dunkel.addEventListener("change", neu); else if (dunkel.addListener) dunkel.addListener(neu);
+    if (dunkel.addEventListener) dunkel.addEventListener("change", farbenNeu); else if (dunkel.addListener) dunkel.addListener(farbenNeu);
   }
 
   // Schieberegler mit Beschriftung und laufender Anzeige des Werts

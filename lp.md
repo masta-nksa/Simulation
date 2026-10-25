@@ -63,6 +63,35 @@ Experiments aus Lektion 1 deshalb an der Tafel festhalten.
 **Rückblick:** Ab Lektion 2 beginnt eine Lektion mit drei Fragen zur vorangehenden – gedacht
 fürs Ankommen oder als Hausaufgabe, ohne eigene Zeit im Ablauf.
 
+## Fortschritt auf einen Blick
+
+Jede Unterlage färbt sich, je mehr Aufgaben darauf bearbeitet sind: ein Rahmen um den ganzen
+Bildschirm, ein leichter Grundton und eine Leiste unter der Kopfzeile. So sehen Sie im
+Vorbeigehen, wie weit jemand gekommen ist – auch von hinten und auf Distanz. Die Lektionsseite
+zeigt den Stand der ganzen Lektion und jeder Unterlage, die Startseite den Stand jeder Lektion,
+und in der Kopfzeile trägt jede Lektionsnummer einen Strich in ihrer Farbe.
+
+<ul class="fs-legende">
+  <li data-fs-stufe="0"><span class="fs-muster"></span><span><strong>keine Farbe</strong> – noch nicht begonnen</span></li>
+  <li data-fs-stufe="1"><span class="fs-muster"></span><span><strong>Orange</strong> – begonnen (unter einem Drittel)</span></li>
+  <li data-fs-stufe="2"><span class="fs-muster"></span><span><strong>Gelb</strong> – gut unterwegs (ab einem Drittel)</span></li>
+  <li data-fs-stufe="3"><span class="fs-muster"></span><span><strong>Hellgrün</strong> – fast fertig (ab zwei Dritteln)</span></li>
+  <li data-fs-stufe="4"><span class="fs-muster"></span><span><strong>Grün</strong> – alles bearbeitet</span></li>
+</ul>
+
+Gezählt wird, ob etwas eingetragen, gewählt oder angekreuzt ist – nicht, ob es stimmt. Eine
+Checkliste («Das sollten Sie jetzt können») zählt als eine Aufgabe, sobald ein Punkt abgehakt
+ist; eine Messtabelle, sobald eine Zeile Werte hat. Zusatz-Etappen zählen für die Lektion nicht
+mit. Wer eine ganze Unterlage fehlerfrei geprüft hat, bekommt auf der Lektionsseite einen Stern
+(★). Der Stand liegt wie alle Eingaben nur im Browser des Geräts: Eine Klassenübersicht gibt es
+nicht, und wer die Eingaben einer Seite löscht, beginnt dort wieder bei null.
+
+**Zwei Designs:** Über den Knopf rechts in der Kopfzeile wechseln die SuS zwischen «Klassisch»
+und «Blüte» (pastell, verspielt). Im Design «Blüte» gibt es bei richtig geprüften Abschnitten
+abwechselnd Konfetti, Herzen, Glitzer, Blüten oder Seifenblasen, bei einer fehlerfrei geprüften
+Unterlage und am Ende einer Lektion ein Feuerwerk. «Klassisch» bleibt ruhig und zeigt nur die
+Meldungen. Fortschrittsfarben und Druck sind in beiden Designs gleich.
+
 ## Grundlagen
 
 </div>

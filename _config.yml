@@ -41,10 +41,10 @@ signet:
 hauptnav:
   - titel: "Steckbriefe"
     url: "/steckbriefe.html"
-  - titel: "Lerndossier"
-    url: "/theorie.html"
-  - titel: "Dossier"
+  - titel: "ArbeitsDossier"
     url: "/dossier.html"
+  - titel: "LernDossier"
+    url: "/theorie.html"
 
 # Besucherstatistik (optional): Code des GoatCounter-Kontos, also der Teil vor
 # ".goatcounter.com". Gezählt wird ohne Cookies und ohne gespeicherte

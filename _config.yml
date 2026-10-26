@@ -41,6 +41,8 @@ signet:
 hauptnav:
   - titel: "Steckbriefe"
     url: "/steckbriefe.html"
+  - titel: "Lerndossier"
+    url: "/theorie.html"
   - titel: "Dossier"
     url: "/dossier.html"
 
@@ -84,6 +86,7 @@ art_labels:
   selbsttest:    "Selbsttest"
   steckbrief:    "Steckbrief"
   dossier:       "Dossier"
+  lerndossier:   "Lerndossier"
 
 # Alle Dateien in lektionen/ sind Unterrichtsmaterial und teilen dasselbe Layout.
 defaults:

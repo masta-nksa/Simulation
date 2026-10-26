@@ -10,5 +10,5 @@ permalink: /lektion-8.html
 ---
 
 1. **Einstieg** *(ca. 5 Min.)* – Prüfen Sie, welche Etappen und Steckbriefe noch offen sind.
-2. **Aufholen und vertiefen** *(ca. 30 Min.)* – Schliessen Sie offene Etappen ab und wiederholen Sie, was im Selbsttest nicht sicher war. Wer fertig ist, wählt eine Zusatz-Etappe.
+2. **Aufholen und vertiefen** *(ca. 30 Min.)* – Schliessen Sie offene Etappen ab und wiederholen Sie, was im Selbsttest nicht sicher war – das [Lerndossier]({{ '/theorie.html' | relative_url }}) fasst alles zusammen. Wer fertig ist, wählt eine Zusatz-Etappe.
 3. **Abschluss** *(ca. 10 Min.)* – Offene Fragen klären.

@@ -121,6 +121,13 @@ Meldungen. Fortschrittsfarben und Druck sind in beiden Designs gleich.
     </a>
   </li>
   <li class="card">
+    <a href="{{ '/theorie.html' | relative_url }}">
+      <span class="badge badge-lerndossier">Lerndossier</span>
+      <strong>Lerndossier: Simulationen</strong>
+      <span class="card-kurz">Alle Erkenntnisse der Lektionen 1–6 nach Lernzielen – Grundlage für die Prüfung</span>
+    </a>
+  </li>
+  <li class="card">
     <a href="{{ '/LP/dossier.html' | relative_url }}">
       <span class="badge badge-dossier">Dossier</span>
       <strong>Dossier für die Lehrperson</strong>

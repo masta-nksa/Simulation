@@ -15,9 +15,10 @@ Die Website wird von GitHub Pages direkt aus diesem Repository mit Jekyll gebaut
 ├── lp.md                  Bereich für die Lehrperson  →  /LP/
 ├── konzept.md             didaktisches Gesamtkonzept
 ├── steckbriefe.md         Steckbriefe der vier Modelle  →  /steckbriefe.html
+├── theorie.md             Lerndossier: alle Erkenntnisse der Lektionen 1–6 nach Lernzielen  →  /theorie.html
 ├── dossier.md             alle Unterlagen auf einer Seite zum Drucken
 ├── lp-dossier.md          dasselbe mit Ablaufplänen und Lösungen  →  /LP/dossier.html
-├── quellen/               ursprüngliche Python-Programme (nur lokal, nicht im Repository)
+├── quellen/               ursprüngliche Python-Programme und Prüfungen (nur lokal, nie ins Repository)
 ├── _layouts/              HTML-Gerüst (default / startseite / lektion / material)
 ├── assets/fonts/          Schriften (Inter, IBM Plex Mono), lokal statt von fremden Servern
 ├── assets/css/unterricht.css   Gestaltung inkl. Dark Mode und Druckansicht

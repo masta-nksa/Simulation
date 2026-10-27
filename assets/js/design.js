@@ -1,11 +1,13 @@
 /* ==========================================================================
    Design umschalten
 
-   Zwei Designs für dieselben Inhalte:
+   Drei Designs für dieselben Inhalte:
      klassisch  Tinte auf Papier, Leuchtstift-Gelb (Standard)
      bluete     pastell, rund und verspielt, mit Feier-Effekten (feier.js)
+     grusel     Halloween: nachtviolett mit Kürbis-Orange, Spinnweben,
+                Fledermäuse und Geister als Feier-Effekte
 
-   Der Knopf in der Kopfzeile wechselt zum jeweils anderen Design. Die Wahl
+   Der Knopf in der Kopfzeile wechselt zum jeweils nächsten Design (im Kreis). Die Wahl
    bleibt im Browser gespeichert («unterricht:design») und gilt für alle
    Einheiten auf derselben Website. Gesetzt wird sie schon im <head>
    (_layouts/default.html), damit die Seite nicht kurz im falschen Design
@@ -21,7 +23,8 @@
   var SCHLUESSEL = "unterricht:design";
   var DESIGNS = [
     { id: "klassisch", name: "Klassisch" },
-    { id: "bluete", name: "Blüte" }
+    { id: "bluete", name: "Blüte" },
+    { id: "grusel", name: "Grusel" }
   ];
 
   function aktuell() { return document.documentElement.getAttribute("data-design") || "klassisch"; }

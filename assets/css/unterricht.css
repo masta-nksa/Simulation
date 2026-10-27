@@ -17,6 +17,7 @@
    8. Fortschritt: Farbe der Seite, Leisten, Zähler (fortschritt.js)
    9. Design «Blüte» und Design-Knopf (design.js)
   10. Feier-Effekte und Meldungen (feier.js)
+  11. Design «Grusel» (Halloween)
 
    FARBE ODER SCHRIFT ÄNDERN
    Fast alles ergibt sich aus den Variablen in Abschnitt 2. Wer dort bleibt,
@@ -1487,4 +1488,187 @@ html[data-fs-stufe]:not([data-fs-stufe="0"]) body::after {
 @media (prefers-reduced-motion: reduce) {
   .feier-meldung { transition: none; }
   html[data-design="bluete"] .lektion-list > li > a, html[data-design="bluete"] .card a { transition: none; }
+}
+
+/* --- 11. Design «Grusel» (Halloween) ------------------------------------- */
+/* Drittes Design (design.js): Nacht in Violett, Kürbis-Orange als Leuchtstift,
+   Schleimgrün für «richtig», Spinnweben in den Ecken, Fledermäuse über dem
+   Titel und flackernde Überschriften. Es ist immer dunkel, unabhängig vom
+   Gerät (color-scheme: dark). Wie «Blüte» setzt es die Variablen aus
+   Abschnitt 2 neu und steht unter @media screen – gedruckt wird klassisch.
+   Die Figuren der Feier-Effekte sind Emoji (feier.js). */
+
+.design-knopf[data-ziel="grusel"] .design-muster { background: radial-gradient(circle at 35% 38%, #ffb347, #ff7a1a 55%, #4a1d6b); box-shadow: 0 0 0 1px #4a1d6b; }
+
+@media screen {
+  html[data-design="grusel"] {
+    color-scheme: dark;
+    --bg:            #120c18;
+    --bg-elev:       #1c1326;
+    --text:          #eadff2;
+    --text-muted:    #ab9dbb;
+    --border:        #35244a;
+    --border-strong: #6d4d8f;
+    --accent:        #ff8a2a;
+    --accent-soft:   #3a2010;
+    --marker:        #ff7a1a;
+    --on-marker:     #140a05;
+    --lp:            #c9a2ff;
+    --lp-soft:       #2a1c3d;
+    --sus:           #8bea5a;
+    --sus-soft:      #182c19;
+    --linie:         #5a3d7a;
+    --linie-b:       1.5px;
+
+    --font-head: Georgia, "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    --font-display: var(--font-head);
+    --head-weight:    700;
+    --display-weight: 700;
+    --label-weight:   500;
+
+    --radius-karte: 10px;
+    --radius-feld:  8px;
+    --radius-block: 8px;
+    --radius-knopf: 6px;
+    --radius-marke: 4px;
+    --radius-code:  4px;
+    --radius-pill:  999px;
+    --shadow:       0 0 24px -12px rgba(255, 122, 26, .6);
+
+    --verlauf:      linear-gradient(120deg, #ff7a1a, #ff3b3b);
+    --header-bg:     color-mix(in srgb, var(--bg) 88%, transparent);
+    --header-filter: blur(10px);
+    --hero-bg:
+      radial-gradient(48rem 18rem at 50% -4rem, #3d1b57 0, transparent 70%),
+      radial-gradient(30rem 14rem at 90% 110%, #3a1d0b 0, transparent 70%);
+
+    --fs-1: #f59a3c; --fs-2: #ecc63a; --fs-3: #a4d65a; --fs-4: #35c174;
+    --fs-ton: 15%;
+  }
+
+  html[data-design="grusel"] body {
+    background-image:
+      radial-gradient(ellipse 70rem 28rem at 50% -8rem, #2d1442 0, transparent 70%),
+      radial-gradient(ellipse 60rem 22rem at 50% 105%, #2a1307 0, transparent 70%);
+    background-attachment: fixed;
+  }
+  html[data-design="grusel"] ::selection { background: var(--marker); color: var(--on-marker); }
+
+  /* Spinnweben in den unteren Ecken des Fensters (blenden den Text nicht aus) */
+  html[data-design="grusel"] body::before {
+    content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: .3;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130' fill='none' stroke='%23d8c8ec' stroke-width='1'%3E%3Cpath d='M0 130 L0 0 M0 130 L40 8 M0 130 L82 40 M0 130 L122 88 M0 130 L130 130'/%3E%3Cpath d='M0 96 Q22 98 30 130 M0 62 Q40 66 62 130 M0 30 Q56 36 96 130 M0 6 Q76 14 126 130'/%3E%3C/svg%3E") left bottom / 130px 130px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130' viewBox='0 0 130 130' fill='none' stroke='%23d8c8ec' stroke-width='1'%3E%3Cpath d='M130 130 L130 0 M130 130 L90 8 M130 130 L48 40 M130 130 L8 88 M130 130 L0 130'/%3E%3Cpath d='M130 96 Q108 98 100 130 M130 62 Q90 66 68 130 M130 30 Q74 36 34 130 M130 6 Q54 14 4 130'/%3E%3C/svg%3E") right bottom / 130px 130px no-repeat;
+  }
+
+  /* Kopfzeile */
+  html[data-design="grusel"] .site-header { border-bottom: 1px solid var(--border-strong); box-shadow: 0 8px 26px -18px rgba(255, 122, 26, .8); }
+  html[data-design="grusel"] .brand-text strong::before { content: "\1F383"; margin-right: .4rem; }
+  html[data-design="grusel"] .site-nav a:hover { background: var(--accent-soft); }
+  html[data-design="grusel"] .site-nav a[aria-current="page"] { background: var(--marker); color: var(--on-marker); }
+
+  /* Titel: oranges Glimmen, gelegentliches Flackern wie eine alte Laterne */
+  html[data-design="grusel"] .hero h1,
+  html[data-design="grusel"] .lektion-header h1,
+  html[data-design="grusel"] .prose h1 {
+    color: #ff9a3c; text-shadow: 0 0 18px rgba(255, 122, 26, .55), 0 2px 0 #3b1a05;
+    letter-spacing: -.01em;
+  }
+  html[data-design="grusel"] .hero h1 { letter-spacing: -.02em; animation: grusel-flackern 7s infinite; }
+  html[data-design="grusel"] .prose h2::before { content: "\2620"; margin-right: .5rem; color: var(--accent); font-weight: 400; }
+  html[data-design="grusel"] .prose h2 { border-bottom-color: var(--border-strong); }
+  html[data-design="grusel"] .section-title { color: var(--accent); }
+  @keyframes grusel-flackern {
+    0%, 17%, 20%, 54%, 57%, 100% { opacity: 1; }
+    18.5%, 55.5% { opacity: .55; }
+  }
+
+  /* Startseite: Fledermäuse fliegen im Abstand über den Titel */
+  html[data-design="grusel"] .hero { position: relative; overflow: hidden; }
+  html[data-design="grusel"] .hero::after {
+    content: "\1F987"; position: absolute; top: 1.2rem; left: -3rem; font-size: 1.8rem; pointer-events: none;
+    animation: grusel-flug 16s linear infinite;
+  }
+  @keyframes grusel-flug {
+    0%        { transform: translate(0, 0) scaleX(1); }
+    25%       { transform: translate(30vw, 1.2rem) scaleX(.6); }
+    50%       { transform: translate(60vw, -.4rem) scaleX(1); }
+    75%       { transform: translate(90vw, .9rem) scaleX(.6); }
+    100%, 100.1% { transform: translate(115vw, 0) scaleX(1); }
+  }
+  html[data-design="grusel"] .signet-zeile > * { border-bottom-width: 1px; }
+  html[data-design="grusel"] .signet { border-top-width: 1px; }
+
+  html[data-design="grusel"] .lektion-list { border-top: 0; display: grid; gap: .7rem; }
+  html[data-design="grusel"] .lektion-list > li > a {
+    align-items: center; padding: .85rem 1.1rem .9rem .9rem;
+    border: 1px solid var(--border); border-radius: var(--radius-karte);
+    background: var(--bg-elev); transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  html[data-design="grusel"] .lektion-list > li > a:hover,
+  html[data-design="grusel"] .lektion-list > li > a:focus-visible {
+    background: var(--bg-elev); color: inherit; border-color: var(--marker);
+    box-shadow: var(--shadow); transform: translateY(-2px);
+  }
+  html[data-design="grusel"] .lektion-list > li > a:hover .lektion-kurz { color: var(--text-muted); }
+  /* Die Nummer ist ein Kürbis */
+  html[data-design="grusel"] .lektion-nr {
+    display: grid; place-items: center; width: 3.1rem; height: 3.1rem; border-radius: 48% 48% 44% 44%;
+    background: radial-gradient(circle at 35% 30%, #ffb347, #ff7a1a 60%, #c2500a); color: #140a05;
+    font-family: var(--font-meta); font-weight: 700; font-size: 1.2rem;
+  }
+  html[data-design="grusel"] .lektion-list > li > a[data-fs-stufe]:not([data-fs-stufe="0"]) .lektion-nr {
+    text-decoration: none; box-shadow: 0 0 0 3px var(--bg-elev), 0 0 0 6px var(--fs-farbe);
+  }
+  html[data-design="grusel"] .lektion-stichwort { padding: .1rem .6rem; border: 1px solid var(--border-strong); border-radius: 999px; color: var(--accent); }
+  @media (max-width: 36rem) {
+    html[data-design="grusel"] .lektion-list > li > a { grid-template-columns: 3.2rem minmax(0, 1fr); }
+    html[data-design="grusel"] .lektion-nr { width: 2.6rem; height: 2.6rem; font-size: 1.05rem; }
+  }
+
+  /* Lektionsseite, Karten, Ablauf */
+  html[data-design="grusel"] .material-block { border: 1px solid var(--border-strong); }
+  html[data-design="grusel"] .material-block h2 { border-bottom: 1px solid var(--border-strong); background: var(--lp-soft); color: #e6d6f7; }
+  html[data-design="grusel"] .block-icon { display: inline; }
+  html[data-design="grusel"] .card a { border: 1px solid var(--border); background: var(--bg-elev); transition: border-color .15s ease, box-shadow .15s ease; }
+  html[data-design="grusel"] .card a:hover { background: var(--bg-elev); color: inherit; border-color: var(--marker); box-shadow: var(--shadow); }
+  html[data-design="grusel"] .card a:hover .card-kurz { color: var(--text-muted); }
+  html[data-design="grusel"] .card a:hover .badge { background: var(--accent-soft); color: var(--accent); }
+  html[data-design="grusel"] .badge { background: var(--accent-soft); color: var(--accent); }
+  html[data-design="grusel"] .badge-zielgruppe-sus { background: none; color: var(--text-muted); }
+  html[data-design="grusel"] .card a[data-fs-stufe]:not([data-fs-stufe="0"]) { box-shadow: inset 5px 0 0 var(--fs-farbe); }
+  html[data-design="grusel"] .ablauf ol > li::before { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  html[data-design="grusel"] .ablauf ol > li:has(a[href]):hover::before { background: var(--marker); color: var(--on-marker); }
+
+  /* Fliesstext, Übungen, Simulationen */
+  html[data-design="grusel"] .prose blockquote { border-left-color: var(--marker); }
+  html[data-design="grusel"] .pager { border-top: 1px solid var(--border-strong); }
+  html[data-design="grusel"] .pager a:hover { background: var(--accent-soft); color: inherit; }
+  html[data-design="grusel"] .site-footer { border-top: 1px solid var(--border-strong); }
+  html[data-design="grusel"] .print-btn { border: 1px solid var(--border-strong); }
+  html[data-design="grusel"] .print-btn:hover { background: var(--accent-soft); color: var(--text); }
+  html[data-design="grusel"] .chip[aria-pressed="true"] { color: var(--on-marker); background: var(--marker); border-color: var(--marker); }
+  html[data-design="grusel"] .wahl-gruppe.falsch .chip[aria-pressed="true"] { color: #fff; }
+  html[data-design="grusel"] .pruefen-knopf {
+    border: 0; background: var(--verlauf); color: #140a05; padding: .38rem 1.1rem;
+    box-shadow: 0 0 18px -6px rgba(255, 122, 26, .9);
+  }
+  html[data-design="grusel"] .pruefen-meldung.ok::after { content: " \1F383"; }
+  html[data-design="grusel"] .sim-knopf.haupt { border: 0; background: var(--verlauf); color: #140a05; }
+  html[data-design="grusel"] .simulation { border: 1px solid var(--border-strong); }
+  html[data-design="grusel"] .messtabelle[data-fest] .messwerte thead th { background: var(--bg); }
+
+  /* Meldungen der Feier-Effekte */
+  html[data-design="grusel"] .feier-meldung {
+    border: 2px solid transparent; border-radius: 12px;
+    background: linear-gradient(var(--bg-elev), var(--bg-elev)) padding-box, var(--verlauf) border-box;
+    box-shadow: 0 0 34px -10px rgba(255, 122, 26, .8);
+  }
+  html[data-design="grusel"] .feier-meldung::before { content: "\1F383"; margin-right: .45rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-design="grusel"] .hero h1, html[data-design="grusel"] .hero::after { animation: none; }
+  html[data-design="grusel"] .hero::after { display: none; }
+  html[data-design="grusel"] .lektion-list > li > a, html[data-design="grusel"] .card a { transition: none; }
 }

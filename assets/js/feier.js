@@ -15,19 +15,23 @@
      klein   Konfetti, Herzen, Glitzer, Blüten, Seifenblasen
      gross   Feuerwerk, Konfettiregen, Herz- und Blütenregen
 
-   Effekte gibt es im Design «Blüte». Im Design «Klassisch» erscheinen nur die
-   Meldungen, ebenso bei «Bewegung reduzieren» im Betriebssystem. Die Auslöser
+   Effekte gibt es in den Designs «Blüte» (Konfetti, Herzen, Glitzer, Blüten,
+   Seifenblasen) und «Grusel» (Fledermäuse, Geister, Kürbisse, Spinnen, Funken;
+   gross: Fledermausschwarm, Kürbisregen). Im Design «Klassisch» erscheinen nur
+   die Meldungen, ebenso bei «Bewegung reduzieren» im Betriebssystem. Die Auslöser
    kommen als Ereignisse aus uebungen.js und fortschritt.js.
    ========================================================================== */
 
 (function () {
   "use strict";
 
-  function bluete() { return document.documentElement.getAttribute("data-design") === "bluete"; }
+  function design() { return document.documentElement.getAttribute("data-design") || "klassisch"; }
   var ruhig = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
-  function effekte() { return bluete() && !ruhig.matches; }
+  function effekte() { return design() !== "klassisch" && !ruhig.matches; }
 
-  var FARBEN = ["#ff6fae", "#b18cff", "#6fd6bd", "#ffd166", "#ff9f80", "#7cc4ff", "#ffffff"];
+  var FARBEN_BLUETE = ["#ff6fae", "#b18cff", "#6fd6bd", "#ffd166", "#ff9f80", "#7cc4ff", "#ffffff"];
+  var FARBEN_GRUSEL = ["#ff7a1a", "#ffb02e", "#8bea5a", "#b44cff", "#ff4d4d", "#f2ecf8", "#ff7a1a"];
+  function palette() { return design() === "grusel" ? FARBEN_GRUSEL : FARBEN_BLUETE; }
   function zufall(a, b) { return a + Math.random() * (b - a); }
   function eine(liste) { return liste[Math.floor(Math.random() * liste.length)]; }
   // Nie zweimal dasselbe hintereinander
@@ -92,7 +96,7 @@
     else { laeuft = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
   }
   function teil(o) {
-    return Object.assign({ x: 0, y: 0, vx: 0, vy: 0, schwere: 0, luft: 1, dreh: 0, drall: 0, alter: 0, leben: 2, verzoegerung: 0, groesse: 8, farbe: eine(FARBEN) }, o);
+    return Object.assign({ x: 0, y: 0, vx: 0, vy: 0, schwere: 0, luft: 1, dreh: 0, drall: 0, alter: 0, leben: 2, verzoegerung: 0, groesse: 8, farbe: eine(palette()) }, o);
   }
 
   // ------------------------------------------------------------ Formen
@@ -207,7 +211,7 @@
     var funken = [], hoehe = innerHeight + 10;
     var r = teil({ x: x, y: hoehe, vy: -(hoehe - zielY) / .9, leben: .9, verzoegerung: verzoegerung, groesse: 3, farbe: "#fff3b0", zeichne: funkenForm });
     r.amEnde = function () {
-      var n = 70, zweite = eine(FARBEN);
+      var n = 70, zweite = eine(palette());
       for (var i = 0; i < n; i++) {
         var w = i / n * 6.283 + zufall(-.05, .05), v = zufall(150, 330);
         funken.push(teil({ x: r.x, y: r.y, vx: Math.cos(w) * v, vy: Math.sin(w) * v, schwere: 160, luft: .955, groesse: zufall(1.8, 3.2), farbe: Math.random() < .75 ? farbe : zweite, leben: zufall(1.1, 1.8), zeichne: funkenForm }));
@@ -222,7 +226,7 @@
   var GROSS = {
     feuerwerk: function (anzahl) {
       var l = [];
-      for (var i = 0; i < (anzahl || 6); i++) l.push(rakete(zufall(.12, .88) * innerWidth, zufall(.12, .42) * innerHeight, i * zufall(.25, .45), eine(FARBEN.slice(0, 6))));
+      for (var i = 0; i < (anzahl || 6); i++) l.push(rakete(zufall(.12, .88) * innerWidth, zufall(.12, .42) * innerHeight, i * zufall(.25, .45), eine(palette().slice(0, 6))));
       return l;
     },
     konfettiregen: function () {
@@ -241,6 +245,98 @@
       return l;
     }
   };
+
+  // ------------------------------------------------------------ Grusel-Effekte (Design «Grusel»)
+  // Die Figuren sind Emoji, die auf die Leinwand geschrieben werden.
+  function emojiForm(c, t, z) {
+    c.save();
+    c.translate(t.x + (t.wackel ? Math.sin(t.alter * t.wackel + t.phase) * (t.weite || 10) : 0), t.y);
+    c.rotate(t.dreh);
+    if (t.schlag) c.scale(.55 + .45 * Math.abs(Math.cos(t.alter * t.schlag)), 1);
+    c.globalAlpha = z < .12 ? z / .12 : z > .7 ? (1 - z) / .3 : 1;
+    c.font = t.groesse + "px serif"; c.textAlign = "center"; c.textBaseline = "middle";
+    c.fillText(t.zeichen, 0, 0);
+    c.restore();
+  }
+  // Spinne am Faden: Der Faden hängt am oberen Fensterrand, die Spinne seilt sich ab und wieder auf.
+  function spinneForm(c, t, z) {
+    t.y = t.ziel * Math.sin(Math.PI * Math.min(1, z * 1.1));
+    c.save();
+    c.globalAlpha = z > .85 ? (1 - z) / .15 : 1;
+    c.strokeStyle = "rgba(235,225,245,.75)"; c.lineWidth = 1;
+    c.beginPath(); c.moveTo(t.x, 0); c.lineTo(t.x, t.y); c.stroke();
+    c.font = t.groesse + "px serif"; c.textAlign = "center"; c.textBaseline = "middle";
+    c.fillText(t.zeichen, t.x, t.y);
+    c.restore();
+  }
+  function figuren(zeichen, n, x, y, o) {
+    var l = [];
+    for (var i = 0; i < n; i++) l.push(teil(Object.assign({ x: x + zufall(-40, 40), y: y + zufall(-10, 10), zeichen: zeichen, phase: zufall(0, 6), zeichne: emojiForm }, o(i))));
+    return l;
+  }
+  var KLEIN_GRUSEL = {
+    fledermaeuse: function (x, y) {
+      return figuren("🦇", 10, x, y, function () {
+        var w = -Math.PI / 2 + zufall(-1.2, 1.2), v = zufall(220, 420);
+        return { vx: Math.cos(w) * v, vy: Math.sin(w) * v, luft: .975, groesse: zufall(22, 36), schlag: zufall(14, 22), drall: zufall(-.6, .6), leben: zufall(1.5, 2.4), verzoegerung: zufall(0, .25) };
+      });
+    },
+    geister: function (x, y) {
+      return figuren("👻", 8, x, y, function () {
+        return { vy: zufall(-130, -60), wackel: zufall(2, 3.5), weite: 14, groesse: zufall(24, 38), leben: zufall(1.8, 2.8), verzoegerung: zufall(0, .6) };
+      });
+    },
+    kuerbisse: function (x, y) {
+      return figuren("🎃", 9, x, y, function () {
+        var w = -Math.PI / 2 + zufall(-.9, .9), v = zufall(300, 600);
+        return { vx: Math.cos(w) * v, vy: Math.sin(w) * v, schwere: 900, luft: .97, drall: zufall(-5, 5), groesse: zufall(22, 34), leben: zufall(1.5, 2.2) };
+      });
+    },
+    spinnen: function (x, y) {
+      var l = [];
+      for (var i = 0; i < 5; i++) {
+        l.push(teil({ x: x + (i - 2) * zufall(38, 70), y: 0, ziel: Math.max(80, y) + zufall(-40, 40), zeichen: "🕷️", groesse: zufall(20, 28), leben: zufall(2.2, 3), verzoegerung: i * .12, zeichne: spinneForm }));
+      }
+      return l;
+    },
+    funken: KLEIN.konfetti
+  };
+  var GROSS_GRUSEL = {
+    feuerwerk: GROSS.feuerwerk,
+    konfettiregen: GROSS.konfettiregen,
+    fledermausschwarm: function () {
+      var l = [];
+      for (var i = 0; i < 34; i++) {
+        var richtung = Math.random() < .5 ? 1 : -1;
+        l.push(teil({ x: richtung > 0 ? -40 : innerWidth + 40, y: zufall(.05, .75) * innerHeight, vx: richtung * zufall(260, 520), vy: zufall(-60, 60), zeichen: "🦇", groesse: zufall(24, 44), schlag: zufall(14, 24), leben: 4, verzoegerung: zufall(0, 1.6), zeichne: emojiForm }));
+      }
+      return l;
+    },
+    kuerbisregen: function () {
+      var l = [];
+      for (var i = 0; i < 40; i++) {
+        l.push(teil({ x: zufall(0, innerWidth), y: zufall(-80, -10), vy: zufall(80, 200), schwere: 60, drall: zufall(-2, 2), zeichen: Math.random() < .7 ? "🎃" : "👻", groesse: zufall(24, 40), leben: 7, verzoegerung: zufall(0, 1.8), zeichne: emojiForm }));
+      }
+      return l;
+    }
+  };
+
+  // Je nach Design andere Figuren und andere Worte
+  var SAETZE = {
+    bluete: {
+      klein: KLEIN, gross: GROSS, grossListe: ["feuerwerk", "konfettiregen", "herzregen"], fertigListe: ["glitzer", "blueten", "herzen"], spitze: "glitzer",
+      seite: ["Alles richtig – die ganze Unterlage!", "Fehlerfrei! Stark.", "Volltreffer auf der ganzen Seite!", "Wow – alles richtig!", "Bravo, keine einzige Lücke daneben!"],
+      fertig: ["Alles bearbeitet ✓", "Unterlage fertig ✓", "Geschafft – alles ausgefüllt ✓"],
+      lektion: "Lektion {n} geschafft! Alle Unterlagen sind bearbeitet."
+    },
+    grusel: {
+      klein: KLEIN_GRUSEL, gross: GROSS_GRUSEL, grossListe: ["feuerwerk", "fledermausschwarm", "kuerbisregen"], fertigListe: ["geister", "fledermaeuse", "kuerbisse"], spitze: "funken",
+      seite: ["Alles richtig – selbst die Geister klatschen!", "Kein einziger Fehler … unheimlich gut!", "Zum Gruseln fehlerfrei!", "Die Fledermäuse sind beeindruckt.", "Nicht ein Fehler – das ist ja nicht normal!"],
+      fertig: ["Alles ausgefüllt – kein Geist bleibt übrig ✓", "Unterlage erlöst ✓", "Geschafft – nichts spukt mehr ✓"],
+      lektion: "Lektion {n} überlebt! Alle Unterlagen sind bearbeitet."
+    }
+  };
+  function satz() { return SAETZE[design()] || SAETZE.bluete; }
 
   // ------------------------------------------------------------ Meldungen
   var schlange = [], sichtbar = false;
@@ -269,9 +365,6 @@
     }, m.link ? 5200 : 3400);
   }
 
-  var LOB_SEITE = ["Alles richtig – die ganze Unterlage!", "Fehlerfrei! Stark.", "Volltreffer auf der ganzen Seite!", "Wow – alles richtig!", "Bravo, keine einzige Lücke daneben!"];
-  var LOB_FERTIG = ["Alles bearbeitet ✓", "Unterlage fertig ✓", "Geschafft – alles ausgefüllt ✓"];
-
   // Zentrum eines Elements im Fenster
   function mitte(e) {
     var r = e.getBoundingClientRect();
@@ -281,7 +374,7 @@
   function gross(welche) {
     grossZuletzt = Date.now();
     if (!effekte()) return;
-    welche.forEach(function (w) { los(GROSS[w](w === "feuerwerk" ? 7 : 0)); });
+    welche.forEach(function (w) { los(satz().gross[w](w === "feuerwerk" ? 7 : 0)); });
   }
   function seiteUrl() { return document.body.dataset.fsSeite || location.pathname; }
 
@@ -292,13 +385,13 @@
     var k = "seite-richtig:" + seiteUrl();
     if (d.seiteRichtig && !merken(k)) {
       gemerkt(k, true);
-      gross([abwechselnd("gross", ["feuerwerk", "konfettiregen", "herzregen"])]);
-      melden(eine(LOB_SEITE), null, true);
+      gross([abwechselnd("gross", satz().grossListe)]);
+      melden(eine(satz().seite), null, true);
       return;
     }
     if (!effekte()) return;
     var p = mitte(d.knopf);
-    los(KLEIN[abwechselnd("klein", Object.keys(KLEIN))](p.x, p.y));
+    los(satz().klein[abwechselnd("klein", Object.keys(satz().klein))](p.x, p.y));
   });
 
   document.addEventListener("fortschritt:stufe", function (ev) {
@@ -307,21 +400,21 @@
     if (l && l.anteil >= 1 && !merken("lektion:" + l.url)) {
       gemerkt("lektion:" + l.url, true);
       gross(["feuerwerk", "konfettiregen"]);
-      melden("Lektion " + l.nr + " geschafft! Alle Unterlagen sind bearbeitet.", null, true);
+      melden(satz().lektion.replace("{n}", l.nr), null, true);
       return;
     }
     if (d.stufe === 4 && !merken("fertig:" + d.seite)) {
       gemerkt("fertig:" + d.seite, true);
       var weiter = document.querySelector(".pager-next");
-      melden(eine(LOB_FERTIG), weiter ? { href: weiter.href, text: "Weiter: " + weiter.lastChild.textContent.trim() + " →" } : null);
-      if (effekte() && Date.now() - grossZuletzt > 3000) los(KLEIN[abwechselnd("klein", ["glitzer", "blueten", "herzen"])](innerWidth / 2, innerHeight * .35));
+      melden(eine(satz().fertig), weiter ? { href: weiter.href, text: "Weiter: " + weiter.lastChild.textContent.trim() + " →" } : null);
+      if (effekte() && Date.now() - grossZuletzt > 3000) los(satz().klein[abwechselnd("klein", satz().fertigListe)](innerWidth / 2, innerHeight * .35));
       return;
     }
     // Zwischenstufen: etwas Glitzer an der Spitze der Fortschrittsleiste
     var leiste = document.querySelector(".fs-leiste");
     if (leiste && effekte() && Date.now() - grossZuletzt > 3000) {
       var r = leiste.getBoundingClientRect();
-      los(KLEIN.glitzer(r.left + r.width * d.anteil, r.top + r.height / 2).slice(0, 14));
+      los(satz().klein[satz().spitze](r.left + r.width * d.anteil, r.top + r.height / 2).slice(0, 14));
     }
   });
 
@@ -331,5 +424,5 @@
     gemerkt("fertig:" + u, false);
   });
 
-  window.Feier = { klein: KLEIN, gross: GROSS, los: los, melden: melden };
+  window.Feier = { klein: KLEIN, gross: GROSS, kleinGrusel: KLEIN_GRUSEL, grossGrusel: GROSS_GRUSEL, los: los, melden: melden };
 })();

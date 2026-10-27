@@ -111,7 +111,7 @@ neuen Tab (Skript in `_layouts/default.html`), interne Links bleiben im selben T
 
 ## Gestaltung
 
-Es gibt zwei Designs, umschaltbar über den Knopf rechts in der Kopfzeile:
+Es gibt drei Designs, umschaltbar über den Knopf rechts in der Kopfzeile (er wechselt im Kreis):
 
 - **Klassisch** (Standard) ist als gemeinsames Design aller Unterrichtseinheiten gedacht und
   steckt so auch im Gerüst für neue Einheiten: Tinte auf Papier, Schreibmaschinenschrift
@@ -124,6 +124,12 @@ Es gibt zwei Designs, umschaltbar über den Knopf rechts in der Kopfzeile:
   zweimal dasselbe hintereinander. Eine fehlerfrei geprüfte Unterlage und eine fertige Lektion
   feiern mit Feuerwerk, Konfetti- oder Herzregen und einer Meldung (je einmal). Im Design
   «Klassisch» und bei «Bewegung reduzieren» im Betriebssystem erscheinen nur die Meldungen.
+
+- **Grusel** (Halloween): nachtviolett mit Kürbis-Orange als Leuchtstift, Schleimgrün für
+  «richtig», Spinnweben in den Ecken, flackernder Titel, Fledermaus über der Startseite, Nummern
+  als Kürbisse. Feier-Effekte mit Emoji-Figuren: Fledermäuse, Geister, Kürbisse, Spinnen am Faden
+  und Funken, für Unterlage und Lektion ein Fledermausschwarm, Kürbisregen oder Feuerwerk, mit
+  Meldungen wie «Zum Gruseln fehlerfrei!». Immer dunkel, unabhängig vom Gerät.
 
 Die Wahl bleibt im Browser gespeichert (`unterricht:design`) und gilt für alle Einheiten auf
 derselben Website; gesetzt wird sie schon im `<head>`, damit nichts aufblitzt. Gedruckt wird

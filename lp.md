@@ -86,11 +86,13 @@ mit. Wer eine ganze Unterlage fehlerfrei geprüft hat, bekommt auf der Lektionss
 (★). Der Stand liegt wie alle Eingaben nur im Browser des Geräts: Eine Klassenübersicht gibt es
 nicht, und wer die Eingaben einer Seite löscht, beginnt dort wieder bei null.
 
-**Zwei Designs:** Über den Knopf rechts in der Kopfzeile wechseln die SuS zwischen «Klassisch»
-und «Blüte» (pastell, verspielt). Im Design «Blüte» gibt es bei richtig geprüften Abschnitten
-abwechselnd Konfetti, Herzen, Glitzer, Blüten oder Seifenblasen, bei einer fehlerfrei geprüften
-Unterlage und am Ende einer Lektion ein Feuerwerk. «Klassisch» bleibt ruhig und zeigt nur die
-Meldungen. Fortschrittsfarben und Druck sind in beiden Designs gleich.
+**Drei Designs:** Über den Knopf rechts in der Kopfzeile wechseln die SuS zwischen «Klassisch»,
+«Blüte» (pastell, verspielt) und «Grusel» (Halloween: nachtviolett, Kürbis-Orange, Spinnweben).
+Bei richtig geprüften Abschnitten gibt es abwechselnd kleine Effekte – in «Blüte» Konfetti, Herzen,
+Glitzer, Blüten oder Seifenblasen, in «Grusel» Fledermäuse, Geister, Kürbisse, Spinnen oder Funken.
+Bei einer fehlerfrei geprüften Unterlage und am Ende einer Lektion folgt ein Feuerwerk, Regen oder
+Fledermausschwarm. «Klassisch» bleibt ruhig und zeigt nur die Meldungen. Fortschrittsfarben und
+Druck sind in allen Designs gleich.
 
 ## Grundlagen
 

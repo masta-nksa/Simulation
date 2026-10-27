@@ -39,7 +39,7 @@ signet:
 
 # Zusatzeinträge in der Kopfzeile, hinter den Lektionsnummern (optional).
 hauptnav:
-  - titel: "Steckbriefe"
+  - titel: "SteckBriefe"
     url: "/steckbriefe.html"
   - titel: "ArbeitsDossier"
     url: "/dossier.html"

@@ -1,11 +1,13 @@
 /* ==========================================================================
    Design umschalten
 
-   Drei Designs für dieselben Inhalte:
+   Zwei aktive Designs für dieselben Inhalte:
      klassisch  Tinte auf Papier, Leuchtstift-Gelb (Standard)
      bluete     pastell, rund und verspielt, mit Feier-Effekten (feier.js)
-     grusel     Halloween: nachtviolett mit Kürbis-Orange, Spinnweben,
-                Fledermäuse und Geister als Feier-Effekte
+   Abgeschaltet, aber vollständig vorhanden (CSS Abschnitt 11, feier.js):
+     grusel     Halloween. Wieder einschalten: Eintrag unten in DESIGNS
+                aktivieren und im <head> von _layouts/default.html «grusel»
+                wieder zulassen.
 
    Der Knopf in der Kopfzeile wechselt zum jeweils nächsten Design (im Kreis). Die Wahl
    bleibt im Browser gespeichert («unterricht:design») und gilt für alle
@@ -23,8 +25,8 @@
   var SCHLUESSEL = "unterricht:design";
   var DESIGNS = [
     { id: "klassisch", name: "Klassisch" },
-    { id: "bluete", name: "Blüte" },
-    { id: "grusel", name: "Grusel" }
+    { id: "bluete", name: "Blüte" }
+    // , { id: "grusel", name: "Grusel" }   // Halloween, abgeschaltet
   ];
 
   function aktuell() { return document.documentElement.getAttribute("data-design") || "klassisch"; }
@@ -51,7 +53,8 @@
 
   // Wechsel in einer anderen Registerkarte übernehmen
   window.addEventListener("storage", function (ev) {
-    if (ev.key === SCHLUESSEL && ev.newValue && ev.newValue !== aktuell()) {
+    var bekannt = DESIGNS.some(function (d) { return d.id === ev.newValue; });
+    if (ev.key === SCHLUESSEL && bekannt && ev.newValue !== aktuell()) {
       if (ev.newValue === "klassisch") document.documentElement.removeAttribute("data-design");
       else document.documentElement.setAttribute("data-design", ev.newValue);
       document.dispatchEvent(new CustomEvent("design:gewechselt", { detail: { design: ev.newValue } }));

@@ -111,7 +111,7 @@ neuen Tab (Skript in `_layouts/default.html`), interne Links bleiben im selben T
 
 ## Gestaltung
 
-Es gibt drei Designs, umschaltbar über den Knopf rechts in der Kopfzeile (er wechselt im Kreis):
+Es gibt zwei Designs, umschaltbar über den Knopf rechts in der Kopfzeile:
 
 - **Klassisch** (Standard) ist als gemeinsames Design aller Unterrichtseinheiten gedacht und
   steckt so auch im Gerüst für neue Einheiten: Tinte auf Papier, Schreibmaschinenschrift
@@ -125,11 +125,10 @@ Es gibt drei Designs, umschaltbar über den Knopf rechts in der Kopfzeile (er we
   feiern mit Feuerwerk, Konfetti- oder Herzregen und einer Meldung (je einmal). Im Design
   «Klassisch» und bei «Bewegung reduzieren» im Betriebssystem erscheinen nur die Meldungen.
 
-- **Grusel** (Halloween): nachtviolett mit Kürbis-Orange als Leuchtstift, Schleimgrün für
-  «richtig», Spinnweben in den Ecken, flackernder Titel, Fledermaus über der Startseite, Nummern
-  als Kürbisse. Feier-Effekte mit Emoji-Figuren: Fledermäuse, Geister, Kürbisse, Spinnen am Faden
-  und Funken, für Unterlage und Lektion ein Fledermausschwarm, Kürbisregen oder Feuerwerk, mit
-  Meldungen wie «Zum Gruseln fehlerfrei!». Immer dunkel, unabhängig vom Gerät.
+- **Grusel** (Halloween) ist abgeschaltet, aber vollständig vorhanden (Stylesheet Abschnitt 11,
+  Effekte in `feier.js`): nachtviolett, Kürbis-Orange, Spinnweben, Fledermäuse und Geister.
+  Einschalten: Eintrag in `DESIGNS` (`design.js`) aktivieren und im `<head>` von
+  `_layouts/default.html` «grusel» wieder zulassen.
 
 Die Wahl bleibt im Browser gespeichert (`unterricht:design`) und gilt für alle Einheiten auf
 derselben Website; gesetzt wird sie schon im `<head>`, damit nichts aufblitzt. Gedruckt wird

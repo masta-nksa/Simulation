@@ -39,6 +39,8 @@
                      leer      Anteil leerer Felder
      data-werte    Startwerte in %, z. B. "wohl=33;vielfalt=100;dreiecke=50;leer=20"
      data-start    "getrennt": Dreiecke links, Quadrate rechts (sonst zufällig)
+     Unter der Stadt schaltet ein Kästchen die gelbe Hervorhebung der
+     Unzufriedenen aus und wieder ein (Statuszeile zählt sie weiter).
 
      <div class="simulation" data-modell="segregation-hand"></div>
      Von Hand: ein kleines Raster mit fester Startverteilung. Man zieht die
@@ -229,7 +231,15 @@
     var kurve = h.leinwand(320, 300, "Verlauf: Anteil gleicher Nachbarn in Abhängigkeit von der Zahl der Umzüge.");
     var bilder = h.el("div", { class: "seg-bilder" });
     bilder.append(stadt.element, kurve.element);
-    var legende = legendeBauen(h);
+    // Ohne Hervorhebung sieht man nur die Formen – wer unzufrieden ist, muss man
+    // dann selbst herausfinden.
+    var hervorheben = true;
+    var legende = legendeBauen(h, function (an) {
+      hervorheben = an;
+      stadt.element.setAttribute("aria-label", "Stadt aus 20 × 20 Feldern mit Dreiecken und Quadraten" +
+        (an ? "; unzufriedene Personen sind gelb hinterlegt." : "; unzufriedene Personen sind nicht hervorgehoben."));
+      zeichne();
+    });
 
     // Regler
     var R = {};
@@ -340,7 +350,7 @@
 
     function zeichne() {
       var f = h.farben();
-      zeichneStadt(stadt, w, f, null);
+      zeichneStadt(stadt, w, f, hervorheben);
       zeichneVerlauf(f);
     }
 
@@ -402,7 +412,7 @@
     return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10) * p;
   }
 
-  function zeichneStadt(bild, w, f, auswahl) {
+  function zeichneStadt(bild, w, f, hervorheben) {
     var ctx = bild.ctx, s = bild.breite / w.breit;
     ctx.fillStyle = f.grund; ctx.fillRect(0, 0, bild.breite, bild.hoehe);
     // feines Raster
@@ -420,7 +430,7 @@
       var x = (i % w.breit) * s, y = Math.floor(i / w.breit) * s;
       // Auf Gelb sind beide Formen dunkel (auch im dunklen Modus), sonst
       // Dreiecke in Tinte, Quadrate grau.
-      if (unzufrieden(w, i)) {
+      if (hervorheben && unzufrieden(w, i)) {
         ctx.fillStyle = f.marker; ctx.fillRect(x + 1, y + 1, s - 1, s - 1);
         ctx.fillStyle = f.aufMarker;
       } else ctx.fillStyle = g === DREIECK ? f.text : f.linie;
@@ -428,8 +438,11 @@
     }
   }
 
-  // Legende als kleine Zeile unter den Bildern
-  function legendeBauen(h) {
+  // Legende als kleine Zeile unter den Bildern. Mit «umschalten» wird aus dem
+  // Eintrag «unzufrieden» ein Kästchen, das die gelbe Hervorhebung ein- und
+  // ausschaltet (umschalten(true/false) zeichnet neu).
+  var kaestchenNr = 0;
+  function legendeBauen(h, umschalten) {
     var p = h.el("p", { class: "seg-legende" });
     function zeichen(klasse, text) {
       var span = h.el("span", { class: "seg-zeichen " + klasse, "aria-hidden": "true" });
@@ -437,7 +450,13 @@
     }
     zeichen("dreieck", "Dreieck");
     zeichen("quadrat", "Quadrat");
-    zeichen("unzufrieden", "unzufrieden (zieht um)");
+    if (!umschalten) { zeichen("unzufrieden", "unzufrieden (zieht um)"); return p; }
+    var id = "seg-hervor-" + (kaestchenNr++);
+    var box = h.el("input", { type: "checkbox", id: id, checked: "checked" });
+    var lab = h.el("label", { for: id, class: "seg-umschalter" });
+    lab.append(box, " ", h.el("span", { class: "seg-zeichen unzufrieden", "aria-hidden": "true" }), " unzufrieden (zieht um) hervorheben");
+    box.addEventListener("change", function () { umschalten(box.checked); });
+    p.appendChild(lab);
     return p;
   }
 

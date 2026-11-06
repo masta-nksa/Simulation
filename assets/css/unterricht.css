@@ -1105,6 +1105,8 @@ select.luecke-feld option { background: var(--bg-elev); color: var(--text); }
 .seg-zeichen.dreieck { clip-path: polygon(50% 6%, 95% 92%, 5% 92%); }
 .seg-zeichen.quadrat { width: .7em; height: .7em; vertical-align: -.02em; background: var(--border-strong); }
 .seg-zeichen.unzufrieden { background: var(--marker); }
+.seg-umschalter { white-space: nowrap; cursor: pointer; }
+.seg-umschalter input { margin: 0; vertical-align: -.12em; accent-color: var(--accent); }
 .seg-hand { display: grid; max-width: 25rem; margin: 0 0 .2rem; border-left: 1px solid var(--border); border-top: 1px solid var(--border); }
 .seg-feld {
   display: flex; align-items: center; justify-content: center; aspect-ratio: 1; min-width: 0; padding: 0;

@@ -90,6 +90,9 @@ Einzelne Durchgänge weichen um 2 bis 4 Prozentpunkte ab.
   den Anteil gleicher Nachbarn um: 50 % gleiche Nachbarn ergibt 0 % Segregation, 100 % ergibt
   100 %. Die Seite zeigt den Anteil direkt, weil er sich erklären lässt («im Schnitt sind drei
   Viertel meiner Nachbarn wie ich»).
+- **Gelbe Hervorhebung abschaltbar:** Unter der Stadt steht das Kästchen «unzufrieden (zieht um)
+  hervorheben». Ohne Gelb sieht man nur die Formen – gut, um die Klasse zuerst selbst schätzen zu
+  lassen, wo Unzufriedene sitzen. Die Statuszeile zählt sie weiter.
 - **Spiel von Hand:** feste Startverteilung mit 8 Unzufriedenen, Anteil gleicher Nachbarn zu
   Beginn 51 %. Je nach Vorgehen braucht es 6 bis 18 Umzüge, am Ende liegt der Anteil meist bei
   70 bis 78 %. Auf dem Touchscreen tippen statt ziehen.
